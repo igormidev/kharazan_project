@@ -16,8 +16,8 @@ const PieceEntity fakePiece = PieceEntity(
   damage: 3,
 );
 
-const fakeBoardEntity =
-    BoardEntity(coordenate: Coordenate(0, 0), piece: fakePiece);
+const fakeBoardEntity = BoardEntity(
+    coordenate: Coordenate(0, 0), piece: fakePiece, pieceOwnerId: 'test');
 
 const fakeUserState = UserStateEntity(playerId: 'test', currentMana: 4);
 

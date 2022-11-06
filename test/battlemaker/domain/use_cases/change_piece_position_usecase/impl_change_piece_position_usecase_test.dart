@@ -36,52 +36,54 @@ void main() {
 
   group('Should change the piece position', () {
     test('Should get a piece in a coordenate', () async {
-      when(() => repository.removePieceInCoordenate(any()))
-          .thenReturn(right(fakePiece));
-      when(() => repository.createPieceInCoordenate(any(), any()))
+      when(() => repository.removeEntityInCoordenate(any()))
+          .thenReturn(right(fakeBoardEntity));
+      when(() => repository.createPieceInCoordenate(any(), any(), any()))
           .thenReturn(right(fakePiece));
 
       final response = await usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<VoidSucess>());
-      verify(() => repository.removePieceInCoordenate(any())).called(1);
-      verify(() => repository.createPieceInCoordenate(any(), any())).called(1);
+      verify(() => repository.removeEntityInCoordenate(any())).called(1);
+      verify(() => repository.createPieceInCoordenate(any(), any(), any()))
+          .called(1);
     });
 
     test('Should use the removed piece as a parameter to create a piece',
         () async {
-      when(() => repository.removePieceInCoordenate(any()))
+      when(() => repository.removeEntityInCoordenate(any()))
           // Have to use this piece here
-          .thenReturn(right(fakePiece));
+          .thenReturn(right(fakeBoardEntity));
       // as the parameter to create a piece
-      when(() => repository.createPieceInCoordenate(any(), fakePiece))
+      when(() => repository.createPieceInCoordenate(any(), fakePiece, 'test'))
           .thenReturn(right(fakePiece));
 
       final response = await usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<VoidSucess>());
-      verify(() => repository.removePieceInCoordenate(any())).called(1);
-      verify(() => repository.createPieceInCoordenate(any(), fakePiece))
+      verify(() => repository.removeEntityInCoordenate(any())).called(1);
+      verify(() => repository.createPieceInCoordenate(any(), fakePiece, 'test'))
           .called(1);
     });
 
     test(
         'Should use the coordenate in the usecase param model when creating a piece',
         () async {
-      when(() => repository.removePieceInCoordenate(any()))
-          .thenReturn(right(fakePiece));
+      when(() => repository.removeEntityInCoordenate(any()))
+          .thenReturn(right(fakeBoardEntity));
       // Here we are using the same coordenate passed in the usecase param model
-      when(() => repository.createPieceInCoordenate(coordenate, any()))
+      when(() => repository.createPieceInCoordenate(coordenate, any(), 'test'))
           .thenReturn(right(fakePiece));
 
       final response = await usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<VoidSucess>());
-      verify(() => repository.removePieceInCoordenate(any())).called(1);
-      verify(() => repository.createPieceInCoordenate(coordenate, any()))
+      verify(() => repository.removeEntityInCoordenate(any())).called(1);
+      verify(() =>
+              repository.createPieceInCoordenate(coordenate, any(), 'test'))
           .called(1);
     });
   });
@@ -89,9 +91,9 @@ void main() {
   group('Should return a error while communicating with the repository', () {
     test('Should return the repository error while removing the piece',
         () async {
-      when(() => repository.removePieceInCoordenate(any()))
+      when(() => repository.removeEntityInCoordenate(any()))
           .thenReturn(left(MockRemovePieceFailure()));
-      when(() => repository.createPieceInCoordenate(any(), any()))
+      when(() => repository.createPieceInCoordenate(any(), any(), any()))
           .thenReturn(right(fakePiece));
 
       final response = await usecase(param);
@@ -99,14 +101,15 @@ void main() {
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MatchFailure>());
       expect(response.asLeftResult, isA<MockRemovePieceFailure>());
-      verify(() => repository.removePieceInCoordenate(any())).called(1);
-      verifyNever(() => repository.createPieceInCoordenate(any(), any()));
+      verify(() => repository.removeEntityInCoordenate(any())).called(1);
+      verifyNever(
+          () => repository.createPieceInCoordenate(any(), any(), any()));
     });
 
     test('Should return the repository error while creating a piece', () async {
-      when(() => repository.removePieceInCoordenate(any()))
-          .thenReturn(right(fakePiece));
-      when(() => repository.createPieceInCoordenate(any(), any()))
+      when(() => repository.removeEntityInCoordenate(any()))
+          .thenReturn(right(fakeBoardEntity));
+      when(() => repository.createPieceInCoordenate(any(), any(), any()))
           .thenReturn(left(MockCreatingAPieceFailure()));
 
       final response = await usecase(param);
@@ -114,8 +117,9 @@ void main() {
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MatchFailure>());
       expect(response.asLeftResult, isA<MockCreatingAPieceFailure>());
-      verify(() => repository.removePieceInCoordenate(any())).called(1);
-      verify(() => repository.createPieceInCoordenate(any(), any())).called(1);
+      verify(() => repository.removeEntityInCoordenate(any())).called(1);
+      verify(() => repository.createPieceInCoordenate(any(), any(), any()))
+          .called(1);
     });
   });
 }

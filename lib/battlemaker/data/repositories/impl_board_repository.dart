@@ -15,10 +15,11 @@ class ImplBoardRepository implements ProtocolBoardRepository {
 
   @override
   Either<MatchFailure, PieceEntity> createPieceInCoordenate(
-      Coordenate coordenate, PieceEntity piece) {
+      Coordenate coordenate, PieceEntity piece, String pieceOwnerId) {
     final entity = BoardEntity(
       coordenate: coordenate,
       piece: piece,
+      pieceOwnerId: pieceOwnerId,
     );
     final createResponse = _boardDataSource.createEntityInCoordenate(entity);
     if (createResponse.isLeft()) return createResponse.asLeft();
@@ -45,27 +46,32 @@ class ImplBoardRepository implements ProtocolBoardRepository {
   }
 
   @override
-  Either<MatchFailure, PieceEntity> removePieceInCoordenate(
+  Either<MatchFailure, BoardEntity> removeEntityInCoordenate(
       Coordenate coordenate) {
     final getEntityResponse =
         _boardDataSource.removeEntityInCoordenate(coordenate);
 
     if (getEntityResponse.isLeft()) return getEntityResponse.asLeft();
-    return right(getEntityResponse.asRightResult.piece);
+    return right(getEntityResponse.asRightResult);
   }
 
   @override
   Either<MatchFailure, PieceEntity> updatePieceInCoordenate(
       Coordenate coordenate,
       PieceEntity Function(PieceEntity pieceInTheCoordenate) pieceUpdate) {
-    final pieceResponse = obtainPieceInCoordenate(coordenate);
+    final pieceResponse = obtainBoardEntityInCoordenate(coordenate);
     if (pieceResponse.isLeft()) return pieceResponse.asLeft();
-    final piece = pieceUpdate(pieceResponse.asRightResult);
+    final entity = pieceResponse.asRightResult;
+    final piece = pieceUpdate(entity.piece);
 
-    final entity = BoardEntity(coordenate: coordenate, piece: piece);
+    final newEntity = BoardEntity(
+      coordenate: coordenate,
+      piece: piece,
+      pieceOwnerId: entity.pieceOwnerId,
+    );
 
     final responseUpdate =
-        _boardDataSource.updateEntityInCoordenate(coordenate, entity);
+        _boardDataSource.updateEntityInCoordenate(coordenate, newEntity);
     if (responseUpdate.isLeft()) return responseUpdate.asLeft();
     return right(responseUpdate.asRightResult.piece);
   }
@@ -76,5 +82,14 @@ class ImplBoardRepository implements ProtocolBoardRepository {
 
     if (getEntitiesResponse.isLeft()) return getEntitiesResponse.asLeft();
     return right(getEntitiesResponse.asRightResult);
+  }
+
+  @override
+  Either<MatchFailure, BoardEntity> obtainBoardEntityInCoordenate(
+      Coordenate coordenate) {
+    final entityResponse = _boardDataSource.getEntityInCoordenate(coordenate);
+    if (entityResponse.isLeft()) return entityResponse.asLeft();
+    final entity = entityResponse.asRightResult;
+    return right(entity);
   }
 }

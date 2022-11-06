@@ -34,8 +34,4 @@ class StageCoordenateGrid extends StatelessWidget {
       ]),
     );
   }
-
-  double _getRespective(int axisX, int bigger) {
-    return ((2 * axisX) / bigger) - 1;
-  }
 }

@@ -40,32 +40,32 @@ void main() {
       final piece = fakePiece.copyWith(attackArea: [Move.twoTileAnyDirection]);
       final pieceAttackMoves = piece.obtainAttackArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -2
-        Coordenate(-2, 2),
-        Coordenate(-2, 1),
-        Coordenate(-2, 0),
-        Coordenate(-2, -1),
-        Coordenate(-2, -2),
+        const Coordenate(-2, 2),
+        const Coordenate(-2, 1),
+        const Coordenate(-2, 0),
+        const Coordenate(-2, -1),
+        const Coordenate(-2, -2),
 
         // Column -1
-        Coordenate(-1, 2),
-        Coordenate(-1, -2),
+        const Coordenate(-1, 2),
+        const Coordenate(-1, -2),
 
         // Column 0
-        Coordenate(0, 2),
-        Coordenate(0, -2),
+        const Coordenate(0, 2),
+        const Coordenate(0, -2),
 
         // Column 1
-        Coordenate(1, 2),
-        Coordenate(1, -2),
+        const Coordenate(1, 2),
+        const Coordenate(1, -2),
 
         // Column 2
-        Coordenate(2, 2),
-        Coordenate(2, 1),
-        Coordenate(2, 0),
-        Coordenate(2, -1),
-        Coordenate(2, -2),
+        const Coordenate(2, 2),
+        const Coordenate(2, 1),
+        const Coordenate(2, 0),
+        const Coordenate(2, -1),
+        const Coordenate(2, -2),
       ];
 
       pieceAttackMoves.sort(_compareCoordenate);
@@ -83,20 +83,20 @@ void main() {
       final piece = fakePiece.copyWith(attackArea: [Move.oneTileAnyDirection]);
       final pieceAttackMoves = piece.obtainAttackArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -1
-        Coordenate(-1, 1),
-        Coordenate(-1, 0),
-        Coordenate(-1, -1),
+        const Coordenate(-1, 1),
+        const Coordenate(-1, 0),
+        const Coordenate(-1, -1),
 
         // Column 0
-        Coordenate(0, 1),
-        Coordenate(0, -1),
+        const Coordenate(0, 1),
+        const Coordenate(0, -1),
 
         // Column 1
-        Coordenate(1, 1),
-        Coordenate(1, 0),
-        Coordenate(1, -1),
+        const Coordenate(1, 1),
+        const Coordenate(1, 0),
+        const Coordenate(1, -1),
       ];
 
       pieceAttackMoves.sort(_compareCoordenate);
@@ -116,22 +116,22 @@ void main() {
       final piece = fakePiece.copyWith(attackArea: [Move.horseMovement]);
       final pieceAttackMoves = piece.obtainAttackArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -2
-        Coordenate(-2, 1),
-        Coordenate(-2, -1),
+        const Coordenate(-2, 1),
+        const Coordenate(-2, -1),
 
         // Column -1
-        Coordenate(-1, 2),
-        Coordenate(-1, -2),
+        const Coordenate(-1, 2),
+        const Coordenate(-1, -2),
 
         // Column 1
-        Coordenate(1, 2),
-        Coordenate(1, -2),
+        const Coordenate(1, 2),
+        const Coordenate(1, -2),
 
         // Column 2
-        Coordenate(2, 1),
-        Coordenate(2, -1),
+        const Coordenate(2, 1),
+        const Coordenate(2, -1),
       ];
 
       pieceAttackMoves.sort(_compareCoordenate);
@@ -151,14 +151,14 @@ void main() {
       final piece = fakePiece.copyWith(attackArea: [Move.twoTileDiagonals]);
       final pieceAttackMoves = piece.obtainAttackArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -2
-        Coordenate(-2, 2),
-        Coordenate(-2, -2),
+        const Coordenate(-2, 2),
+        const Coordenate(-2, -2),
 
         // Column 2
-        Coordenate(2, 2),
-        Coordenate(2, -2),
+        const Coordenate(2, 2),
+        const Coordenate(2, -2),
       ];
 
       pieceAttackMoves.sort(_compareCoordenate);
@@ -176,14 +176,14 @@ void main() {
       final piece = fakePiece.copyWith(attackArea: [Move.oneTileDiagonals]);
       final pieceAttackMoves = piece.obtainAttackArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -1
-        Coordenate(-1, 1),
-        Coordenate(-1, -1),
+        const Coordenate(-1, 1),
+        const Coordenate(-1, -1),
 
         // Column 1
-        Coordenate(1, 1),
-        Coordenate(1, -1),
+        const Coordenate(1, 1),
+        const Coordenate(1, -1),
       ];
 
       pieceAttackMoves.sort(_compareCoordenate);
@@ -203,16 +203,16 @@ void main() {
       final piece = fakePiece.copyWith(attackArea: [Move.twoTileUPDL]);
       final pieceAttackMoves = piece.obtainAttackArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -2
-        Coordenate(-2, 0),
+        const Coordenate(-2, 0),
 
         // Column 0
-        Coordenate(0, 2),
-        Coordenate(0, -2),
+        const Coordenate(0, 2),
+        const Coordenate(0, -2),
 
         // Column 2
-        Coordenate(2, 0),
+        const Coordenate(2, 0),
       ];
 
       pieceAttackMoves.sort(_compareCoordenate);
@@ -230,16 +230,16 @@ void main() {
       final piece = fakePiece.copyWith(attackArea: [Move.oneTileUPDL]);
       final pieceAttackMoves = piece.obtainAttackArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -1
-        Coordenate(-1, 0),
+        const Coordenate(-1, 0),
 
         // Column 0
-        Coordenate(0, 1),
-        Coordenate(0, -1),
+        const Coordenate(0, 1),
+        const Coordenate(0, -1),
 
         // Column 1
-        Coordenate(1, 0),
+        const Coordenate(1, 0),
       ];
 
       pieceAttackMoves.sort(_compareCoordenate);
@@ -262,32 +262,32 @@ void main() {
       final piece = fakePiece.copyWith(moveArea: [Move.twoTileAnyDirection]);
       final pieceMovimentation = piece.obtainMovesArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -2
-        Coordenate(-2, 2),
-        Coordenate(-2, 1),
-        Coordenate(-2, 0),
-        Coordenate(-2, -1),
-        Coordenate(-2, -2),
+        const Coordenate(-2, 2),
+        const Coordenate(-2, 1),
+        const Coordenate(-2, 0),
+        const Coordenate(-2, -1),
+        const Coordenate(-2, -2),
 
         // Column -1
-        Coordenate(-1, 2),
-        Coordenate(-1, -2),
+        const Coordenate(-1, 2),
+        const Coordenate(-1, -2),
 
         // Column 0
-        Coordenate(0, 2),
-        Coordenate(0, -2),
+        const Coordenate(0, 2),
+        const Coordenate(0, -2),
 
         // Column 1
-        Coordenate(1, 2),
-        Coordenate(1, -2),
+        const Coordenate(1, 2),
+        const Coordenate(1, -2),
 
         // Column 2
-        Coordenate(2, 2),
-        Coordenate(2, 1),
-        Coordenate(2, 0),
-        Coordenate(2, -1),
-        Coordenate(2, -2),
+        const Coordenate(2, 2),
+        const Coordenate(2, 1),
+        const Coordenate(2, 0),
+        const Coordenate(2, -1),
+        const Coordenate(2, -2),
       ];
 
       pieceMovimentation.sort(_compareCoordenate);
@@ -305,20 +305,20 @@ void main() {
       final piece = fakePiece.copyWith(moveArea: [Move.oneTileAnyDirection]);
       final pieceMovimentation = piece.obtainMovesArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -1
-        Coordenate(-1, 1),
-        Coordenate(-1, 0),
-        Coordenate(-1, -1),
+        const Coordenate(-1, 1),
+        const Coordenate(-1, 0),
+        const Coordenate(-1, -1),
 
         // Column 0
-        Coordenate(0, 1),
-        Coordenate(0, -1),
+        const Coordenate(0, 1),
+        const Coordenate(0, -1),
 
         // Column 1
-        Coordenate(1, 1),
-        Coordenate(1, 0),
-        Coordenate(1, -1),
+        const Coordenate(1, 1),
+        const Coordenate(1, 0),
+        const Coordenate(1, -1),
       ];
 
       pieceMovimentation.sort(_compareCoordenate);
@@ -338,22 +338,22 @@ void main() {
       final piece = fakePiece.copyWith(moveArea: [Move.horseMovement]);
       final pieceMovimentation = piece.obtainMovesArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -2
-        Coordenate(-2, 1),
-        Coordenate(-2, -1),
+        const Coordenate(-2, 1),
+        const Coordenate(-2, -1),
 
         // Column -1
-        Coordenate(-1, 2),
-        Coordenate(-1, -2),
+        const Coordenate(-1, 2),
+        const Coordenate(-1, -2),
 
         // Column 1
-        Coordenate(1, 2),
-        Coordenate(1, -2),
+        const Coordenate(1, 2),
+        const Coordenate(1, -2),
 
         // Column 2
-        Coordenate(2, 1),
-        Coordenate(2, -1),
+        const Coordenate(2, 1),
+        const Coordenate(2, -1),
       ];
 
       pieceMovimentation.sort(_compareCoordenate);
@@ -373,14 +373,14 @@ void main() {
       final piece = fakePiece.copyWith(moveArea: [Move.twoTileDiagonals]);
       final pieceMovimentation = piece.obtainMovesArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -2
-        Coordenate(-2, 2),
-        Coordenate(-2, -2),
+        const Coordenate(-2, 2),
+        const Coordenate(-2, -2),
 
         // Column 2
-        Coordenate(2, 2),
-        Coordenate(2, -2),
+        const Coordenate(2, 2),
+        const Coordenate(2, -2),
       ];
 
       pieceMovimentation.sort(_compareCoordenate);
@@ -398,14 +398,14 @@ void main() {
       final piece = fakePiece.copyWith(moveArea: [Move.oneTileDiagonals]);
       final pieceMovimentation = piece.obtainMovesArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -1
-        Coordenate(-1, 1),
-        Coordenate(-1, -1),
+        const Coordenate(-1, 1),
+        const Coordenate(-1, -1),
 
         // Column 1
-        Coordenate(1, 1),
-        Coordenate(1, -1),
+        const Coordenate(1, 1),
+        const Coordenate(1, -1),
       ];
 
       pieceMovimentation.sort(_compareCoordenate);
@@ -425,16 +425,16 @@ void main() {
       final piece = fakePiece.copyWith(moveArea: [Move.twoTileUPDL]);
       final pieceMovimentation = piece.obtainMovesArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -2
-        Coordenate(-2, 0),
+        const Coordenate(-2, 0),
 
         // Column 0
-        Coordenate(0, 2),
-        Coordenate(0, -2),
+        const Coordenate(0, 2),
+        const Coordenate(0, -2),
 
         // Column 2
-        Coordenate(2, 0),
+        const Coordenate(2, 0),
       ];
 
       pieceMovimentation.sort(_compareCoordenate);
@@ -452,16 +452,16 @@ void main() {
       final piece = fakePiece.copyWith(moveArea: [Move.oneTileUPDL]);
       final pieceMovimentation = piece.obtainMovesArea(coordinate);
 
-      const expectedPieces = <Coordenate>[
+      final expectedPieces = <Coordenate>[
         // Column -1
-        Coordenate(-1, 0),
+        const Coordenate(-1, 0),
 
         // Column 0
-        Coordenate(0, 1),
-        Coordenate(0, -1),
+        const Coordenate(0, 1),
+        const Coordenate(0, -1),
 
         // Column 1
-        Coordenate(1, 0),
+        const Coordenate(1, 0),
       ];
 
       pieceMovimentation.sort(_compareCoordenate);

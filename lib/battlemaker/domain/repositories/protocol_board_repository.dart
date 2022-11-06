@@ -9,8 +9,8 @@ abstract class ProtocolBoardRepository {
   Either<MatchFailure, PieceEntity> obtainPieceInCoordenate(
       Coordenate coordenate);
 
-  /// Returns the removed piece
-  Either<MatchFailure, PieceEntity> removePieceInCoordenate(
+  /// Returns the removed entity
+  Either<MatchFailure, BoardEntity> removeEntityInCoordenate(
       Coordenate coordenate);
 
   /// Returns the piece new piece after the update
@@ -24,10 +24,16 @@ abstract class ProtocolBoardRepository {
 
   /// Will return the piece created in the [coordenate]
   Either<MatchFailure, PieceEntity> createPieceInCoordenate(
-      Coordenate coordenate, PieceEntity piece);
+    Coordenate coordenate,
+    PieceEntity piece,
+    String pieceOwnerId,
+  );
 
   /// Obtain all the coordenates in the board
   Either<MatchFailure, List<Coordenate>> obtainCoordenatesInTheBoard();
+
+  Either<MatchFailure, BoardEntity> obtainBoardEntityInCoordenate(
+      Coordenate coordenate);
 
   /// Obtain the entities in the board
   Either<MatchFailure, List<BoardEntity>> obtainEntitiesOfTheBoard();

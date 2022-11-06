@@ -141,8 +141,9 @@ void main() {
   });
 
   group('Should obtain the board state as expected', () {
-    const piece = BoardEntity(coordenate: Coordenate(0, 0), piece: fakePiece);
-    const user = UserStateEntity(playerId: '_', currentMana: 0);
+    const piece = BoardEntity(
+        coordenate: Coordenate(0, 0), piece: fakePiece, pieceOwnerId: 'test');
+    const user = UserStateEntity(playerId: 'test', currentMana: 0);
     const fakeReturn = ReturnGetMatchStatesUsecase(
       boardState: [piece],
       usersInTheMatchState: [user],

@@ -11,12 +11,18 @@ void main() {
   late ProtocolBoardSource source;
   const coordenate = Coordenate(2, 6);
   const list = <BoardEntity>[
-    BoardEntity(coordenate: Coordenate(6, 2), piece: medusa),
-    BoardEntity(coordenate: Coordenate(3, 1), piece: pegasus),
-    BoardEntity(coordenate: Coordenate(4, 3), piece: kraken),
-    BoardEntity(coordenate: Coordenate(5, 5), piece: hermes),
-    BoardEntity(coordenate: Coordenate(2, 3), piece: phoenix),
-    BoardEntity(coordenate: Coordenate(2, 6), piece: griffin),
+    BoardEntity(
+        coordenate: Coordenate(6, 2), piece: medusa, pieceOwnerId: 'test'),
+    BoardEntity(
+        coordenate: Coordenate(3, 1), piece: pegasus, pieceOwnerId: 'test'),
+    BoardEntity(
+        coordenate: Coordenate(4, 3), piece: kraken, pieceOwnerId: 'test'),
+    BoardEntity(
+        coordenate: Coordenate(5, 5), piece: hermes, pieceOwnerId: 'test'),
+    BoardEntity(
+        coordenate: Coordenate(2, 3), piece: phoenix, pieceOwnerId: 'test'),
+    BoardEntity(
+        coordenate: Coordenate(2, 6), piece: griffin, pieceOwnerId: 'test')
   ];
   setUp(() {
     source = ImplBoardSource(piecesInTheBoard: List.from(list));
@@ -24,14 +30,16 @@ void main() {
 
   group('Should create entity in list of board source as expected', () {
     test('Should add entity in list of entities of board', () {
-      const entity = BoardEntity(coordenate: Coordenate(3, 3), piece: griffin);
+      const entity = BoardEntity(
+          coordenate: Coordenate(3, 3), piece: griffin, pieceOwnerId: 'test');
       source.createEntityInCoordenate(entity);
       final response = source.getEntitiesInTheBoard();
       expect(response.asRightResult, contains(entity));
     });
 
     test('Should return the exact same piece that was added', () {
-      const entity = BoardEntity(coordenate: Coordenate(3, 3), piece: griffin);
+      const entity = BoardEntity(
+          coordenate: Coordenate(3, 3), piece: griffin, pieceOwnerId: 'test');
       final response = source.createEntityInCoordenate(entity);
       expect(response.asRightResult, entity);
     });
@@ -40,7 +48,8 @@ void main() {
         'Should return error while adding entity in list '
         'if already exists a entity in coordenate', () {
       // Already exists a entity in this coordenate
-      const entity = BoardEntity(coordenate: Coordenate(6, 2), piece: griffin);
+      const entity = BoardEntity(
+          coordenate: Coordenate(6, 2), piece: griffin, pieceOwnerId: 'test');
       final response = source.createEntityInCoordenate(entity);
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<EntityAlreadyExistsInCoordenate>());
@@ -55,8 +64,10 @@ void main() {
 
     test('Should get a determine piece in a coordenate', () {
       final response = source.getEntityInCoordenate(coordenate);
-      expect(response.asRightResult,
-          const BoardEntity(coordenate: coordenate, piece: griffin));
+      expect(
+          response.asRightResult,
+          const BoardEntity(
+              coordenate: coordenate, piece: griffin, pieceOwnerId: 'test'));
     });
 
     test(
@@ -72,11 +83,13 @@ void main() {
         () {
       final responseBefore = source.getEntityInCoordenate(coordenate);
       final before = responseBefore.asRightResult; // Before, a medusa piece
-      const oldEntity = BoardEntity(coordenate: coordenate, piece: griffin);
+      const oldEntity = BoardEntity(
+          coordenate: coordenate, piece: griffin, pieceOwnerId: 'test');
       expect(before, oldEntity);
 
       // Lets execute
-      const newEntity = BoardEntity(coordenate: coordenate, piece: kraken);
+      const newEntity = BoardEntity(
+          coordenate: coordenate, piece: kraken, pieceOwnerId: 'test');
       source.updateEntityInCoordenate(coordenate, newEntity);
 
       final responseAfter = source.getEntityInCoordenate(coordenate);
@@ -89,7 +102,8 @@ void main() {
         () {
       // Dosent exists a piece in coordenate to update
       const invalid = Coordenate(9, 9);
-      const entity = BoardEntity(coordenate: invalid, piece: griffin);
+      const entity = BoardEntity(
+          coordenate: invalid, piece: griffin, pieceOwnerId: 'test');
       final response = source.updateEntityInCoordenate(invalid, entity);
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<NoEntityFoundInCoordenate>());
@@ -108,7 +122,8 @@ void main() {
     );
 
     test('Should return exactly the removed entity', () {
-      const entity = BoardEntity(coordenate: coordenate, piece: griffin);
+      const entity = BoardEntity(
+          coordenate: coordenate, piece: griffin, pieceOwnerId: 'test');
       final response = source.removeEntityInCoordenate(coordenate);
       expect(response.asRightResult, equals(entity));
     });
@@ -121,11 +136,16 @@ void main() {
       source.removeEntityInCoordenate(coordenate);
 
       final expectedAfterList = <BoardEntity>[
-        const BoardEntity(coordenate: Coordenate(6, 2), piece: medusa),
-        const BoardEntity(coordenate: Coordenate(3, 1), piece: pegasus),
-        const BoardEntity(coordenate: Coordenate(4, 3), piece: kraken),
-        const BoardEntity(coordenate: Coordenate(5, 5), piece: hermes),
-        const BoardEntity(coordenate: Coordenate(2, 3), piece: phoenix),
+        const BoardEntity(
+            coordenate: Coordenate(6, 2), piece: medusa, pieceOwnerId: 'test'),
+        const BoardEntity(
+            coordenate: Coordenate(3, 1), piece: pegasus, pieceOwnerId: 'test'),
+        const BoardEntity(
+            coordenate: Coordenate(4, 3), piece: kraken, pieceOwnerId: 'test'),
+        const BoardEntity(
+            coordenate: Coordenate(5, 5), piece: hermes, pieceOwnerId: 'test'),
+        const BoardEntity(
+            coordenate: Coordenate(2, 3), piece: phoenix, pieceOwnerId: 'test'),
       ];
       final afterList = source.getEntitiesInTheBoard();
       expect(afterList.asRightResult, expectedAfterList);

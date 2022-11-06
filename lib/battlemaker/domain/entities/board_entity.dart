@@ -10,14 +10,14 @@ class BoardEntity extends Equatable {
   final PieceEntity piece;
 
   /// The id of the user that can control the piece
-  // final String pieceOwnerId;
+  final String pieceOwnerId;
 
   const BoardEntity({
     required this.coordenate,
     required this.piece,
-    // required this.pieceOwnerId,
+    required this.pieceOwnerId,
   });
 
   @override
-  List<Object> get props => [coordenate, piece];
+  List<Object> get props => [pieceOwnerId, coordenate, piece];
 }

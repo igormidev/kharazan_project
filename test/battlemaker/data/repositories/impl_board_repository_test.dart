@@ -20,8 +20,8 @@ void main() {
   const coordenate = Coordenate(0, 0);
 
   setUpAll(() {
-    registerFallbackValue(
-        const BoardEntity(coordenate: coordenate, piece: fakePiece));
+    registerFallbackValue(const BoardEntity(
+        coordenate: coordenate, piece: fakePiece, pieceOwnerId: 'test'));
     registerFallbackValue(const Coordenate(0, 0));
   });
 
@@ -34,18 +34,19 @@ void main() {
     test('Should create a piece entity using the source of the board', () {
       when(() => boardSource.createEntityInCoordenate(any()))
           .thenReturn(right(fakeBoardEntity));
-      final response =
-          boardRepository.createPieceInCoordenate(coordenate, fakePiece);
+      final response = boardRepository.createPieceInCoordenate(
+          coordenate, fakePiece, 'test');
       verify(() => boardSource.createEntityInCoordenate(any())).called(1);
       expect(response.asRightResult, fakeBoardEntity.piece);
     });
 
     test('Should use parameters passed in the functions', () {
-      const boardEntity = BoardEntity(coordenate: coordenate, piece: fakePiece);
+      const boardEntity = BoardEntity(
+          coordenate: coordenate, piece: fakePiece, pieceOwnerId: 'test');
       when(() => boardSource.createEntityInCoordenate(boardEntity))
           .thenReturn(right(fakeBoardEntity));
 
-      boardRepository.createPieceInCoordenate(coordenate, fakePiece);
+      boardRepository.createPieceInCoordenate(coordenate, fakePiece, 'test');
       verify(() => boardSource.createEntityInCoordenate(boardEntity)).called(1);
     });
 
@@ -53,8 +54,8 @@ void main() {
       when(() => boardSource.createEntityInCoordenate(any()))
           .thenReturn(left(MockMatchFailure()));
 
-      final response =
-          boardRepository.createPieceInCoordenate(coordenate, fakePiece);
+      final response = boardRepository.createPieceInCoordenate(
+          coordenate, fakePiece, 'test');
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<MockMatchFailure>());
     });
@@ -115,9 +116,9 @@ void main() {
         () {
       when(() => boardSource.removeEntityInCoordenate(any()))
           .thenReturn(right(fakeBoardEntity));
-      final response = boardRepository.removePieceInCoordenate(coordenate);
+      final response = boardRepository.removeEntityInCoordenate(coordenate);
       verify(() => boardSource.removeEntityInCoordenate(any())).called(1);
-      expect(response.asRightResult, fakeBoardEntity.piece);
+      expect(response.asRightResult, fakeBoardEntity);
     });
 
     test(
@@ -126,7 +127,7 @@ void main() {
       when(() => boardSource.removeEntityInCoordenate(coordenate))
           .thenReturn(right(fakeBoardEntity));
 
-      boardRepository.removePieceInCoordenate(coordenate);
+      boardRepository.removeEntityInCoordenate(coordenate);
       verify(() => boardSource.removeEntityInCoordenate(coordenate)).called(1);
     });
 
@@ -134,15 +135,17 @@ void main() {
       when(() => boardSource.removeEntityInCoordenate(any()))
           .thenReturn(left(MockMatchFailure()));
 
-      final response = boardRepository.removePieceInCoordenate(coordenate);
+      final response = boardRepository.removeEntityInCoordenate(coordenate);
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<MockMatchFailure>());
     });
   });
 
   group('Should update piece in coordenate as expected', () {
-    final boardEntity =
-        BoardEntity(coordenate: coordenate, piece: fakePiece.copyWith(life: 1));
+    final boardEntity = BoardEntity(
+        coordenate: coordenate,
+        piece: fakePiece.copyWith(life: 1),
+        pieceOwnerId: 'test');
     setUp(() {
       when(() => boardSource.getEntityInCoordenate(coordenate))
           .thenReturn(right(fakeBoardEntity));
@@ -200,6 +203,29 @@ void main() {
           .thenReturn(left(MockMatchFailure()));
 
       final response = boardRepository.obtainEntitiesOfTheBoard();
+      expect(response.isLeft(), isTrue);
+      expect(response.asLeftResult, isA<MockMatchFailure>());
+    });
+  });
+
+  group('Should return the entity as expected', () {
+    test('Should return the entity in the passed coordenate', () {
+      when(() => boardSource.getEntityInCoordenate(coordenate))
+          .thenReturn(right(fakeBoardEntity));
+
+      final response =
+          boardRepository.obtainBoardEntityInCoordenate(coordenate);
+      expect(response.isRight(), isTrue);
+      expect(response.asRightResult, isA<BoardEntity>());
+      expect(response.asRightResult, fakeBoardEntity);
+    });
+
+    test('Should return left error when data source returns a error', () {
+      when(() => boardSource.getEntityInCoordenate(coordenate))
+          .thenReturn(left(MockMatchFailure()));
+
+      final response =
+          boardRepository.obtainBoardEntityInCoordenate(coordenate);
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<MockMatchFailure>());
     });

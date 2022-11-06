@@ -21,10 +21,11 @@ class ImplChangePiecePositionUsecase
   ) {
     final coordenate = param.coordenates;
 
-    final removeResponse = _repository.removePieceInCoordenate(coordenate);
+    final removeResponse = _repository.removeEntityInCoordenate(coordenate);
     if (removeResponse.isLeft()) return removeResponse.asLeft();
-    final piece = removeResponse.asRightResult; // Removed piece
-    final moveResponse = _repository.createPieceInCoordenate(coordenate, piece);
+    final entity = removeResponse.asRightResult; // Removed entity
+    final moveResponse = _repository.createPieceInCoordenate(
+        coordenate, entity.piece, entity.pieceOwnerId);
     if (moveResponse.isLeft()) return moveResponse.asLeft();
 
     return right(VoidSucess());
