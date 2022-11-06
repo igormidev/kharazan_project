@@ -1,0 +1,599 @@
+import 'dart:convert';
+import 'dart:developer' as dev;
+
+import 'package:kharazan/core/extensions/boilerplate_extensions.dart';
+
+part 'log_templates.dart';
+part 'values/constants.dart';
+part 'color_logs.dart';
+part 'values/enums.dart';
+part 'log_type_model.dart';
+part 'values/extensions.dart';
+part 'stack_trace_formater.dart';
+
+class SandLog {
+  SandLog._internal();
+  static final SandLog _singleton = SandLog._internal();
+  static SandLog get instance => _singleton;
+
+  /// Here you can configure your [SandLog] functions will
+  /// print logs in terminal or not.
+  ///
+  /// This is useful because it's good to configure to
+  /// print logs or not based on whether the
+  /// application is in release or debug mode.
+  void setWillLog(bool willLog) {
+    _willLog = willLog;
+  }
+
+  static bool _willLog = true;
+
+  /// A ready-made [text] log template for errors with default red
+  /// [color] and ⛔ as the default [errorIcon] that has an optional
+  /// [header] with the title of the error and the possibility to log a [map].
+  static void error({
+    String? text,
+    Map<String, dynamic>? map,
+    String header = 'An error has occurred !',
+    LogColor color = LogColor.red,
+    String icon = '⛔',
+    int horizontalLenght = 80,
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    if (_willLog == false) return;
+    final logs = _generateStringAndMapLogs(text, map, header, color, icon);
+    if (error != null) logs.add(_generateErrorLogs(error, stackTrace, color));
+    logTemplateBuilder(logs, color: color, lenght: horizontalLenght);
+  }
+
+  static void info({
+    String? text,
+    Map<String, dynamic>? map,
+    String header = 'Info:',
+    LogColor color = LogColor.white,
+    String icon = '*️⃣',
+    int horizontalLenght = 80,
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    if (_willLog == false) return;
+    final logs = _generateStringAndMapLogs(text, map, header, color, icon);
+    if (error != null) logs.add(_generateErrorLogs(error, stackTrace, color));
+    logTemplateBuilder(logs, color: color, lenght: horizontalLenght);
+  }
+
+  static void warning({
+    String? text,
+    Map<String, dynamic>? map,
+    String header = 'Warning! be alert with this:',
+    LogColor color = LogColor.yellow,
+    String icon = '🔔',
+    int horizontalLenght = 80,
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    if (_willLog == false) return;
+    final logs = _generateStringAndMapLogs(text, map, header, color, icon);
+    if (error != null) logs.add(_generateErrorLogs(error, stackTrace, color));
+    logTemplateBuilder(logs, color: color, lenght: horizontalLenght);
+  }
+
+  static void success({
+    String? text,
+    Map<String, dynamic>? map,
+    String header = 'Uhul! Success! No bugs.',
+    LogColor color = LogColor.green,
+    String icon = '✅',
+    int horizontalLenght = 80,
+    Object? error,
+    StackTrace? stackTrace,
+  }) {
+    if (_willLog == false) return;
+    final logs = _generateStringAndMapLogs(text, map, header, color, icon);
+    if (error != null) logs.add(_generateErrorLogs(error, stackTrace, color));
+    logTemplateBuilder(logs, color: color, lenght: horizontalLenght);
+  }
+
+  static List<LogModel> _generateStringAndMapLogs(
+    String? message,
+    Map<String, dynamic>? model,
+    String header,
+    LogColor color,
+    String? icon,
+  ) {
+    if (message?.contains('\n') ?? false) {
+      message = message?.replaceAll('\n', '');
+    }
+    if (model == null && message == null) {
+      error(
+        text: ' YOU ARE TRYING TO LOG WITHOUT PASSING A TEXT OR MAP',
+        header: 'LOG ERROR',
+      );
+      assert(model == null && message == null);
+    }
+    final LogStringModel logHead =
+        LogStringModel.headler(header, color: color, icon: icon);
+    LogStringModel? text;
+    LogMapModel? map;
+
+    if (model != null) {
+      if (message == null) {
+        map = LogMapModel.bottom(model, color: color);
+      } else {
+        map = LogMapModel.middle(model, color: color);
+      }
+    }
+
+    if (message != null) {
+      text = LogStringModel.bottom(message, color: color);
+    }
+    List<LogModel> list = [
+      logHead,
+      if (map != null) map,
+      if (text != null) text,
+    ];
+    return list;
+  }
+
+  static LogModel _generateErrorLogs(
+    Object? error,
+    StackTrace? stackTrace,
+    LogColor color,
+  ) {
+    assert(
+      error == null && stackTrace != null,
+      'Can not have a stackTrace without a error',
+    );
+    assert(error == null, 'Can not have a null error');
+
+    if (error != null && stackTrace == null) {
+      return LogStringModel.bottom('$error', color: color);
+    }
+    return LogExceptionModel.bottom(
+      error: error!,
+      stackTrace: stackTrace!,
+      color: color,
+    );
+  }
+
+  /// Use this method as tempalte to build your custom log
+  /// with the combination of [LogModel].
+  ///
+  /// If the [color] parameter is not null, will make all [logModels] have
+  /// the same [color]. Otherwise, each [LogModel] will have the color
+  /// that was configured inside there.
+  ///
+  /// The horizontal size of the log is determined by the [lenght]parameter
+  /// that `can not be less then 70`.
+  static void logTemplateBuilder(
+    List<LogModel> logModels, {
+    LogColor? color,
+    int lenght = 80,
+  }) {
+    if (_willLog == false) return;
+    assert(lenght >= 70, 'Can not be less then 70');
+
+    // The text what will have a diferent color
+    final List<String> textsToMakeHighLightedl = [];
+
+    // Here is where we put the string that we will print.
+    List<String> templates = [];
+
+    // Here we do the logic to configure the color of the logs
+    // that will be used in the print process.
+    //
+    // If we have the color parameter, all logs will have that same color.
+    final List<LogModel> logModelsCastedToDesiredColor;
+    if (color != null) {
+      logModelsCastedToDesiredColor = logModels.map((model) {
+        return model.copyWith(color: color);
+      }).toList();
+    } else {
+      logModelsCastedToDesiredColor = logModels;
+    }
+
+    // Here i will fill my list of strings [templates] that will me printed with
+    // Strings that depend of the type of the abstract class [LogModel].
+    for (LogModel model in logModelsCastedToDesiredColor) {
+      String? template;
+      if (model is LogMapModel) {
+        textsToMakeHighLightedl.addAll(model.emphasisTexts);
+        template = _buildMapTemplate(model, lenght, model.borderType);
+      } else if (model is LogExceptionModel) {
+        template = _getStackTraceTemplate(model, lenght);
+      } else if (model is LogStringModel) {
+        textsToMakeHighLightedl.addAll(model.emphasisTexts);
+        template = _getStringTemplate(model, lenght);
+      }
+
+      if (template == null) return;
+
+      final resetColor = LogColor.resetColor.anciCode;
+      final taggedText = template.replaceAll('\n', (BREAKLINEFLAG + '\n'));
+      final splitedAndTaggedList = taggedText.split('\n');
+      final coloredText = splitedAndTaggedList.map((sentence) {
+        String text = sentence.replaceAll(BREAKLINEFLAG, '$resetColor\n');
+        if (text.contains(resetColor) == false) text += resetColor;
+        String colorText = model.color.anciCode + text;
+
+        textsToMakeHighLightedl.forEach((text) {
+          colorText = colorText.replaceAll(
+            text,
+            '${LogColor.white.anciCode}$text${model.color.anciCode}',
+          );
+        });
+
+        return colorText;
+      }).join();
+
+      templates.add(coloredText);
+    }
+    final text = templates.join();
+
+    dev.log(text);
+  }
+
+  static String _getStringTemplate(LogStringModel model, int lenght) {
+    // Using a MARKER, could be any value that would hardly appear in a text
+    //
+    // This is made because i need some caracter to replace later for the icon, and
+    // that place is the marker.
+    final text = model.icon == null ? model.text : '$ICON ${model.text}';
+    final border = model.borderType;
+    return _buildStringTemplate(text, lenght, border).replaceAll(
+      ICON,
+      '${model.icon}',
+    );
+  }
+
+  static String _getStackTraceTemplate(LogExceptionModel model, int lenght) {
+    String template = '';
+    final errorModel = LogStringModel('Error: ${model.error}');
+
+    final errorBorder = _getStackTopBorder(model.borderType);
+    final stackBorder = _getStackBottomBorder(model.borderType);
+
+    final text = errorModel.text;
+    final errorInText = _buildStringTemplate(text, lenght, errorBorder);
+    template += errorInText;
+
+    final stackModel = _buildStackTraceTemplate(model, lenght, stackBorder);
+    template += stackModel;
+    return template;
+  }
+
+  static LogBorderType _getStackTopBorder(LogBorderType border) {
+    switch (border) {
+      case LogBorderType.headler:
+        return LogBorderType.headler;
+      case LogBorderType.middle:
+        return LogBorderType.middle;
+      case LogBorderType.bottom:
+        return LogBorderType.middle;
+      case LogBorderType.single:
+        return LogBorderType.headler;
+    }
+  }
+
+  static LogBorderType _getStackBottomBorder(LogBorderType border) {
+    switch (border) {
+      case LogBorderType.headler:
+        return LogBorderType.middle;
+      case LogBorderType.middle:
+        return LogBorderType.middle;
+      case LogBorderType.bottom:
+        return LogBorderType.bottom;
+      case LogBorderType.single:
+        return LogBorderType.bottom;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+part of '../sandbox_core.dart';
+
+enum _EMethodTypes {
+  get('GET'),
+  patch('PATCH'),
+  delete('DELETE'),
+  post('POST');
+
+  final String name;
+  const _EMethodTypes(this.name);
+
+  bool get isAGetMethod => this == _EMethodTypes.get;
+}
+
+typedef OnError = void Function(HttpRequestException errorModel);
+typedef FromMapFunc<T> = T Function(Map<String, dynamic> map);
+
+class SandHttp implements Path, Method, Payload, NullableRequestHandler {
+  final _dio = Dio();
+  final _lock = sync.Lock();
+  SandHttp._internal(this._choosedType);
+
+  // ┌───────────────────────────────────────────────────────
+  // ├  Types of requests
+  // └───────────────────────────────────────────────────────
+
+  static Path get get => SandHttp._internal(_EMethodTypes.get);
+  static Path get post => SandHttp._internal(_EMethodTypes.post);
+  static Path get patch => SandHttp._internal(_EMethodTypes.patch);
+  static Path get delete => SandHttp._internal(_EMethodTypes.delete);
+
+  // ┌───────────────────────────────────────────────────────
+  // ├  The values for the request
+  // └───────────────────────────────────────────────────────
+
+  // The choosed type of request
+  final _EMethodTypes _choosedType;
+  String get _choosedMethod => _choosedType.name;
+
+  // The url of the request
+  late final String _path;
+
+  // The headler that will be in the request
+  final Map<String, dynamic> _requestHeadlers = {};
+
+  Map<String, dynamic> get _allHeadlers {
+    final defaultMap = _defaultConfiguration.baseHeadler ?? {};
+    final Map<String, dynamic> map = Map.from(defaultMap);
+    map.addAll(_requestHeadlers);
+    return map;
+  }
+
+  /// Http request query parameters that will be in the request
+  final Map<String, dynamic> _requestQueryParams = {};
+
+  Map<String, dynamic> get _allQueryParams {
+    final defaultMap = _defaultConfiguration.baseQueryParameters ?? {};
+    final Map<String, dynamic> map = Map.from(defaultMap);
+    map.addAll(_requestQueryParams);
+    return map;
+  }
+
+  /// The payload that will be passed as a body to the request `if not null`
+  Object? _requestOptionalPayload;
+
+  // ┌───────────────────────────────────────────────────────
+  // ├  Request configurations and handlers
+  // └───────────────────────────────────────────────────────
+
+  /// The dafault configuration used for each request if not changed
+  static SandRequestConfiguration _defaultConfiguration =
+      const SandRequestConfiguration();
+  static void setDefaultConfiguration(SandRequestConfiguration configuration) =>
+      _defaultConfiguration = configuration;
+
+  /// The function that will handle a error (can be null)
+  OnError? _onError;
+
+  // ┌───────────────────────────────────────────────────────
+  // ├  The methods that can be called by the user
+  // └───────────────────────────────────────────────────────
+
+  @override
+  Method atPath(String pathRequest) {
+    _path = pathRequest;
+    return this;
+  }
+
+  @override
+  Method addHeadler<T>(String name, T value) {
+    _requestHeadlers.addAll({name: value});
+    return this;
+  }
+
+  @override
+  Method addQueryParam<T>(String name, T value) {
+    _requestQueryParams.addAll({name: value});
+    return this;
+  }
+
+  @override
+  Payload addPayload(Object data) {
+    _requestOptionalPayload = data;
+    return this;
+  }
+
+  @override
+  NullableRequestHandler addOnError(onError) {
+    _onError = onError;
+    return this;
+  }
+
+  // ┌───────────────────────────────────────────────────────
+  // ├  Request methods
+  // └───────────────────────────────────────────────────────
+
+  @override
+  Future<void> execute() async {
+    if (_choosedType.isAGetMethod) {
+      throw Exception(
+          'Can\'t call [execute()] in a GET method because he doesn\'t have a return');
+    }
+
+    await _makeRequest();
+  }
+
+  @override
+  Future<T> getRawResponse<T>() async {
+    final response = await _makeRequest<T, T>();
+    return response as T;
+  }
+
+  @override
+  Future<T> getCastedResponse<T>(FromMapFunc<T> fromMapFunc) async {
+    final response = await _makeRequest<T, Map>();
+    return response as T;
+  }
+
+  @override
+  Future<List<T>> getCastedListResponse<T>(FromMapFunc<T> fromMapFunc) async {
+    final List<T>? response = await _makeRequest<List<T>, List>();
+    return response as List<T>;
+  }
+
+  Future<T?> _makeRequest<T, ExpectedRespoonseType>(
+      [FromMapFunc<T>? fromMapFunc]) async {
+    final path = _defaultConfiguration.basePath + _path;
+    final data = _requestOptionalPayload;
+
+    final RequestModel config = RequestModel(
+      path: path,
+      header: _allHeadlers,
+      queryParameters: _allQueryParams,
+      bodyOfPostRequest: _requestOptionalPayload,
+    );
+
+    return await _lock.synchronized(() async {
+      try {
+        final response = await request(_dio, path, _choosedMethod, data,
+            _allHeadlers, _allQueryParams, _defaultConfiguration);
+        try {
+          return _getObject<T>(fromMapFunc, response.data);
+        } catch (error, stack) {
+          final errorModel = HttpCastingFailure(response, error, stack);
+          return _manegeError<T>(errorModel, _onError);
+        }
+      } on RedirectException catch (redirectError, stackTrace) {
+        final errorModel = RedirectFailure(redirectError, stackTrace, config);
+        return _manegeError<T>(errorModel, _onError);
+      } on DioError catch (dioError, stackTrace) {
+        final errorModel = _manegeDioError(dioError, stackTrace);
+        return _manegeError<T>(errorModel, _onError);
+      } catch (error, stackTrace) {
+        final errorModel = HttpUnknownErrorFailure(error, stackTrace, config);
+        return _manegeError<T>(errorModel, _onError);
+      }
+    });
+  }
+}
+
+/// Class to manege the [Path] functions and options
+abstract class Path {
+  /// The url of the request
+  ///
+  /// Returns the [Method] class to customize the request
+  Method atPath(String path);
+}
+
+/// Class to manege the [Method] functions and options
+///
+/// Here you have the typical http functionality.
+/// For exemple, you can [addHeadler], [addQueryParam]
+/// or even [addPayload] in a post request.
+abstract class Method implements RequestHandler {
+  /// Add a headler configuration to the [SandHttp._requestHeadlers] that
+  /// will be used `with` the defaults headlers setted in [SandHttp.defaultConfiguration]
+  Method addHeadler<T>(String name, T value);
+
+  /// Add a query parameter configuration to the [SandHttp._requestQueryParams] that
+  /// will be used `with` the defaults query parameters setted in [SandHttp.defaultConfiguration]
+  Method addQueryParam<T>(String name, T value);
+
+  /// Add a headler configuration to the [SandHttp._requestOptionalPayload]
+  ///
+  /// You can only add `one` payload to a request, so when you call
+  /// this method you will end your requests method configuration
+  /// and will go to the execution phase.
+  Payload addPayload(Object data);
+}
+
+/// Class to manege the [Payload] functions and options
+/// (the abstract [RequestHandler] class extensions)
+abstract class Payload implements RequestHandler {}
+
+abstract class RequestHandler extends RequestProtocol {
+  @override
+  Future<T> getCastedResponse<T>(FromMapFunc<T> fromMapFunc);
+
+  @override
+  Future<T> getRawResponse<T>();
+
+  @override
+  Future<List<T>> getCastedListResponse<T>(FromMapFunc<T> fromMapFunc);
+}
+
+abstract class NullableRequestHandler extends RequestProtocol {}
+
+abstract class RequestProtocol extends Execute {
+
+
+  /// Will return from the model [T] by casting
+  /// the [Map] from of the api response with the [fromMapFunc]
+  /// to the desired model
+  ///
+  /// Use the [getRawResponse] if you want the original response
+  /// without any automatic cast.
+  ///
+
+  ///
+  /// If you `pass` a [addOnError], the return [T] will be null if a error
+  /// happends, and the error will be treated by the void callback [addOnError].
+  /// Otherwise, if you `don't pass` a [addOnError], the return [T] can't be
+  /// null and if a occurs it will `throw` a [HttpRequestException].
+  Future<T?> getCastedResponse<T>(FromMapFunc<T> fromMapFunc);
+
+  /// Will return a `list` of model [T] by casting the a [List] of [Map]
+  /// response from the api with by passing the [fromMapFunc] to each [Map]
+  /// inside the list.
+  ///
+  /// ## Where will the error be handled?
+  ///
+  /// If you `pass` a [addOnError], the return [T] will be null if a error
+  /// happends, and the error will be treated by the void callback [addOnError].
+  /// Otherwise, if you `don't pass` a [addOnError], the return [T] can't be
+  /// null and if a occurs it will `throw` a [HttpRequestException].
+  Future<List<T>?> getCastedListResponse<T>(FromMapFunc<T> fromMapFunc);
+
+  /// Will return the [T] object from the api
+  ///
+  /// If you are reciving a `Map<String, dynamic>` and will
+  /// cast it to a model in your application, use [getCastedResponse]
+  /// to automatically do the casting for you.
+  ///
+  /// ## Where will the error be handled?
+  ///
+  /// If you `pass` a [addOnError], the return [T] will be null if a error
+  /// happends, and the error will be treated by the void callback [addOnError].
+  /// Otherwise, if you `don't pass` a [addOnError], the return [T] can't be
+  /// null and if a occurs it will `throw` a [HttpRequestException].
+  Future<T?> getRawResponse<T>();
+}
+
+abstract class Execute<T> {
+  /// Will just execute the http request, without any return response.
+  ///
+  /// For exemple, is useful when you only want to make a post, that won't
+  /// have a response.
+  Future<T> execute();
+
+  /// What will happend when a error happend
+  ///
+  /// No error will be throwed. Instead, the [errorModel] will be passed
+  /// in the [onError] callback.
+  ///
+  /// ## Where will the error be handled?
+  /// If you put a [addOnError], when a error happen it won't throw more a error
+  /// but instead the [getCastedResponse] and [getRawResponse] `will have a
+  /// null value if a error happend`.
+  NullableRequestHandler addOnError(OnError onError);
+}
