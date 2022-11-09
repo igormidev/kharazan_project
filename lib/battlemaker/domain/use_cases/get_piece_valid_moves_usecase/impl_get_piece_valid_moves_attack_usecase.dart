@@ -22,14 +22,15 @@ class ImplGetPieceValidMovesAttackUsecase
 
     final matchResponse = _boardRepository.obtainCoordenatesInTheBoard();
     if (matchResponse.isLeft()) return matchResponse.asLeft();
-    final match = matchResponse.asRightResult;
+    final field = matchResponse.asRightResult;
 
     final pieceResponse = _boardRepository.obtainPieceInCoordenate(coordenate);
     if (pieceResponse.isLeft()) return pieceResponse.asLeft();
     final piece = pieceResponse.asRightResult;
 
-    final possibleAttackArea = piece.obtainMovesArea(param.coordenate);
-    final validAttackArea = getLeftJoinCoordenates(match, possibleAttackArea);
+    final possibleAttackArea = piece.obtainAttackArea(param.coordenate);
+    final validAttackArea =
+        getCoordenatesInsideLimits(field, possibleAttackArea);
     return right(validAttackArea);
   }
 }

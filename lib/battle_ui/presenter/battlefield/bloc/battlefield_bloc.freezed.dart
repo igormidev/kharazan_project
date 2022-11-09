@@ -18,33 +18,45 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BattlefieldEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() pieceSelected,
+    required TResult Function(PieceEntity piece, Coordenate coordenate)
+        pieceSelectedInCoordenate,
+    required TResult Function(List<BoardEntity> pieces) setPieces,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? pieceSelected,
+    TResult? Function(PieceEntity piece, Coordenate coordenate)?
+        pieceSelectedInCoordenate,
+    TResult? Function(List<BoardEntity> pieces)? setPieces,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? pieceSelected,
+    TResult Function(PieceEntity piece, Coordenate coordenate)?
+        pieceSelectedInCoordenate,
+    TResult Function(List<BoardEntity> pieces)? setPieces,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BattlefieldPieceSelected value) pieceSelected,
+    required TResult Function(_BattlefieldPieceSelected value)
+        pieceSelectedInCoordenate,
+    required TResult Function(_SetPieces value) setPieces,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_BattlefieldPieceSelected value)? pieceSelected,
+    TResult? Function(_BattlefieldPieceSelected value)?
+        pieceSelectedInCoordenate,
+    TResult? Function(_SetPieces value)? setPieces,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BattlefieldPieceSelected value)? pieceSelected,
+    TResult Function(_BattlefieldPieceSelected value)?
+        pieceSelectedInCoordenate,
+    TResult Function(_SetPieces value)? setPieces,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -74,6 +86,8 @@ abstract class _$$_BattlefieldPieceSelectedCopyWith<$Res> {
           _$_BattlefieldPieceSelected value,
           $Res Function(_$_BattlefieldPieceSelected) then) =
       __$$_BattlefieldPieceSelectedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PieceEntity piece, Coordenate coordenate});
 }
 
 /// @nodoc
@@ -83,52 +97,91 @@ class __$$_BattlefieldPieceSelectedCopyWithImpl<$Res>
   __$$_BattlefieldPieceSelectedCopyWithImpl(_$_BattlefieldPieceSelected _value,
       $Res Function(_$_BattlefieldPieceSelected) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? piece = null,
+    Object? coordenate = null,
+  }) {
+    return _then(_$_BattlefieldPieceSelected(
+      null == piece
+          ? _value.piece
+          : piece // ignore: cast_nullable_to_non_nullable
+              as PieceEntity,
+      null == coordenate
+          ? _value.coordenate
+          : coordenate // ignore: cast_nullable_to_non_nullable
+              as Coordenate,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
-  const _$_BattlefieldPieceSelected();
+  const _$_BattlefieldPieceSelected(this.piece, this.coordenate);
+
+  @override
+  final PieceEntity piece;
+  @override
+  final Coordenate coordenate;
 
   @override
   String toString() {
-    return 'BattlefieldEvent.pieceSelected()';
+    return 'BattlefieldEvent.pieceSelectedInCoordenate(piece: $piece, coordenate: $coordenate)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BattlefieldPieceSelected);
+            other is _$_BattlefieldPieceSelected &&
+            (identical(other.piece, piece) || other.piece == piece) &&
+            (identical(other.coordenate, coordenate) ||
+                other.coordenate == coordenate));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, piece, coordenate);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BattlefieldPieceSelectedCopyWith<_$_BattlefieldPieceSelected>
+      get copyWith => __$$_BattlefieldPieceSelectedCopyWithImpl<
+          _$_BattlefieldPieceSelected>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() pieceSelected,
+    required TResult Function(PieceEntity piece, Coordenate coordenate)
+        pieceSelectedInCoordenate,
+    required TResult Function(List<BoardEntity> pieces) setPieces,
   }) {
-    return pieceSelected();
+    return pieceSelectedInCoordenate(piece, coordenate);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? pieceSelected,
+    TResult? Function(PieceEntity piece, Coordenate coordenate)?
+        pieceSelectedInCoordenate,
+    TResult? Function(List<BoardEntity> pieces)? setPieces,
   }) {
-    return pieceSelected?.call();
+    return pieceSelectedInCoordenate?.call(piece, coordenate);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? pieceSelected,
+    TResult Function(PieceEntity piece, Coordenate coordenate)?
+        pieceSelectedInCoordenate,
+    TResult Function(List<BoardEntity> pieces)? setPieces,
     required TResult orElse(),
   }) {
-    if (pieceSelected != null) {
-      return pieceSelected();
+    if (pieceSelectedInCoordenate != null) {
+      return pieceSelectedInCoordenate(piece, coordenate);
     }
     return orElse();
   }
@@ -136,68 +189,246 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BattlefieldPieceSelected value) pieceSelected,
+    required TResult Function(_BattlefieldPieceSelected value)
+        pieceSelectedInCoordenate,
+    required TResult Function(_SetPieces value) setPieces,
   }) {
-    return pieceSelected(this);
+    return pieceSelectedInCoordenate(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_BattlefieldPieceSelected value)? pieceSelected,
+    TResult? Function(_BattlefieldPieceSelected value)?
+        pieceSelectedInCoordenate,
+    TResult? Function(_SetPieces value)? setPieces,
   }) {
-    return pieceSelected?.call(this);
+    return pieceSelectedInCoordenate?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BattlefieldPieceSelected value)? pieceSelected,
+    TResult Function(_BattlefieldPieceSelected value)?
+        pieceSelectedInCoordenate,
+    TResult Function(_SetPieces value)? setPieces,
     required TResult orElse(),
   }) {
-    if (pieceSelected != null) {
-      return pieceSelected(this);
+    if (pieceSelectedInCoordenate != null) {
+      return pieceSelectedInCoordenate(this);
     }
     return orElse();
   }
 }
 
 abstract class _BattlefieldPieceSelected implements BattlefieldEvent {
-  const factory _BattlefieldPieceSelected() = _$_BattlefieldPieceSelected;
+  const factory _BattlefieldPieceSelected(
+          final PieceEntity piece, final Coordenate coordenate) =
+      _$_BattlefieldPieceSelected;
+
+  PieceEntity get piece;
+  Coordenate get coordenate;
+  @JsonKey(ignore: true)
+  _$$_BattlefieldPieceSelectedCopyWith<_$_BattlefieldPieceSelected>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_SetPiecesCopyWith<$Res> {
+  factory _$$_SetPiecesCopyWith(
+          _$_SetPieces value, $Res Function(_$_SetPieces) then) =
+      __$$_SetPiecesCopyWithImpl<$Res>;
+  @useResult
+  $Res call({List<BoardEntity> pieces});
+}
+
+/// @nodoc
+class __$$_SetPiecesCopyWithImpl<$Res>
+    extends _$BattlefieldEventCopyWithImpl<$Res, _$_SetPieces>
+    implements _$$_SetPiecesCopyWith<$Res> {
+  __$$_SetPiecesCopyWithImpl(
+      _$_SetPieces _value, $Res Function(_$_SetPieces) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pieces = null,
+  }) {
+    return _then(_$_SetPieces(
+      null == pieces
+          ? _value._pieces
+          : pieces // ignore: cast_nullable_to_non_nullable
+              as List<BoardEntity>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_SetPieces implements _SetPieces {
+  const _$_SetPieces(final List<BoardEntity> pieces) : _pieces = pieces;
+
+  final List<BoardEntity> _pieces;
+  @override
+  List<BoardEntity> get pieces {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_pieces);
+  }
+
+  @override
+  String toString() {
+    return 'BattlefieldEvent.setPieces(pieces: $pieces)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_SetPieces &&
+            const DeepCollectionEquality().equals(other._pieces, _pieces));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_pieces));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SetPiecesCopyWith<_$_SetPieces> get copyWith =>
+      __$$_SetPiecesCopyWithImpl<_$_SetPieces>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(PieceEntity piece, Coordenate coordenate)
+        pieceSelectedInCoordenate,
+    required TResult Function(List<BoardEntity> pieces) setPieces,
+  }) {
+    return setPieces(pieces);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(PieceEntity piece, Coordenate coordenate)?
+        pieceSelectedInCoordenate,
+    TResult? Function(List<BoardEntity> pieces)? setPieces,
+  }) {
+    return setPieces?.call(pieces);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(PieceEntity piece, Coordenate coordenate)?
+        pieceSelectedInCoordenate,
+    TResult Function(List<BoardEntity> pieces)? setPieces,
+    required TResult orElse(),
+  }) {
+    if (setPieces != null) {
+      return setPieces(pieces);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_BattlefieldPieceSelected value)
+        pieceSelectedInCoordenate,
+    required TResult Function(_SetPieces value) setPieces,
+  }) {
+    return setPieces(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_BattlefieldPieceSelected value)?
+        pieceSelectedInCoordenate,
+    TResult? Function(_SetPieces value)? setPieces,
+  }) {
+    return setPieces?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_BattlefieldPieceSelected value)?
+        pieceSelectedInCoordenate,
+    TResult Function(_SetPieces value)? setPieces,
+    required TResult orElse(),
+  }) {
+    if (setPieces != null) {
+      return setPieces(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SetPieces implements BattlefieldEvent {
+  const factory _SetPieces(final List<BoardEntity> pieces) = _$_SetPieces;
+
+  List<BoardEntity> get pieces;
+  @JsonKey(ignore: true)
+  _$$_SetPiecesCopyWith<_$_SetPieces> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$BattlefieldState {
-  List<PieceEntity> get pieces => throw _privateConstructorUsedError;
+  List<BoardEntity> get pieces => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PieceEntity> pieces) initial,
+    required TResult Function(List<BoardEntity> pieces) initial,
+    required TResult Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)
+        pieceSelected,
+    required TResult Function(MatchFailure failure, List<BoardEntity> pieces)
+        withError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PieceEntity> pieces)? initial,
+    TResult? Function(List<BoardEntity> pieces)? initial,
+    TResult? Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)?
+        pieceSelected,
+    TResult? Function(MatchFailure failure, List<BoardEntity> pieces)?
+        withError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PieceEntity> pieces)? initial,
+    TResult Function(List<BoardEntity> pieces)? initial,
+    TResult Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)?
+        pieceSelected,
+    TResult Function(MatchFailure failure, List<BoardEntity> pieces)? withError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_BattlefieldInitialState value) initial,
+    required TResult Function(_PieceSelected value) pieceSelected,
+    required TResult Function(_WithError value) withError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_BattlefieldInitialState value)? initial,
+    TResult? Function(_PieceSelected value)? pieceSelected,
+    TResult? Function(_WithError value)? withError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_BattlefieldInitialState value)? initial,
+    TResult Function(_PieceSelected value)? pieceSelected,
+    TResult Function(_WithError value)? withError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -213,7 +444,7 @@ abstract class $BattlefieldStateCopyWith<$Res> {
           BattlefieldState value, $Res Function(BattlefieldState) then) =
       _$BattlefieldStateCopyWithImpl<$Res, BattlefieldState>;
   @useResult
-  $Res call({List<PieceEntity> pieces});
+  $Res call({List<BoardEntity> pieces});
 }
 
 /// @nodoc
@@ -235,7 +466,7 @@ class _$BattlefieldStateCopyWithImpl<$Res, $Val extends BattlefieldState>
       pieces: null == pieces
           ? _value.pieces
           : pieces // ignore: cast_nullable_to_non_nullable
-              as List<PieceEntity>,
+              as List<BoardEntity>,
     ) as $Val);
   }
 }
@@ -248,7 +479,7 @@ abstract class _$$_BattlefieldInitialStateCopyWith<$Res>
       __$$_BattlefieldInitialStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<PieceEntity> pieces});
+  $Res call({List<BoardEntity> pieces});
 }
 
 /// @nodoc
@@ -265,10 +496,10 @@ class __$$_BattlefieldInitialStateCopyWithImpl<$Res>
     Object? pieces = null,
   }) {
     return _then(_$_BattlefieldInitialState(
-      null == pieces
+      pieces: null == pieces
           ? _value._pieces
           : pieces // ignore: cast_nullable_to_non_nullable
-              as List<PieceEntity>,
+              as List<BoardEntity>,
     ));
   }
 }
@@ -276,12 +507,12 @@ class __$$_BattlefieldInitialStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_BattlefieldInitialState implements _BattlefieldInitialState {
-  const _$_BattlefieldInitialState(final List<PieceEntity> pieces)
+  const _$_BattlefieldInitialState({required final List<BoardEntity> pieces})
       : _pieces = pieces;
 
-  final List<PieceEntity> _pieces;
+  final List<BoardEntity> _pieces;
   @override
-  List<PieceEntity> get pieces {
+  List<BoardEntity> get pieces {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pieces);
   }
@@ -314,7 +545,12 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PieceEntity> pieces) initial,
+    required TResult Function(List<BoardEntity> pieces) initial,
+    required TResult Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)
+        pieceSelected,
+    required TResult Function(MatchFailure failure, List<BoardEntity> pieces)
+        withError,
   }) {
     return initial(pieces);
   }
@@ -322,7 +558,12 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PieceEntity> pieces)? initial,
+    TResult? Function(List<BoardEntity> pieces)? initial,
+    TResult? Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)?
+        pieceSelected,
+    TResult? Function(MatchFailure failure, List<BoardEntity> pieces)?
+        withError,
   }) {
     return initial?.call(pieces);
   }
@@ -330,7 +571,11 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PieceEntity> pieces)? initial,
+    TResult Function(List<BoardEntity> pieces)? initial,
+    TResult Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)?
+        pieceSelected,
+    TResult Function(MatchFailure failure, List<BoardEntity> pieces)? withError,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -343,6 +588,8 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_BattlefieldInitialState value) initial,
+    required TResult Function(_PieceSelected value) pieceSelected,
+    required TResult Function(_WithError value) withError,
   }) {
     return initial(this);
   }
@@ -351,6 +598,8 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_BattlefieldInitialState value)? initial,
+    TResult? Function(_PieceSelected value)? pieceSelected,
+    TResult? Function(_WithError value)? withError,
   }) {
     return initial?.call(this);
   }
@@ -359,6 +608,8 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_BattlefieldInitialState value)? initial,
+    TResult Function(_PieceSelected value)? pieceSelected,
+    TResult Function(_WithError value)? withError,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -369,13 +620,386 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
 }
 
 abstract class _BattlefieldInitialState implements BattlefieldState {
-  const factory _BattlefieldInitialState(final List<PieceEntity> pieces) =
-      _$_BattlefieldInitialState;
+  const factory _BattlefieldInitialState(
+      {required final List<BoardEntity> pieces}) = _$_BattlefieldInitialState;
 
   @override
-  List<PieceEntity> get pieces;
+  List<BoardEntity> get pieces;
   @override
   @JsonKey(ignore: true)
   _$$_BattlefieldInitialStateCopyWith<_$_BattlefieldInitialState>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_PieceSelectedCopyWith<$Res>
+    implements $BattlefieldStateCopyWith<$Res> {
+  factory _$$_PieceSelectedCopyWith(
+          _$_PieceSelected value, $Res Function(_$_PieceSelected) then) =
+      __$$_PieceSelectedCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<Coordenate> possiblePieceMovementArea,
+      List<Coordenate> possiblePieceAttackArea,
+      List<BoardEntity> pieces});
+}
+
+/// @nodoc
+class __$$_PieceSelectedCopyWithImpl<$Res>
+    extends _$BattlefieldStateCopyWithImpl<$Res, _$_PieceSelected>
+    implements _$$_PieceSelectedCopyWith<$Res> {
+  __$$_PieceSelectedCopyWithImpl(
+      _$_PieceSelected _value, $Res Function(_$_PieceSelected) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? possiblePieceMovementArea = null,
+    Object? possiblePieceAttackArea = null,
+    Object? pieces = null,
+  }) {
+    return _then(_$_PieceSelected(
+      possiblePieceMovementArea: null == possiblePieceMovementArea
+          ? _value._possiblePieceMovementArea
+          : possiblePieceMovementArea // ignore: cast_nullable_to_non_nullable
+              as List<Coordenate>,
+      possiblePieceAttackArea: null == possiblePieceAttackArea
+          ? _value._possiblePieceAttackArea
+          : possiblePieceAttackArea // ignore: cast_nullable_to_non_nullable
+              as List<Coordenate>,
+      pieces: null == pieces
+          ? _value._pieces
+          : pieces // ignore: cast_nullable_to_non_nullable
+              as List<BoardEntity>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_PieceSelected implements _PieceSelected {
+  const _$_PieceSelected(
+      {required final List<Coordenate> possiblePieceMovementArea,
+      required final List<Coordenate> possiblePieceAttackArea,
+      required final List<BoardEntity> pieces})
+      : _possiblePieceMovementArea = possiblePieceMovementArea,
+        _possiblePieceAttackArea = possiblePieceAttackArea,
+        _pieces = pieces;
+
+  final List<Coordenate> _possiblePieceMovementArea;
+  @override
+  List<Coordenate> get possiblePieceMovementArea {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_possiblePieceMovementArea);
+  }
+
+  final List<Coordenate> _possiblePieceAttackArea;
+  @override
+  List<Coordenate> get possiblePieceAttackArea {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_possiblePieceAttackArea);
+  }
+
+  final List<BoardEntity> _pieces;
+  @override
+  List<BoardEntity> get pieces {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_pieces);
+  }
+
+  @override
+  String toString() {
+    return 'BattlefieldState.pieceSelected(possiblePieceMovementArea: $possiblePieceMovementArea, possiblePieceAttackArea: $possiblePieceAttackArea, pieces: $pieces)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_PieceSelected &&
+            const DeepCollectionEquality().equals(
+                other._possiblePieceMovementArea, _possiblePieceMovementArea) &&
+            const DeepCollectionEquality().equals(
+                other._possiblePieceAttackArea, _possiblePieceAttackArea) &&
+            const DeepCollectionEquality().equals(other._pieces, _pieces));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_possiblePieceMovementArea),
+      const DeepCollectionEquality().hash(_possiblePieceAttackArea),
+      const DeepCollectionEquality().hash(_pieces));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PieceSelectedCopyWith<_$_PieceSelected> get copyWith =>
+      __$$_PieceSelectedCopyWithImpl<_$_PieceSelected>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<BoardEntity> pieces) initial,
+    required TResult Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)
+        pieceSelected,
+    required TResult Function(MatchFailure failure, List<BoardEntity> pieces)
+        withError,
+  }) {
+    return pieceSelected(
+        possiblePieceMovementArea, possiblePieceAttackArea, pieces);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<BoardEntity> pieces)? initial,
+    TResult? Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)?
+        pieceSelected,
+    TResult? Function(MatchFailure failure, List<BoardEntity> pieces)?
+        withError,
+  }) {
+    return pieceSelected?.call(
+        possiblePieceMovementArea, possiblePieceAttackArea, pieces);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<BoardEntity> pieces)? initial,
+    TResult Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)?
+        pieceSelected,
+    TResult Function(MatchFailure failure, List<BoardEntity> pieces)? withError,
+    required TResult orElse(),
+  }) {
+    if (pieceSelected != null) {
+      return pieceSelected(
+          possiblePieceMovementArea, possiblePieceAttackArea, pieces);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_BattlefieldInitialState value) initial,
+    required TResult Function(_PieceSelected value) pieceSelected,
+    required TResult Function(_WithError value) withError,
+  }) {
+    return pieceSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_BattlefieldInitialState value)? initial,
+    TResult? Function(_PieceSelected value)? pieceSelected,
+    TResult? Function(_WithError value)? withError,
+  }) {
+    return pieceSelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_BattlefieldInitialState value)? initial,
+    TResult Function(_PieceSelected value)? pieceSelected,
+    TResult Function(_WithError value)? withError,
+    required TResult orElse(),
+  }) {
+    if (pieceSelected != null) {
+      return pieceSelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _PieceSelected implements BattlefieldState {
+  const factory _PieceSelected(
+      {required final List<Coordenate> possiblePieceMovementArea,
+      required final List<Coordenate> possiblePieceAttackArea,
+      required final List<BoardEntity> pieces}) = _$_PieceSelected;
+
+  List<Coordenate> get possiblePieceMovementArea;
+  List<Coordenate> get possiblePieceAttackArea;
+  @override
+  List<BoardEntity> get pieces;
+  @override
+  @JsonKey(ignore: true)
+  _$$_PieceSelectedCopyWith<_$_PieceSelected> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_WithErrorCopyWith<$Res>
+    implements $BattlefieldStateCopyWith<$Res> {
+  factory _$$_WithErrorCopyWith(
+          _$_WithError value, $Res Function(_$_WithError) then) =
+      __$$_WithErrorCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({MatchFailure failure, List<BoardEntity> pieces});
+}
+
+/// @nodoc
+class __$$_WithErrorCopyWithImpl<$Res>
+    extends _$BattlefieldStateCopyWithImpl<$Res, _$_WithError>
+    implements _$$_WithErrorCopyWith<$Res> {
+  __$$_WithErrorCopyWithImpl(
+      _$_WithError _value, $Res Function(_$_WithError) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? failure = null,
+    Object? pieces = null,
+  }) {
+    return _then(_$_WithError(
+      failure: null == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as MatchFailure,
+      pieces: null == pieces
+          ? _value._pieces
+          : pieces // ignore: cast_nullable_to_non_nullable
+              as List<BoardEntity>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_WithError implements _WithError {
+  const _$_WithError(
+      {required this.failure, required final List<BoardEntity> pieces})
+      : _pieces = pieces;
+
+  @override
+  final MatchFailure failure;
+  final List<BoardEntity> _pieces;
+  @override
+  List<BoardEntity> get pieces {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_pieces);
+  }
+
+  @override
+  String toString() {
+    return 'BattlefieldState.withError(failure: $failure, pieces: $pieces)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_WithError &&
+            (identical(other.failure, failure) || other.failure == failure) &&
+            const DeepCollectionEquality().equals(other._pieces, _pieces));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, failure, const DeepCollectionEquality().hash(_pieces));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_WithErrorCopyWith<_$_WithError> get copyWith =>
+      __$$_WithErrorCopyWithImpl<_$_WithError>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(List<BoardEntity> pieces) initial,
+    required TResult Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)
+        pieceSelected,
+    required TResult Function(MatchFailure failure, List<BoardEntity> pieces)
+        withError,
+  }) {
+    return withError(failure, pieces);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(List<BoardEntity> pieces)? initial,
+    TResult? Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)?
+        pieceSelected,
+    TResult? Function(MatchFailure failure, List<BoardEntity> pieces)?
+        withError,
+  }) {
+    return withError?.call(failure, pieces);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(List<BoardEntity> pieces)? initial,
+    TResult Function(List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea, List<BoardEntity> pieces)?
+        pieceSelected,
+    TResult Function(MatchFailure failure, List<BoardEntity> pieces)? withError,
+    required TResult orElse(),
+  }) {
+    if (withError != null) {
+      return withError(failure, pieces);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_BattlefieldInitialState value) initial,
+    required TResult Function(_PieceSelected value) pieceSelected,
+    required TResult Function(_WithError value) withError,
+  }) {
+    return withError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_BattlefieldInitialState value)? initial,
+    TResult? Function(_PieceSelected value)? pieceSelected,
+    TResult? Function(_WithError value)? withError,
+  }) {
+    return withError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_BattlefieldInitialState value)? initial,
+    TResult Function(_PieceSelected value)? pieceSelected,
+    TResult Function(_WithError value)? withError,
+    required TResult orElse(),
+  }) {
+    if (withError != null) {
+      return withError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _WithError implements BattlefieldState {
+  const factory _WithError(
+      {required final MatchFailure failure,
+      required final List<BoardEntity> pieces}) = _$_WithError;
+
+  MatchFailure get failure;
+  @override
+  List<BoardEntity> get pieces;
+  @override
+  @JsonKey(ignore: true)
+  _$$_WithErrorCopyWith<_$_WithError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

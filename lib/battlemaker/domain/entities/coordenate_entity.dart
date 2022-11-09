@@ -7,7 +7,7 @@ class Coordenate extends Equatable {
   const Coordenate(this.axisX, this.axisY);
 
   @override
-  String toString() => '$axisX $axisY';
+  String toString() => '(${axisX}x$axisY)';
 
   factory Coordenate.fromString(String text) {
     text = text.replaceAll(' ', '');

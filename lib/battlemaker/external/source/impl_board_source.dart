@@ -6,8 +6,12 @@ import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 
 class ImplBoardSource extends ProtocolBoardSource {
   final List<BoardEntity> _entitiesInTheBoard;
-  const ImplBoardSource({required List<BoardEntity> piecesInTheBoard})
-      : _entitiesInTheBoard = piecesInTheBoard;
+  final List<Coordenate> _fieldLimits;
+  const ImplBoardSource({
+    required List<BoardEntity> piecesInTheBoard,
+    required List<Coordenate> fieldLimits,
+  })  : _entitiesInTheBoard = piecesInTheBoard,
+        _fieldLimits = fieldLimits;
 
   @override
   Either<MatchFailure, BoardEntity> createEntityInCoordenate(
@@ -59,7 +63,12 @@ class ImplBoardSource extends ProtocolBoardSource {
 
   @override
   Either<MatchFailure, List<BoardEntity>> getEntitiesInTheBoard() {
-    return right(_entitiesInTheBoard);
+    return right(List.from(_entitiesInTheBoard));
+  }
+
+  @override
+  Either<MatchFailure, List<Coordenate>> getFieldLimits() {
+    return right(List.from(_fieldLimits));
   }
 }
 

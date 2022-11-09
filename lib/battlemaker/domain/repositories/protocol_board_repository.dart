@@ -36,5 +36,5 @@ abstract class ProtocolBoardRepository {
       Coordenate coordenate);
 
   /// Obtain the entities in the board
-  Either<MatchFailure, List<BoardEntity>> obtainEntitiesOfTheBoard();
+  Either<MatchFailure, List<BoardEntity>> obtainEntitiesInTheBoard();
 }

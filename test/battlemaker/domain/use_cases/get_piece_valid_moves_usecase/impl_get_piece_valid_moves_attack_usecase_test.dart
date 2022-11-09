@@ -47,7 +47,7 @@ void main() {
     });
 
     test('Should obtain the attack area from the piece function', () async {
-      when(() => pieceMock.obtainMovesArea(param.coordenate))
+      when(() => pieceMock.obtainAttackArea(param.coordenate))
           .thenReturn(<Coordenate>[const Coordenate(0, 0)]);
 
       when(() => repository.obtainCoordenatesInTheBoard())
@@ -58,7 +58,7 @@ void main() {
       await usecase(param);
 
       // Needs to be exactly the same coordinate of the param
-      verify(() => pieceMock.obtainMovesArea(param.coordenate)).called(1);
+      verify(() => pieceMock.obtainAttackArea(param.coordenate)).called(1);
     });
   });
 

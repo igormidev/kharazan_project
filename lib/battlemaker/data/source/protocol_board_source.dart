@@ -19,4 +19,6 @@ abstract class ProtocolBoardSource {
       Coordenate coordenates);
 
   Either<MatchFailure, List<BoardEntity>> getEntitiesInTheBoard();
+
+  Either<MatchFailure, List<Coordenate>> getFieldLimits();
 }
