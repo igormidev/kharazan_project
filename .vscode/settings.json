@@ -1,0 +1,9 @@
+{
+    "files.exclude": {
+      "**/*.freezed.dart": true,
+      "**/*.p.dart": true,
+      "**/*.w.dart": true,
+      "**/*.g.dart": true,
+    },
+    "java.configuration.updateBuildConfiguration": "automatic",
+}

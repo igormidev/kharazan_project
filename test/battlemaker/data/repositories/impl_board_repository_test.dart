@@ -191,7 +191,7 @@ void main() {
     test('Using the data source, hould return all entities of the match', () {
       when(() => boardSource.getEntitiesInTheBoard())
           .thenReturn(right(<BoardEntity>[fakeBoardEntity]));
-      final response = boardRepository.obtainEntitiesOfTheBoard();
+      final response = boardRepository.obtainEntitiesInTheBoard();
       verify(() => boardSource.getEntitiesInTheBoard()).called(1);
 
       expect(response.isRight(), isTrue);
@@ -202,7 +202,7 @@ void main() {
       when(() => boardSource.getEntitiesInTheBoard())
           .thenReturn(left(MockMatchFailure()));
 
-      final response = boardRepository.obtainEntitiesOfTheBoard();
+      final response = boardRepository.obtainEntitiesInTheBoard();
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<MockMatchFailure>());
     });

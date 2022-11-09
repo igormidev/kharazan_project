@@ -33,7 +33,7 @@ void main() {
   });
 
   test('Should obtain the match states as expected', () async {
-    when(() => boardRepository.obtainEntitiesOfTheBoard())
+    when(() => boardRepository.obtainEntitiesInTheBoard())
         .thenReturn(right(<BoardEntity>[fakeBoardEntity]));
     when(() => matchRepository.getStateOfUsersOfMatch())
         .thenReturn(right(<UserStateEntity>[fakeUserState]));
@@ -45,17 +45,17 @@ void main() {
   });
 
   test('Should use the repository that obtains the board entities', () async {
-    when(() => boardRepository.obtainEntitiesOfTheBoard())
+    when(() => boardRepository.obtainEntitiesInTheBoard())
         .thenReturn(right(<BoardEntity>[fakeBoardEntity]));
     when(() => matchRepository.getStateOfUsersOfMatch())
         .thenReturn(right(<UserStateEntity>[fakeUserState]));
 
     await getMatchStatesUsecase();
-    verify(() => boardRepository.obtainEntitiesOfTheBoard()).called(1);
+    verify(() => boardRepository.obtainEntitiesInTheBoard()).called(1);
   });
 
   test('Should use the repository that obtains the state of users', () async {
-    when(() => boardRepository.obtainEntitiesOfTheBoard())
+    when(() => boardRepository.obtainEntitiesInTheBoard())
         .thenReturn(right(<BoardEntity>[fakeBoardEntity]));
     when(() => matchRepository.getStateOfUsersOfMatch())
         .thenReturn(right(<UserStateEntity>[fakeUserState]));
@@ -68,7 +68,7 @@ void main() {
     test(
         'Should return the error of the repository '
         'when obtaining the entities', () async {
-      when(() => boardRepository.obtainEntitiesOfTheBoard())
+      when(() => boardRepository.obtainEntitiesInTheBoard())
           .thenReturn(left(MockMatchFailure()));
       when(() => matchRepository.getStateOfUsersOfMatch())
           .thenReturn(right(<UserStateEntity>[]));
@@ -82,7 +82,7 @@ void main() {
     test(
         'Should return the error of the repository '
         'when obtaining the users state of the match', () async {
-      when(() => boardRepository.obtainEntitiesOfTheBoard())
+      when(() => boardRepository.obtainEntitiesInTheBoard())
           .thenReturn(right(<BoardEntity>[]));
       when(() => matchRepository.getStateOfUsersOfMatch())
           .thenReturn(left(MockMatchFailure()));
@@ -90,7 +90,7 @@ void main() {
       final response = await getMatchStatesUsecase();
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<MockMatchFailure>());
-      verify(() => boardRepository.obtainEntitiesOfTheBoard()).called(1);
+      verify(() => boardRepository.obtainEntitiesInTheBoard()).called(1);
     });
   });
 }

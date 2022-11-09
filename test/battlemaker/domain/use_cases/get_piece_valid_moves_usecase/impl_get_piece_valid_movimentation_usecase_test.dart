@@ -97,4 +97,6 @@ void main() {
       verify(() => repository.obtainCoordenatesInTheBoard()).called(1);
     });
   });
+
+  group('Should remove coordenates that arent in the board', () {});
 }

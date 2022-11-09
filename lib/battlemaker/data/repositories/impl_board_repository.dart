@@ -28,11 +28,10 @@ class ImplBoardRepository implements ProtocolBoardRepository {
 
   @override
   Either<MatchFailure, List<Coordenate>> obtainCoordenatesInTheBoard() {
-    final getEntitiesResponse = _boardDataSource.getEntitiesInTheBoard();
+    final getEntitiesResponse = _boardDataSource.getFieldLimits();
 
     if (getEntitiesResponse.isLeft()) return getEntitiesResponse.asLeft();
-    return getEntitiesResponse
-        .castRight((entities) => entities.map((e) => e.coordenate).toList());
+    return getEntitiesResponse;
   }
 
   @override
@@ -77,7 +76,7 @@ class ImplBoardRepository implements ProtocolBoardRepository {
   }
 
   @override
-  Either<MatchFailure, List<BoardEntity>> obtainEntitiesOfTheBoard() {
+  Either<MatchFailure, List<BoardEntity>> obtainEntitiesInTheBoard() {
     final getEntitiesResponse = _boardDataSource.getEntitiesInTheBoard();
 
     if (getEntitiesResponse.isLeft()) return getEntitiesResponse.asLeft();

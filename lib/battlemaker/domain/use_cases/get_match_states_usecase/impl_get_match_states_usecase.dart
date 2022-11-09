@@ -19,7 +19,7 @@ class ImplGetMatchStatesUsecase implements ProtocolGetMatchStatesUsecase {
 
   @override
   FutureOr<Either<MatchFailure, ReturnGetMatchStatesUsecase>> call() {
-    final entitiesResponse = _boardRepository.obtainEntitiesOfTheBoard();
+    final entitiesResponse = _boardRepository.obtainEntitiesInTheBoard();
     if (entitiesResponse.isLeft()) return entitiesResponse.asLeft();
     final entitiesInTheGame = entitiesResponse.asRightResult;
 

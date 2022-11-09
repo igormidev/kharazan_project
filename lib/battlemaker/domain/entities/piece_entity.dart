@@ -27,9 +27,8 @@ class PieceEntity extends Equatable {
   bool get pieceIsAlive => life > 0;
   List<Move> get attackArea => _attackArea;
   List<Move> get moveArea => _moveArea;
-  String get lowerName => name.toLowerCase();
-  String get whiteDisplayImage => 'assets/pieces/${lowerName}_white.png';
-  String get blackDisplayImage => 'assets/pieces/${lowerName}_black.png';
+  String get whiteDisplayImage => 'assets/pieces/${name}_white.png';
+  String get blackDisplayImage => 'assets/pieces/${name}_black.png';
 
   List<Coordenate> obtainMovesArea(Coordenate refCoordenate) =>
       _obtainPossibleMovesByReferenceCoordenate(refCoordenate, moveArea);
