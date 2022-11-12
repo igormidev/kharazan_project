@@ -50,7 +50,10 @@ void main() {
         'if already exists a entity in coordenate', () {
       // Already exists a entity in this coordenate
       const entity = BoardEntity(
-          coordenate: Coordenate(6, 2), piece: griffin, pieceOwnerId: 'test');
+        coordenate: Coordenate(6, 2),
+        piece: griffin,
+        pieceOwnerId: 'test',
+      );
       final response = source.createEntityInCoordenate(entity);
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<EntityAlreadyExistsInCoordenate>());
