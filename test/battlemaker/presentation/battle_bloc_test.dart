@@ -192,7 +192,7 @@ void main() {
   group('Should geet piece valid movimentation as expected', () {
     const coordenate = Coordenate(0, 0);
     const moveParam = GetPieceValidMovesParam(coordenate: coordenate);
-    final fakeResult = [const Coordenate(5, 5), const Coordenate(7, 7)];
+    const fakeResult = [Coordenate(5, 5), Coordenate(7, 7)];
 
     test('Should return the coordenates that came from the usecase', () async {
       when(() => getPieceValidMoves(moveParam))
@@ -212,7 +212,7 @@ void main() {
   group('Should geet piece valid attacks moves as expected', () {
     const coordenate = Coordenate(0, 0);
     const moveParam = GetPieceValidMovesParam(coordenate: coordenate);
-    final fakeResult = [const Coordenate(5, 5), const Coordenate(7, 7)];
+    const fakeResult = [Coordenate(5, 5), Coordenate(7, 7)];
 
     test('Should return the coordenates that came from the usecase', () async {
       when(() => getPieceValidMoves(moveParam))

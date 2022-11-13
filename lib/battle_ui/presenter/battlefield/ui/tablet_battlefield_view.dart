@@ -48,6 +48,7 @@ class TabletBattlefieldView extends StatelessWidget {
           //     ),
           //   ),
           // ),
+
           SizedBox(height: 20),
           Center(
             child: StageCoordenateGrid(

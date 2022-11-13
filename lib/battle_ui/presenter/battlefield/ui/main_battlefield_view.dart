@@ -41,10 +41,12 @@ class MainBattlefieldView extends StatelessWidget {
       fieldLimits: const ColiseumMap().stageLimits,
     );
 
-    const matchSource = ImplMatchSource(usersInTheGame: [
+    const usersInTheGame = [
       UserStateEntity(playerId: 'play1', currentMana: 50),
       UserStateEntity(playerId: 'bot', currentMana: 50),
-    ]);
+    ];
+
+    const matchSource = ImplMatchSource(usersInTheGame: usersInTheGame);
 
     final ProtocolBoardRepository boardRepo = ImplBoardRepository(boardSource);
     const ProtocolMatchStateRepository matchRepo =
@@ -92,12 +94,57 @@ class MainBattlefieldView extends StatelessWidget {
     );
 
     return BlocProvider(
-      create: (_) => BattlefieldBloc(battleController: controller),
-      child: const ResponsiveDeviceSplitter(
-        mobile: MobileBattlefieldView(),
-        tablet: TabletBattlefieldView(),
-        desktop: DesktopBattlefieldView(),
+      create: (_) => BattlefieldBloc(
+        battleController: controller,
+        pieces: mockPieces,
+        usersInTheGame: usersInTheGame,
       ),
+      child: const DisposeWidget(),
+    );
+  }
+}
+
+class DisposeWidget extends StatefulWidget {
+  const DisposeWidget({super.key});
+
+  @override
+  State<DisposeWidget> createState() => _DisposeWidgetState();
+}
+
+class _DisposeWidgetState extends State<DisposeWidget> {
+  @override
+  void initState() {
+    super.initState();
+    final bloc = context.read<BattlefieldBloc>();
+    bloc.events.listen((event) {
+      event.when(
+        surrender: BattlefieldEvent.surrender,
+        passTurnOtherToUser: BattlefieldEvent.passTurn,
+        errorOccoured: BattlefieldEvent.notificateFailure,
+        moveMaked: (
+          coordenatesInMove,
+          playerUserTurnId,
+          boardState,
+          usersInTheMatchState,
+        ) {
+          bloc.add(BattlefieldEvent.setPieces(boardState));
+        },
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: DISPOSE THE BATTLEFIELD
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const ResponsiveDeviceSplitter(
+      mobile: MobileBattlefieldView(),
+      tablet: TabletBattlefieldView(),
+      desktop: DesktopBattlefieldView(),
     );
   }
 }

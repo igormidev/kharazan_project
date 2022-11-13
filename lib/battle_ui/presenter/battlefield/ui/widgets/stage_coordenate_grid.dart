@@ -44,7 +44,7 @@ class StageCoordenateGrid extends StatelessWidget {
             // └─────────────────────────────────────────────────────────
             BlocSelector<BattlefieldBloc, BattlefieldState, List<Coordenate>>(
               selector: (state) => state.maybeWhen(
-                pieceSelected: (pieceMovimentation, _, __) =>
+                pieceSelected: (pieceMovimentation, _, __, ___) =>
                     pieceMovimentation,
                 orElse: () => <Coordenate>[],
               ),
@@ -77,7 +77,7 @@ class StageCoordenateGrid extends StatelessWidget {
             // └─────────────────────────────────────────────────────────
             BlocSelector<BattlefieldBloc, BattlefieldState, List<Coordenate>>(
               selector: (state) => state.maybeWhen(
-                pieceSelected: (_, pieceAttacks, __) => pieceAttacks,
+                pieceSelected: (_, pieceAttacks, __, ___) => pieceAttacks,
                 orElse: () => <Coordenate>[],
               ),
               builder: (context, pieceMovimentation) {
