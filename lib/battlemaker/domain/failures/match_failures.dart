@@ -8,6 +8,8 @@ class NoEntityFoundInCoordenate extends MatchFailure {}
 
 class EntityAlreadyExistsInCoordenate extends MatchFailure {}
 
+class NoUserStateWithThatID extends MatchFailure {}
+
 class ErrorWhileCastingMovement extends MatchFailure {}
 
 class CastingCoordenateError extends MatchFailure {}

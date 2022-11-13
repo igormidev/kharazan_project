@@ -6,6 +6,8 @@ import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dar
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_match_states_usecase/protocol_get_match_states_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_match_states_usecase/return_get_match_states_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_moves_usecase/param_get_piece_valid_moves_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_moves_usecase/protocol_get_piece_valid_moves_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/param_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/return_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/presentation/match_event.dart';
@@ -19,6 +21,9 @@ import '../../helpers/failure_mocks.dart';
 import '../../helpers/mock_piece.dart';
 
 class MockMakeMoveUsecase extends Mock implements ProtocolMakeMoveUsecase {}
+
+class MockProtocolGetPieceValidMovesUsecase extends Mock
+    implements ProtocolGetPieceValidMovesUsecase {}
 
 const fakeResult = ReturnMakeMoveUsecase(
   moveMaked: CoordenatesInMove(
@@ -37,15 +42,20 @@ void main() {
   late BattleMakerController controller;
   late MockMakeMoveUsecase makeMoveUsecase;
   late MockGetMatchStatesUsecase getMatchStatesUsecase;
+  late ProtocolGetPieceValidMovesUsecase getPieceValidMoves;
   const param = MakeMoveParam(userId: 'testID', move: 'b5a3');
 
   setUp(() {
     makeMoveUsecase = MockMakeMoveUsecase();
     getMatchStatesUsecase = MockGetMatchStatesUsecase();
+    getPieceValidMoves = MockProtocolGetPieceValidMovesUsecase();
+
     controller = BattleMakerController.createMatch(
       firstUserToMoveId: 'testID',
       makeMoveUsecase: makeMoveUsecase,
       protocolGetMatchStatesUsecase: getMatchStatesUsecase,
+      getPieceValidAttacks: getPieceValidMoves,
+      getPieceValidMovimentation: getPieceValidMoves,
     );
   });
 
@@ -175,6 +185,46 @@ void main() {
       final response = await controller.getTheBoardState();
 
       expect(response.isLeft(), isTrue);
+      expect(response.asLeftResult, isA<MockMatchFailure>());
+    });
+  });
+
+  group('Should geet piece valid movimentation as expected', () {
+    const coordenate = Coordenate(0, 0);
+    const moveParam = GetPieceValidMovesParam(coordenate: coordenate);
+    const fakeResult = [Coordenate(5, 5), Coordenate(7, 7)];
+
+    test('Should return the coordenates that came from the usecase', () async {
+      when(() => getPieceValidMoves(moveParam))
+          .thenAnswer((_) => right(fakeResult));
+      final response = await controller.getPieceValidMovimentation(coordenate);
+      expect(response.asRightResult, equals(fakeResult));
+    });
+
+    test('Should return the usecase error case it accours', () async {
+      when(() => getPieceValidMoves(moveParam))
+          .thenAnswer((_) => left(MockMatchFailure()));
+      final response = await controller.getPieceValidMovimentation(coordenate);
+      expect(response.asLeftResult, isA<MockMatchFailure>());
+    });
+  });
+
+  group('Should geet piece valid attacks moves as expected', () {
+    const coordenate = Coordenate(0, 0);
+    const moveParam = GetPieceValidMovesParam(coordenate: coordenate);
+    const fakeResult = [Coordenate(5, 5), Coordenate(7, 7)];
+
+    test('Should return the coordenates that came from the usecase', () async {
+      when(() => getPieceValidMoves(moveParam))
+          .thenAnswer((_) => right(fakeResult));
+      final response = await controller.getPieceValidAttacks(coordenate);
+      expect(response.asRightResult, equals(fakeResult));
+    });
+
+    test('Should return the usecase error case it accours', () async {
+      when(() => getPieceValidMoves(moveParam))
+          .thenAnswer((_) => left(MockMatchFailure()));
+      final response = await controller.getPieceValidAttacks(coordenate);
       expect(response.asLeftResult, isA<MockMatchFailure>());
     });
   });
