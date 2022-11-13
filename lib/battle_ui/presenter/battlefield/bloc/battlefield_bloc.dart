@@ -7,11 +7,9 @@ import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/piece_entity.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_moves_usecase/param_get_piece_valid_moves_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_moves_usecase/protocol_get_piece_valid_moves_usecase.dart';
 import 'package:micro_kharazan/battlemaker/presentation/battle_maker_controller.dart';
+import 'package:micro_kharazan/battlemaker/presentation/match_event.dart';
 
 part 'battlefield_event.dart';
 part 'battlefield_state.dart';
@@ -19,39 +17,48 @@ part 'battlefield_state.dart';
 part 'battlefield_bloc.freezed.dart';
 
 class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
-  final ProtocolGetPieceValidMovesUsecase getPieceValidMovimentation;
-  final ProtocolGetPieceValidMovesUsecase getPieceValidAttacks;
-  final BattleMakerController controller;
-  BattlefieldBloc({
-    required this.getPieceValidAttacks,
-    required this.getPieceValidMovimentation,
-    required this.controller,
-  }) : super(const BattlefieldState.initial(pieces: mockPieces)) {
+  final BattleMakerController _battleController;
+
+  Stream<MatchEvent> get events => _battleController.outEvents;
+
+  BattlefieldBloc({required BattleMakerController battleController})
+      : _battleController = battleController,
+        super(const BattlefieldState.initial(pieces: mockPieces)) {
     on<_BattlefieldPieceSelected>(_manegePieceSelection);
     on<_SetPieces>(_setPiecesInBoard);
 
-    controller.outEvents.listen((event) {
-      event.when<void>(
-        moveMaked: _onMoveMaked,
-        surrender: _onSurrender,
-        passTurnOtherToUser: _onPassTurnToOtherUser,
-        errorOccoured: _oFailure,
-      );
+    battleController.outEvents.listen((event) {
+      // event.when<void>(
+      //   moveMaked: _onMoveMaked,
+      //   surrender: _onSurrender,
+      //   passTurnOtherToUser: _onPassTurnToOtherUser,
+      //   errorOccoured: _onFailure,
+      // );
     });
   }
 
-  void _onMoveMaked(
-    CoordenatesInMove coordenatesInMove,
-    String moveMaded,
-    List<BoardEntity> entities,
-    List<UserStateEntity> userState,
-  ) {}
+  // Future<void> _onMoveMaked(
+  //   CoordenatesInMove coordenatesInMove,
+  //   String moveMaded,
+  //   List<BoardEntity> entities,
+  //   List<UserStateEntity> userState,
+  // ) async {
+  //   final response = await battleController.makeMove('userId', '23 84');
+  //   // emit();
+  //   if (response.isLeft()) {
+  //     emit(BattlefieldState.withError(
+  //       failure: response.asLeftResult,
+  //       pieces: state.pieces,
+  //     ));
+  //     // emit(BattlefieldState.initial(pieces: event.pieces));
+  //   }
+  // }
 
   void _onSurrender(String userThatSurrenderID) {}
 
   void _onPassTurnToOtherUser(String userTurnID) {}
 
-  void _oFailure(MatchFailure failure) {}
+  void _onFailure(MatchFailure failure) {}
 
   FutureOr<void> _setPiecesInBoard(
     _SetPieces event,
@@ -64,9 +71,8 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     _BattlefieldPieceSelected event,
     Emitter<BattlefieldState> emit,
   ) async {
-    final moveParam = GetPieceValidMovesParam(coordenate: event.coordenate);
-
-    final possibleAttacksResponse = await getPieceValidAttacks(moveParam);
+    final possibleAttacksResponse =
+        await _battleController.getPieceValidAttacks(event.coordenate);
     if (possibleAttacksResponse.isLeft()) {
       emit(BattlefieldState.withError(
         failure: possibleAttacksResponse.asLeftResult,
@@ -74,7 +80,8 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
       ));
     }
 
-    final possibleMovesResponse = await getPieceValidMovimentation(moveParam);
+    final possibleMovesResponse =
+        await _battleController.getPieceValidMovimentation(event.coordenate);
     if (possibleMovesResponse.isLeft()) {
       emit(BattlefieldState.withError(
         failure: possibleMovesResponse.asLeftResult,

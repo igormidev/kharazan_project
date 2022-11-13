@@ -64,7 +64,7 @@ class MainBattlefieldView extends StatelessWidget {
         ImplChangePiecePositionUsecase(boardRepository: boardRepo);
     final ProtocolDealDamageToPieceUsecase dealDamageToPiece =
         ImplDealDamageToPieceUsecase(boardRepository: boardRepo);
-    final ProtocolCanUserMakeMoveUsecase canUserMakeMove =
+    const ProtocolCanUserMakeMoveUsecase canUserMakeMove =
         ImplCanUserMakeMoveUsecase(matchStateRepository: matchRepo);
     final ProtocolGetPieceUsecase getPiece =
         ImplGetPieceUsecase(boardRepository: boardRepo);
@@ -84,17 +84,15 @@ class MainBattlefieldView extends StatelessWidget {
     );
 
     final controller = BattleMakerController.createMatch(
-      firstUserToMoveId: '',
+      firstUserToMoveId: 'play1',
       makeMoveUsecase: makeMoveUsecase,
       protocolGetMatchStatesUsecase: getMatchStatesUsecase,
+      getPieceValidAttacks: getValidAttacks,
+      getPieceValidMovimentation: getValidMoves,
     );
 
     return BlocProvider(
-      create: (_) => BattlefieldBloc(
-        getPieceValidAttacks: getValidAttacks,
-        getPieceValidMovimentation: getValidMoves,
-        controller: controller,
-      ),
+      create: (_) => BattlefieldBloc(battleController: controller),
       child: const ResponsiveDeviceSplitter(
         mobile: MobileBattlefieldView(),
         tablet: TabletBattlefieldView(),
