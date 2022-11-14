@@ -24,13 +24,29 @@ class ImplGetPieceValidMovesAttackUsecase
     if (matchResponse.isLeft()) return matchResponse.asLeft();
     final field = matchResponse.asRightResult;
 
-    final pieceResponse = _boardRepository.obtainPieceInCoordenate(coordenate);
-    if (pieceResponse.isLeft()) return pieceResponse.asLeft();
-    final piece = pieceResponse.asRightResult;
+    final entityResponse =
+        _boardRepository.obtainBoardEntityInCoordenate(coordenate);
+    if (entityResponse.isLeft()) return entityResponse.asLeft();
+    final piece = entityResponse.asRightResult.piece;
 
     final possibleAttackArea = piece.obtainAttackArea(param.coordenate);
     final validAttackArea =
         getCoordenatesInsideLimits(field, possibleAttackArea);
+
+    final entitiesResponse = _boardRepository.obtainEntitiesInTheBoard();
+    if (entitiesResponse.isLeft()) return entitiesResponse.asLeft();
+    final userIdOfPieceOwner = entityResponse.asRightResult.pieceOwnerId;
+    final coordenatesWithSameTimePieces = entitiesResponse.asRightResult
+        .where((entity) => entity.pieceOwnerId == userIdOfPieceOwner)
+        .toList()
+        .coordenatesInBoard;
+
+    validAttackArea.retainWhere((coordenate) {
+      final contain =
+          coordenatesWithSameTimePieces.contains(coordenate) == false;
+      return contain;
+    });
+
     return right(validAttackArea);
   }
 }

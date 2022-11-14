@@ -14,11 +14,19 @@ class ImplGetPieceUsecase implements ProtocolGetPieceUsecase {
   }) : _repository = boardRepository;
 
   @override
-  Either<MatchFailure, PieceEntity> call(GetPieceParam param) {
+  Either<MatchFailure, PieceEntity?> call(GetPieceParam param) {
     final coordenate = param.coordenates;
     final response = _repository.obtainPieceInCoordenate(coordenate);
 
-    if (response.isLeft()) return response.asLeft();
+    if (response.isLeft()) {
+      // If there is no entity in the coordenate we will return null
+      if (response.asLeftResult is NoEntityFoundInCoordenate) {
+        return right(null);
+      }
+
+      // In case of other error, we will just return the error
+      return response.asLeft();
+    }
     return response.asRight();
   }
 }

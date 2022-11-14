@@ -24,22 +24,22 @@ class ImplGetPieceValidMovimentationUsecase
     if (coordenatesResponse.isLeft()) return coordenatesResponse.asLeft();
     final field = coordenatesResponse.asRightResult;
 
-    final entitiesResponse = _boardRepository.obtainEntitiesInTheBoard();
-    if (entitiesResponse.isLeft()) return entitiesResponse.asLeft();
-    final piecesInBoard = entitiesResponse.asRightResult.coordenatesInBoard;
-    field.retainWhere((coordenate) {
-      final list = piecesInBoard.contains(coordenate) == false;
-      return list;
-    });
-
     final pieceResponse = _boardRepository.obtainPieceInCoordenate(coordenate);
     if (pieceResponse.isLeft()) return pieceResponse.asLeft();
     final piece = pieceResponse.asRightResult;
 
     final possibleMovimentArea = piece.obtainMovesArea(param.coordenate);
-    final validMovesArea =
+    final movesThatExistsInField =
         getCoordenatesInsideLimits(field, possibleMovimentArea);
 
-    return right(validMovesArea);
+    final entitiesResponse = _boardRepository.obtainEntitiesInTheBoard();
+    if (entitiesResponse.isLeft()) return entitiesResponse.asLeft();
+    final piecesInBoard = entitiesResponse.asRightResult.coordenatesInBoard;
+    movesThatExistsInField.retainWhere((coordenate) {
+      final contain = piecesInBoard.contains(coordenate) == false;
+      return contain;
+    });
+
+    return right(movesThatExistsInField);
   }
 }

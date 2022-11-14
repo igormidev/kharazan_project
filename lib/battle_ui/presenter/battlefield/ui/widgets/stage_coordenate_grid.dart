@@ -43,8 +43,8 @@ class StageCoordenateGrid extends StatelessWidget {
             // │ The possible movements dots of the selected piece
             // └─────────────────────────────────────────────────────────
             BlocSelector<BattlefieldBloc, BattlefieldState, List<Coordenate>>(
-              selector: (state) => state.maybeWhen(
-                pieceSelected: (pieceMovimentation, _, __, ___) =>
+              selector: (BattlefieldState state) => state.maybeWhen(
+                pieceSelected: (pieceMovimentation, _, __, ___, ____) =>
                     pieceMovimentation,
                 orElse: () => <Coordenate>[],
               ),
@@ -59,10 +59,13 @@ class StageCoordenateGrid extends StatelessWidget {
                       child: SizedBox(
                         height: max,
                         width: max,
-                        child: Center(
-                          child: CircleAvatar(
-                            radius: 16,
-                            backgroundColor: Colors.blueGrey.withAlpha(100),
+                        child: GestureWrapper(
+                          coordenate: coordenate,
+                          child: Center(
+                            child: CircleAvatar(
+                              radius: 16,
+                              backgroundColor: Colors.blueGrey.withAlpha(100),
+                            ),
                           ),
                         ),
                       ),
@@ -77,16 +80,27 @@ class StageCoordenateGrid extends StatelessWidget {
             // └─────────────────────────────────────────────────────────
             BlocSelector<BattlefieldBloc, BattlefieldState, List<Coordenate>>(
               selector: (state) => state.maybeWhen(
-                pieceSelected: (_, pieceAttacks, __, ___) => pieceAttacks,
+                pieceSelected: (_, pieceAttacks, __, ___, ____) => pieceAttacks,
                 orElse: () => <Coordenate>[],
               ),
-              builder: (context, pieceMovimentation) {
+              builder: (context, pieceAttacks) {
                 return Stack(
-                  children: pieceMovimentation.map((coordenate) {
+                  children: pieceAttacks.map((coordenate) {
                     final max = width / stageEntity.stageLimits.biggerXInList;
                     final multipliyer = width * 0.125;
                     final iconSize = width * 0.1625;
                     final align = width * 0.01875;
+
+                    final isEnemyPieceCoordenate = context
+                        .read<BattlefieldBloc>()
+                        .state
+                        .pieces
+                        .coordenatesInBoard
+                        .contains(coordenate);
+
+                    final color = isEnemyPieceCoordenate
+                        ? const Color.fromARGB(255, 210, 88, 79)
+                        : const Color.fromARGB(82, 202, 110, 35);
                     return Positioned(
                       left: ((coordenate.axisX - 1) * multipliyer) - align,
                       top: ((coordenate.axisY - 1) * multipliyer) - align,
@@ -95,8 +109,7 @@ class StageCoordenateGrid extends StatelessWidget {
                         width: max,
                         child: Icon(
                           // Icons.crop_free,
-                          Icons.crop_free_rounded,
-                          color: const Color.fromARGB(82, 202, 110, 35),
+                          Icons.crop_free_rounded, color: color,
                           // color: Color.fromARGB(80, 255, 255, 255),
                           size: iconSize,
                         ),
@@ -135,6 +148,37 @@ class StageCoordenateGrid extends StatelessWidget {
           ]);
         },
       ),
+    );
+  }
+}
+
+class GestureWrapper extends StatelessWidget {
+  final Coordenate coordenate;
+  final Widget child;
+  const GestureWrapper(
+      {super.key, required this.coordenate, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        final bloc = context.read<BattlefieldBloc>();
+        bloc.state.whenOrNull(
+          pieceSelected: (_, __, ___, ____, pieceCoordenate) {
+            final move = '$pieceCoordenate$coordenate'
+                .replaceAll('(', '')
+                .replaceAll(')', '')
+                .replaceAll('x', '');
+            bloc.add(
+              BattlefieldEvent.makeMove(
+                'user1',
+                move,
+              ),
+            );
+          },
+        );
+      },
+      child: child,
     );
   }
 }
