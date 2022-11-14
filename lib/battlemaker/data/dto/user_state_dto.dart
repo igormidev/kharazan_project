@@ -5,6 +5,7 @@ extension UserStateDtoExtension on UserStateEntity {
     int? currentMana,
   }) {
     return UserStateEntity(
+      displayName: displayName, // Can't be changed
       playerId: playerId, // Can't be changed
       currentMana: currentMana ?? this.currentMana,
     );

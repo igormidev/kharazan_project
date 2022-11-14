@@ -98,5 +98,7 @@ void main() {
     });
   });
 
-  group('Should remove coordenates that arent in the board', () {});
+  group('Should remove coordenates that arent in the board', () {
+    /// TODO: MAKE TEST
+  });
 }

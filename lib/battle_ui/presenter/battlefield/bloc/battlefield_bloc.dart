@@ -117,6 +117,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
       possiblePieceMovementArea: possibleMovimentation,
       pieces: state.pieces,
       users: state.users,
+      selectedPieceCoordenate: event.coordenate,
     ));
   }
 

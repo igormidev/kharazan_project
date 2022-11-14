@@ -42,8 +42,10 @@ class MainBattlefieldView extends StatelessWidget {
     );
 
     const usersInTheGame = [
-      UserStateEntity(playerId: 'play1', currentMana: 50),
-      UserStateEntity(playerId: 'bot', currentMana: 50),
+      UserStateEntity(
+          displayName: 'zNeutro', playerId: 'user1', currentMana: 50),
+      UserStateEntity(
+          displayName: 'The BOT', playerId: 'user2', currentMana: 50),
     ];
 
     const matchSource = ImplMatchSource(usersInTheGame: usersInTheGame);
@@ -86,7 +88,7 @@ class MainBattlefieldView extends StatelessWidget {
     );
 
     final controller = BattleMakerController.createMatch(
-      firstUserToMoveId: 'play1',
+      firstUserToMoveId: 'user1',
       makeMoveUsecase: makeMoveUsecase,
       protocolGetMatchStatesUsecase: getMatchStatesUsecase,
       getPieceValidAttacks: getValidAttacks,
@@ -141,10 +143,21 @@ class _DisposeWidgetState extends State<DisposeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return const ResponsiveDeviceSplitter(
-      mobile: MobileBattlefieldView(),
-      tablet: TabletBattlefieldView(),
-      desktop: DesktopBattlefieldView(),
+    return BlocListener<BattlefieldBloc, BattlefieldState>(
+      listenWhen: (previous, current) =>
+          current.maybeMap<bool>(withError: (_) => true, orElse: () => false),
+      listener: (context, state) {
+        state.whenOrNull(
+          withError: (failure, users, pieces) {
+            print(failure); // TODO: IMPLEMENT DIALOG / ERROR MANEJMENT
+          },
+        );
+      },
+      child: const ResponsiveDeviceSplitter(
+        mobile: MobileBattlefieldView(),
+        tablet: TabletBattlefieldView(),
+        desktop: DesktopBattlefieldView(),
+      ),
     );
   }
 }

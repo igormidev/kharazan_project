@@ -12,6 +12,7 @@ class BattlefieldState with _$BattlefieldState {
     required List<Coordenate> possiblePieceAttackArea,
     required List<UserStateEntity> users,
     required List<BoardEntity> pieces,
+    required Coordenate selectedPieceCoordenate,
   }) = _PieceSelected;
 
   const factory BattlefieldState.withError({

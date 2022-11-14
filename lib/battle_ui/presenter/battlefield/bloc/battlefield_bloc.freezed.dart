@@ -1309,7 +1309,8 @@ mixin _$BattlefieldState {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)
         pieceSelected,
     required TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)
@@ -1324,7 +1325,8 @@ mixin _$BattlefieldState {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)?
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)?
         pieceSelected,
     TResult? Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)?
@@ -1339,7 +1341,8 @@ mixin _$BattlefieldState {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)?
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)?
         pieceSelected,
     TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)?
@@ -1512,7 +1515,8 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)
         pieceSelected,
     required TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)
@@ -1530,7 +1534,8 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)?
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)?
         pieceSelected,
     TResult? Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)?
@@ -1548,7 +1553,8 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)?
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)?
         pieceSelected,
     TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)?
@@ -1623,7 +1629,8 @@ abstract class _$$_PieceSelectedCopyWith<$Res>
       {List<Coordenate> possiblePieceMovementArea,
       List<Coordenate> possiblePieceAttackArea,
       List<UserStateEntity> users,
-      List<BoardEntity> pieces});
+      List<BoardEntity> pieces,
+      Coordenate selectedPieceCoordenate});
 }
 
 /// @nodoc
@@ -1641,6 +1648,7 @@ class __$$_PieceSelectedCopyWithImpl<$Res>
     Object? possiblePieceAttackArea = null,
     Object? users = null,
     Object? pieces = null,
+    Object? selectedPieceCoordenate = null,
   }) {
     return _then(_$_PieceSelected(
       possiblePieceMovementArea: null == possiblePieceMovementArea
@@ -1659,6 +1667,10 @@ class __$$_PieceSelectedCopyWithImpl<$Res>
           ? _value._pieces
           : pieces // ignore: cast_nullable_to_non_nullable
               as List<BoardEntity>,
+      selectedPieceCoordenate: null == selectedPieceCoordenate
+          ? _value.selectedPieceCoordenate
+          : selectedPieceCoordenate // ignore: cast_nullable_to_non_nullable
+              as Coordenate,
     ));
   }
 }
@@ -1670,7 +1682,8 @@ class _$_PieceSelected implements _PieceSelected {
       {required final List<Coordenate> possiblePieceMovementArea,
       required final List<Coordenate> possiblePieceAttackArea,
       required final List<UserStateEntity> users,
-      required final List<BoardEntity> pieces})
+      required final List<BoardEntity> pieces,
+      required this.selectedPieceCoordenate})
       : _possiblePieceMovementArea = possiblePieceMovementArea,
         _possiblePieceAttackArea = possiblePieceAttackArea,
         _users = users,
@@ -1705,8 +1718,11 @@ class _$_PieceSelected implements _PieceSelected {
   }
 
   @override
+  final Coordenate selectedPieceCoordenate;
+
+  @override
   String toString() {
-    return 'BattlefieldState.pieceSelected(possiblePieceMovementArea: $possiblePieceMovementArea, possiblePieceAttackArea: $possiblePieceAttackArea, users: $users, pieces: $pieces)';
+    return 'BattlefieldState.pieceSelected(possiblePieceMovementArea: $possiblePieceMovementArea, possiblePieceAttackArea: $possiblePieceAttackArea, users: $users, pieces: $pieces, selectedPieceCoordenate: $selectedPieceCoordenate)';
   }
 
   @override
@@ -1719,7 +1735,10 @@ class _$_PieceSelected implements _PieceSelected {
             const DeepCollectionEquality().equals(
                 other._possiblePieceAttackArea, _possiblePieceAttackArea) &&
             const DeepCollectionEquality().equals(other._users, _users) &&
-            const DeepCollectionEquality().equals(other._pieces, _pieces));
+            const DeepCollectionEquality().equals(other._pieces, _pieces) &&
+            (identical(
+                    other.selectedPieceCoordenate, selectedPieceCoordenate) ||
+                other.selectedPieceCoordenate == selectedPieceCoordenate));
   }
 
   @override
@@ -1728,7 +1747,8 @@ class _$_PieceSelected implements _PieceSelected {
       const DeepCollectionEquality().hash(_possiblePieceMovementArea),
       const DeepCollectionEquality().hash(_possiblePieceAttackArea),
       const DeepCollectionEquality().hash(_users),
-      const DeepCollectionEquality().hash(_pieces));
+      const DeepCollectionEquality().hash(_pieces),
+      selectedPieceCoordenate);
 
   @JsonKey(ignore: true)
   @override
@@ -1746,14 +1766,15 @@ class _$_PieceSelected implements _PieceSelected {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)
         pieceSelected,
     required TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)
         withError,
   }) {
-    return pieceSelected(
-        possiblePieceMovementArea, possiblePieceAttackArea, users, pieces);
+    return pieceSelected(possiblePieceMovementArea, possiblePieceAttackArea,
+        users, pieces, selectedPieceCoordenate);
   }
 
   @override
@@ -1765,14 +1786,15 @@ class _$_PieceSelected implements _PieceSelected {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)?
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)?
         pieceSelected,
     TResult? Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)?
         withError,
   }) {
-    return pieceSelected?.call(
-        possiblePieceMovementArea, possiblePieceAttackArea, users, pieces);
+    return pieceSelected?.call(possiblePieceMovementArea,
+        possiblePieceAttackArea, users, pieces, selectedPieceCoordenate);
   }
 
   @override
@@ -1784,7 +1806,8 @@ class _$_PieceSelected implements _PieceSelected {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)?
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)?
         pieceSelected,
     TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)?
@@ -1792,8 +1815,8 @@ class _$_PieceSelected implements _PieceSelected {
     required TResult orElse(),
   }) {
     if (pieceSelected != null) {
-      return pieceSelected(
-          possiblePieceMovementArea, possiblePieceAttackArea, users, pieces);
+      return pieceSelected(possiblePieceMovementArea, possiblePieceAttackArea,
+          users, pieces, selectedPieceCoordenate);
     }
     return orElse();
   }
@@ -1838,7 +1861,8 @@ abstract class _PieceSelected implements BattlefieldState {
       {required final List<Coordenate> possiblePieceMovementArea,
       required final List<Coordenate> possiblePieceAttackArea,
       required final List<UserStateEntity> users,
-      required final List<BoardEntity> pieces}) = _$_PieceSelected;
+      required final List<BoardEntity> pieces,
+      required final Coordenate selectedPieceCoordenate}) = _$_PieceSelected;
 
   List<Coordenate> get possiblePieceMovementArea;
   List<Coordenate> get possiblePieceAttackArea;
@@ -1846,6 +1870,7 @@ abstract class _PieceSelected implements BattlefieldState {
   List<UserStateEntity> get users;
   @override
   List<BoardEntity> get pieces;
+  Coordenate get selectedPieceCoordenate;
   @override
   @JsonKey(ignore: true)
   _$$_PieceSelectedCopyWith<_$_PieceSelected> get copyWith =>
@@ -1962,7 +1987,8 @@ class _$_WithError implements _WithError {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)
         pieceSelected,
     required TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)
@@ -1980,7 +2006,8 @@ class _$_WithError implements _WithError {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)?
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)?
         pieceSelected,
     TResult? Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)?
@@ -1998,7 +2025,8 @@ class _$_WithError implements _WithError {
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
-            List<BoardEntity> pieces)?
+            List<BoardEntity> pieces,
+            Coordenate selectedPieceCoordenate)?
         pieceSelected,
     TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardEntity> pieces)?

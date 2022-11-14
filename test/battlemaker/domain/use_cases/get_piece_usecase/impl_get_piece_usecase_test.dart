@@ -60,9 +60,23 @@ void main() {
 
     final response = usecase(param);
 
-    expect(response.isRight(), equals(false));
+    expect(response.isRight(), isFalse);
     expect(response.asLeftResult, isA<MatchFailure>());
     expect(response.asLeftResult, isA<MockMatchFailure>());
     verify(() => repository.obtainPieceInCoordenate(any())).called(1);
   });
+
+  test(
+    'Should return right null when the error from '
+    'the repositorie is that the piece dosent exists',
+    () {
+      when(() => repository.obtainPieceInCoordenate(any()))
+          .thenReturn(left(NoEntityFoundInCoordenate()));
+
+      final response = usecase(param);
+
+      expect(response.isRight(), isTrue);
+      expect(response.asRightResult, equals(null));
+    },
+  );
 }

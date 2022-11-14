@@ -8,8 +8,10 @@ import 'package:micro_kharazan/battlemaker/external/source/impl_match_source.dar
 void main() {
   late ProtocolMatchSource source;
 
-  const user1 = UserStateEntity(playerId: 'player1', currentMana: 13);
-  const user2 = UserStateEntity(playerId: 'player2', currentMana: 20);
+  const user1 = UserStateEntity(
+      displayName: 'testName', playerId: 'player1', currentMana: 13);
+  const user2 = UserStateEntity(
+      displayName: 'testName', playerId: 'player2', currentMana: 20);
   setUp(() {
     source = const ImplMatchSource(usersInTheGame: [user1, user2]);
   });

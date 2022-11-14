@@ -17,9 +17,13 @@ const PieceEntity fakePiece = PieceEntity(
 );
 
 const fakeBoardEntity = BoardEntity(
-    coordenate: Coordenate(0, 0), piece: fakePiece, pieceOwnerId: 'test');
+  coordenate: Coordenate(0, 0),
+  piece: fakePiece,
+  pieceOwnerId: 'test',
+);
 
-const fakeUserState = UserStateEntity(playerId: 'test', currentMana: 4);
+const fakeUserState =
+    UserStateEntity(displayName: 'testName', playerId: 'test', currentMana: 4);
 
 const fakeGetMatchStates = ReturnGetMatchStatesUsecase(
   boardState: [fakeBoardEntity],
