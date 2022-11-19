@@ -65,16 +65,18 @@ void main() {
     test(
         'Should obtain the the board entities and '
         'return coordenates of each entity in a list', () {
-      when(() => boardSource.getEntitiesInTheBoard())
-          .thenReturn(right(<BoardEntity>[fakeBoardEntity]));
+      when(() => boardSource.getFieldLimits())
+          .thenReturn(right(<Coordenate>[coordenate]));
+
       final response = boardRepository.obtainCoordenatesInTheBoard();
-      verify(() => boardSource.getEntitiesInTheBoard()).called(1);
+
+      verify(() => boardSource.getFieldLimits()).called(1);
       expect(response.asRightResult, isA<List<Coordenate>>());
-      expect(response.asRightResult, equals([fakeBoardEntity.coordenate]));
+      expect(response.asRightResult, equals([coordenate]));
     });
 
     test('Should return the source error when obtaining entities of board', () {
-      when(() => boardSource.getEntitiesInTheBoard())
+      when(() => boardSource.getFieldLimits())
           .thenReturn(left(MockMatchFailure()));
 
       final response = boardRepository.obtainCoordenatesInTheBoard();

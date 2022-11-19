@@ -38,6 +38,8 @@ void main() {
           .thenReturn(right(fieldLimit));
       when(() => repository.obtainPieceInCoordenate(any()))
           .thenReturn(right(fakePiece));
+      when(() => repository.obtainEntitiesInTheBoard())
+          .thenReturn(right([fakeBoardEntity]));
 
       final response = await usecase(param);
 
@@ -56,6 +58,8 @@ void main() {
           .thenReturn(right(fieldLimit));
       when(() => repository.obtainPieceInCoordenate(any()))
           .thenReturn(right(pieceMock));
+      when(() => repository.obtainEntitiesInTheBoard())
+          .thenReturn(right([fakeBoardEntity]));
 
       await usecase(param);
 
@@ -84,6 +88,22 @@ void main() {
     test(
         'Should return the repository error obtaining '
         'the piece in the coordenate', () async {
+      when(() => repository.obtainCoordenatesInTheBoard())
+          .thenReturn(right(fieldLimit));
+      when(() => repository.obtainPieceInCoordenate(any()))
+          .thenReturn(left(MockMatchFailure()));
+
+      final response = await usecase(param);
+
+      expect(response.isLeft(), equals(true));
+      expect(response.asLeftResult, isA<MockMatchFailure>());
+      verify(() => repository.obtainPieceInCoordenate(any())).called(1);
+      verify(() => repository.obtainCoordenatesInTheBoard()).called(1);
+    });
+
+    test(
+        'Should return the repository error  '
+        'obtaining the entities in the board', () async {
       when(() => repository.obtainCoordenatesInTheBoard())
           .thenReturn(right(fieldLimit));
       when(() => repository.obtainPieceInCoordenate(any()))

@@ -10,23 +10,24 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late ProtocolBoardSource source;
   const coordenate = Coordenate(2, 6);
-  const list = <BoardEntity>[
-    BoardEntity(
-        coordenate: Coordenate(6, 2), piece: medusa, pieceOwnerId: 'test'),
-    BoardEntity(
-        coordenate: Coordenate(3, 1), piece: pegasus, pieceOwnerId: 'test'),
-    BoardEntity(
-        coordenate: Coordenate(4, 3), piece: kraken, pieceOwnerId: 'test'),
-    BoardEntity(
-        coordenate: Coordenate(5, 5), piece: hermes, pieceOwnerId: 'test'),
-    BoardEntity(
-        coordenate: Coordenate(2, 3), piece: phoenix, pieceOwnerId: 'test'),
-    BoardEntity(
-        coordenate: Coordenate(2, 6), piece: griffin, pieceOwnerId: 'test')
-  ];
+  late List<BoardEntity> list;
   setUp(() {
-    source =
-        const ImplBoardSource(piecesInTheBoard: list, fieldLimits: fakeField);
+    list = [
+      const BoardEntity(
+          coordenate: Coordenate(6, 2), piece: medusa, pieceOwnerId: 'test'),
+      const BoardEntity(
+          coordenate: Coordenate(3, 1), piece: pegasus, pieceOwnerId: 'test'),
+      const BoardEntity(
+          coordenate: Coordenate(4, 3), piece: kraken, pieceOwnerId: 'test'),
+      const BoardEntity(
+          coordenate: Coordenate(5, 5), piece: hermes, pieceOwnerId: 'test'),
+      const BoardEntity(
+          coordenate: Coordenate(2, 3), piece: phoenix, pieceOwnerId: 'test'),
+      const BoardEntity(
+          coordenate: Coordenate(2, 6), piece: griffin, pieceOwnerId: 'test')
+    ];
+    source = ImplBoardSource(
+        piecesInTheBoard: List.from([...list]), fieldLimits: fakeField);
   });
 
   group('Should create entity in list of board source as expected', () {
@@ -42,6 +43,7 @@ void main() {
       const entity = BoardEntity(
           coordenate: Coordenate(3, 3), piece: griffin, pieceOwnerId: 'test');
       final response = source.createEntityInCoordenate(entity);
+      print('AAAAAAAAAA: $response');
       expect(response.asRightResult, entity);
     });
 
