@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
@@ -76,6 +77,38 @@ class StageCoordenateGrid extends StatelessWidget {
             ),
 
             // ┌─────────────────────────────────────────────────────────
+            // │ The widget of each piece in the game
+            // └─────────────────────────────────────────────────────────
+            BlocBuilder<BattlefieldBloc, BattlefieldState>(
+              buildWhen: (previous, current) =>
+                  listEquals(previous.pieces, current.pieces) == false,
+              builder: (context, state) {
+                final List<BoardEntity> entities = state.pieces;
+                return Stack(
+                  children: entities.map(
+                    (BoardEntity entity) {
+                      final max = width / stageEntity.stageLimits.biggerXInList;
+                      final multipliyer = width * 0.125;
+                      return AnimatedPositioned(
+                        duration: const Duration(milliseconds: 400),
+                        left: (entity.coordenate.axisX - 1) * multipliyer,
+                        top: (entity.coordenate.axisY - 1) * multipliyer,
+                        child: SizedBox(
+                          height: max,
+                          width: max,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: PieceWidget(entity: entity, size: max),
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                );
+              },
+            ),
+
+            // ┌─────────────────────────────────────────────────────────
             // │ The possible attacks dots of the selected piece
             // └─────────────────────────────────────────────────────────
             BlocSelector<BattlefieldBloc, BattlefieldState, List<Coordenate>>(
@@ -119,32 +152,6 @@ class StageCoordenateGrid extends StatelessWidget {
                 );
               },
             ),
-
-            // ┌─────────────────────────────────────────────────────────
-            // │ The widget of each piece in the game
-            // └─────────────────────────────────────────────────────────
-            BlocSelector<BattlefieldBloc, BattlefieldState, List<BoardEntity>>(
-              selector: (state) => state.pieces,
-              builder: (context, entities) {
-                return Stack(
-                    children: entities.map((entity) {
-                  final max = width / stageEntity.stageLimits.biggerXInList;
-                  final multipliyer = width * 0.125;
-                  return Positioned(
-                    left: (entity.coordenate.axisX - 1) * multipliyer,
-                    top: (entity.coordenate.axisY - 1) * multipliyer,
-                    child: SizedBox(
-                      height: max,
-                      width: max,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: PieceWidget(entity: entity, size: max),
-                      ),
-                    ),
-                  );
-                }).toList());
-              },
-            ),
           ]);
         },
       ),
@@ -170,10 +177,7 @@ class GestureWrapper extends StatelessWidget {
                 .replaceAll(')', '')
                 .replaceAll('x', '');
             bloc.add(
-              BattlefieldEvent.makeMove(
-                'user1',
-                move,
-              ),
+              BattlefieldEvent.makeMove('user1', move),
             );
           },
         );
