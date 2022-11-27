@@ -7,6 +7,7 @@ import 'package:micro_kharazan/battlemaker/domain/use_cases/change_piece_positio
 import 'package:dartz/dartz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
 import '../../../../helpers/mock_piece.dart';
@@ -27,11 +28,14 @@ void main() {
   late ProtocolBoardRepository repository;
   late ProtocolChangePiecePositionUsecase usecase;
   late ChangePiecePositionParam param;
-  const coordenate = Coordenate(3, 3);
+  const originCoordenate = Coordenate(3, 3);
+  const destinyCoordenate = Coordenate(5, 6);
   setUp(() {
     repository = MockProtocolBoardRepository();
     usecase = ImplChangePiecePositionUsecase(boardRepository: repository);
-    param = const ChangePiecePositionParam(coordenates: coordenate);
+    param = const ChangePiecePositionParam(
+        originCoordenate: originCoordenate,
+        destinyCoordenate: destinyCoordenate);
   });
 
   group('Should change the piece position', () {
@@ -41,7 +45,7 @@ void main() {
       when(() => repository.createPieceInCoordenate(any(), any(), any()))
           .thenReturn(right(fakePiece));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<VoidSucess>());
@@ -59,7 +63,7 @@ void main() {
       when(() => repository.createPieceInCoordenate(any(), fakePiece, 'test'))
           .thenReturn(right(fakePiece));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<VoidSucess>());
@@ -74,17 +78,16 @@ void main() {
       when(() => repository.removeEntityInCoordenate(any()))
           .thenReturn(right(fakeBoardEntity));
       // Here we are using the same coordenate passed in the usecase param model
-      when(() => repository.createPieceInCoordenate(coordenate, any(), 'test'))
-          .thenReturn(right(fakePiece));
+      when(() => repository.createPieceInCoordenate(
+          originCoordenate, any(), 'test')).thenReturn(right(fakePiece));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<VoidSucess>());
       verify(() => repository.removeEntityInCoordenate(any())).called(1);
-      verify(() =>
-              repository.createPieceInCoordenate(coordenate, any(), 'test'))
-          .called(1);
+      verify(() => repository.createPieceInCoordenate(
+          originCoordenate, any(), 'test')).called(1);
     });
   });
 
@@ -96,7 +99,7 @@ void main() {
       when(() => repository.createPieceInCoordenate(any(), any(), any()))
           .thenReturn(right(fakePiece));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MatchFailure>());
@@ -112,7 +115,7 @@ void main() {
       when(() => repository.createPieceInCoordenate(any(), any(), any()))
           .thenReturn(left(MockCreatingAPieceFailure()));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MatchFailure>());

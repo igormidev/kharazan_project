@@ -2,6 +2,7 @@ import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/data/source/protocol_board_source.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/collections/collection_pieces.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/external/source/impl_board_source.dart';
@@ -43,7 +44,6 @@ void main() {
       const entity = BoardEntity(
           coordenate: Coordenate(3, 3), piece: griffin, pieceOwnerId: 'test');
       final response = source.createEntityInCoordenate(entity);
-      print('AAAAAAAAAA: $response');
       expect(response.asRightResult, entity);
     });
 

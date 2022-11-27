@@ -1,6 +1,6 @@
-import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'piece_entity.dart';
 import 'package:equatable/equatable.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 
 class BoardEntity extends Equatable {
   /// The [coordenate] that indicate where is the [piece]

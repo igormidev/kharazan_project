@@ -1,11 +1,19 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:micro_kharazan/battle_ui/core/mock_pieces.dart';
+import 'package:micro_kharazan/battle_ui/domain/usecases/change_piece_coordenate_usecase/impl_change_piece_coordenate_usecase.dart';
+import 'package:micro_kharazan/battle_ui/domain/usecases/obtain_pieces_status_after_move_usecase/impl_obtain_pieces_status_after_move_usecase.dart';
+import 'package:micro_kharazan/battle_ui/domain/usecases/wrap_piece_in_move_with_animation_model/impl_wrap_piece_in_move_with_animation_model_usecase.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/coliseum_map.dart';
 import 'package:micro_kharazan/battlemaker/data/repositories/impl_board_repository.dart';
 import 'package:micro_kharazan/battlemaker/data/repositories/impl_match_repository.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_match_state_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/can_user_make_move_usecase/impl_can_user_make_move_usecase.dart';
@@ -37,15 +45,21 @@ class MainBattlefieldView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final boardSource = ImplBoardSource(
-      piecesInTheBoard: mockPieces,
+      piecesInTheBoard: mockEntities.map((e) => e.entity).toList(),
       fieldLimits: const ColiseumMap().stageLimits,
     );
 
     const usersInTheGame = [
       UserStateEntity(
-          displayName: 'zNeutro', playerId: 'user1', currentMana: 50),
+        displayName: 'zNeutro',
+        playerId: 'user1',
+        currentMana: 50,
+      ),
       UserStateEntity(
-          displayName: 'The BOT', playerId: 'user2', currentMana: 50),
+        displayName: 'The BOT',
+        playerId: 'user2',
+        currentMana: 50,
+      ),
     ];
 
     const matchSource = ImplMatchSource(usersInTheGame: usersInTheGame);
@@ -95,11 +109,17 @@ class MainBattlefieldView extends StatelessWidget {
       getPieceValidMovimentation: getValidMoves,
     );
 
+    final wrapAnimationUsecase = ImplWrapPieceInMoveWithAnimationModelUsecase();
+
     return BlocProvider(
       create: (_) => BattlefieldBloc(
-        battleController: controller,
-        pieces: mockPieces,
+        obtainPiecesStatusAfterMoveUsecase:
+            ImplObtainPiecesStatusAfterMoveUsecase(),
+        changePieceInCoordenate: ImplChangePieceCoordenateUsecase(),
         usersInTheGame: usersInTheGame,
+        battleController: controller,
+        entities: mockEntities,
+        withPieceInMoveAnimationModelUsecase: wrapAnimationUsecase,
       ),
       child: const DisposeWidget(),
     );
@@ -120,16 +140,28 @@ class _DisposeWidgetState extends State<DisposeWidget> {
     final bloc = context.read<BattlefieldBloc>();
     bloc.events.listen((event) {
       event.when(
-        surrender: BattlefieldEvent.surrender,
-        passTurnOtherToUser: BattlefieldEvent.passTurn,
-        errorOccoured: BattlefieldEvent.notificateFailure,
+        surrender: (String userThatSurrenderID) {
+          bloc.add(BattlefieldEvent.surrender(userThatSurrenderID));
+        },
+        passTurnOtherToUser: (String idOfTurnUser) {
+          bloc.add(BattlefieldEvent.surrender(idOfTurnUser));
+        },
+        errorOccoured: (MatchFailure failure) {
+          bloc.add(BattlefieldEvent.notificateFailure(failure));
+        },
         moveMaked: (
-          coordenatesInMove,
-          playerUserTurnId,
-          boardState,
-          usersInTheMatchState,
+          CoordenatesInMove coordenatesInMove,
+          String playerUserTurnId,
+          List<BoardEntity> boardState,
+          List<UserStateEntity> usersInTheMatchState,
         ) {
-          bloc.add(BattlefieldEvent.setPieces(boardState));
+          bloc.add(BattlefieldEvent.manegeMoveFromApi(
+            userId: playerUserTurnId,
+            coordenatesInMove: coordenatesInMove,
+            playerUserTurnId: playerUserTurnId,
+            boardState: boardState,
+            usersInTheMatchState: usersInTheMatchState,
+          ));
         },
       );
     });
@@ -149,7 +181,7 @@ class _DisposeWidgetState extends State<DisposeWidget> {
       listener: (context, state) {
         state.whenOrNull(
           withError: (failure, users, pieces) {
-            print(failure); // TODO: IMPLEMENT DIALOG / ERROR MANEJMENT
+            log(failure.toString()); // TODO: IMPLEMENT DIALOG / ERROR MANEJMENT
           },
         );
       },

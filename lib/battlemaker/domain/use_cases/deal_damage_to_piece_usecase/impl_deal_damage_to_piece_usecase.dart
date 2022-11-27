@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
@@ -17,7 +16,7 @@ class ImplDealDamageToPieceUsecase implements ProtocolDealDamageToPieceUsecase {
   }) : _repository = boardRepository;
 
   @override
-  FutureOr<Either<MatchFailure, bool>> call(DealDamageToPieceParam param) {
+  Either<MatchFailure, bool> call(DealDamageToPieceParam param) {
     final coordenate = param.coordenates;
     final pieceResponse = _repository.updatePieceInCoordenate(
       coordenate,

@@ -4,7 +4,7 @@ import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/coliseum_map.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 
-import 'widgets/stage_coordenate_grid.dart';
+import 'widgets/stage_coordenate_grid/stage_coordenate_grid.dart';
 
 class TabletBattlefieldView extends StatelessWidget {
   const TabletBattlefieldView({super.key});
@@ -36,13 +36,7 @@ class PlayerInfoDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocSelector<BattlefieldBloc, BattlefieldState,
         List<UserStateEntity>>(
-      selector: (BattlefieldState state) {
-        return state.when(
-          initial: (users, _) => users,
-          withError: (_, users, __) => users,
-          pieceSelected: (_, __, users, ___, ____) => users,
-        );
-      },
+      selector: (state) => state.maybeMap(orElse: () => state.users),
       builder: (context, users) {
         final UserStateEntity user1 = users[0];
         final UserStateEntity user2 = users[1];

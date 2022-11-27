@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';

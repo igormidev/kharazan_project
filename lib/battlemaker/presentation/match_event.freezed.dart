@@ -25,7 +25,7 @@ mixin _$MatchEvent {
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
-    required TResult Function(String userId) passTurnOtherToUser,
+    required TResult Function(String idOfTurnUser) passTurnOtherToUser,
     required TResult Function(MatchFailure failure) errorOccoured,
   }) =>
       throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ mixin _$MatchEvent {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
-    TResult? Function(String userId)? passTurnOtherToUser,
+    TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult? Function(MatchFailure failure)? errorOccoured,
   }) =>
       throw _privateConstructorUsedError;
@@ -51,7 +51,7 @@ mixin _$MatchEvent {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
-    TResult Function(String userId)? passTurnOtherToUser,
+    TResult Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult Function(MatchFailure failure)? errorOccoured,
     required TResult orElse(),
   }) =>
@@ -224,7 +224,7 @@ class _$_MoveMaked implements _MoveMaked {
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
-    required TResult Function(String userId) passTurnOtherToUser,
+    required TResult Function(String idOfTurnUser) passTurnOtherToUser,
     required TResult Function(MatchFailure failure) errorOccoured,
   }) {
     return moveMaked(
@@ -241,7 +241,7 @@ class _$_MoveMaked implements _MoveMaked {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
-    TResult? Function(String userId)? passTurnOtherToUser,
+    TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult? Function(MatchFailure failure)? errorOccoured,
   }) {
     return moveMaked?.call(
@@ -258,7 +258,7 @@ class _$_MoveMaked implements _MoveMaked {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
-    TResult Function(String userId)? passTurnOtherToUser,
+    TResult Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult Function(MatchFailure failure)? errorOccoured,
     required TResult orElse(),
   }) {
@@ -396,7 +396,7 @@ class _$_UserSurrender implements _UserSurrender {
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
-    required TResult Function(String userId) passTurnOtherToUser,
+    required TResult Function(String idOfTurnUser) passTurnOtherToUser,
     required TResult Function(MatchFailure failure) errorOccoured,
   }) {
     return surrender(surrenderingUserId);
@@ -412,7 +412,7 @@ class _$_UserSurrender implements _UserSurrender {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
-    TResult? Function(String userId)? passTurnOtherToUser,
+    TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult? Function(MatchFailure failure)? errorOccoured,
   }) {
     return surrender?.call(surrenderingUserId);
@@ -428,7 +428,7 @@ class _$_UserSurrender implements _UserSurrender {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
-    TResult Function(String userId)? passTurnOtherToUser,
+    TResult Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult Function(MatchFailure failure)? errorOccoured,
     required TResult orElse(),
   }) {
@@ -492,7 +492,7 @@ abstract class _$$_PassTurnCopyWith<$Res> {
           _$_PassTurn value, $Res Function(_$_PassTurn) then) =
       __$$_PassTurnCopyWithImpl<$Res>;
   @useResult
-  $Res call({String userId});
+  $Res call({String idOfTurnUser});
 }
 
 /// @nodoc
@@ -506,12 +506,12 @@ class __$$_PassTurnCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userId = null,
+    Object? idOfTurnUser = null,
   }) {
     return _then(_$_PassTurn(
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+      idOfTurnUser: null == idOfTurnUser
+          ? _value.idOfTurnUser
+          : idOfTurnUser // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -520,14 +520,14 @@ class __$$_PassTurnCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_PassTurn implements _PassTurn {
-  const _$_PassTurn({required this.userId});
+  const _$_PassTurn({required this.idOfTurnUser});
 
   @override
-  final String userId;
+  final String idOfTurnUser;
 
   @override
   String toString() {
-    return 'MatchEvent.passTurnOtherToUser(userId: $userId)';
+    return 'MatchEvent.passTurnOtherToUser(idOfTurnUser: $idOfTurnUser)';
   }
 
   @override
@@ -535,11 +535,12 @@ class _$_PassTurn implements _PassTurn {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PassTurn &&
-            (identical(other.userId, userId) || other.userId == userId));
+            (identical(other.idOfTurnUser, idOfTurnUser) ||
+                other.idOfTurnUser == idOfTurnUser));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, userId);
+  int get hashCode => Object.hash(runtimeType, idOfTurnUser);
 
   @JsonKey(ignore: true)
   @override
@@ -557,10 +558,10 @@ class _$_PassTurn implements _PassTurn {
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
-    required TResult Function(String userId) passTurnOtherToUser,
+    required TResult Function(String idOfTurnUser) passTurnOtherToUser,
     required TResult Function(MatchFailure failure) errorOccoured,
   }) {
-    return passTurnOtherToUser(userId);
+    return passTurnOtherToUser(idOfTurnUser);
   }
 
   @override
@@ -573,10 +574,10 @@ class _$_PassTurn implements _PassTurn {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
-    TResult? Function(String userId)? passTurnOtherToUser,
+    TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult? Function(MatchFailure failure)? errorOccoured,
   }) {
-    return passTurnOtherToUser?.call(userId);
+    return passTurnOtherToUser?.call(idOfTurnUser);
   }
 
   @override
@@ -589,12 +590,12 @@ class _$_PassTurn implements _PassTurn {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
-    TResult Function(String userId)? passTurnOtherToUser,
+    TResult Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult Function(MatchFailure failure)? errorOccoured,
     required TResult orElse(),
   }) {
     if (passTurnOtherToUser != null) {
-      return passTurnOtherToUser(userId);
+      return passTurnOtherToUser(idOfTurnUser);
     }
     return orElse();
   }
@@ -638,9 +639,9 @@ class _$_PassTurn implements _PassTurn {
 }
 
 abstract class _PassTurn implements MatchEvent {
-  const factory _PassTurn({required final String userId}) = _$_PassTurn;
+  const factory _PassTurn({required final String idOfTurnUser}) = _$_PassTurn;
 
-  String get userId;
+  String get idOfTurnUser;
   @JsonKey(ignore: true)
   _$$_PassTurnCopyWith<_$_PassTurn> get copyWith =>
       throw _privateConstructorUsedError;
@@ -717,7 +718,7 @@ class _$_ErrorOccoured implements _ErrorOccoured {
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
-    required TResult Function(String userId) passTurnOtherToUser,
+    required TResult Function(String idOfTurnUser) passTurnOtherToUser,
     required TResult Function(MatchFailure failure) errorOccoured,
   }) {
     return errorOccoured(failure);
@@ -733,7 +734,7 @@ class _$_ErrorOccoured implements _ErrorOccoured {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
-    TResult? Function(String userId)? passTurnOtherToUser,
+    TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult? Function(MatchFailure failure)? errorOccoured,
   }) {
     return errorOccoured?.call(failure);
@@ -749,7 +750,7 @@ class _$_ErrorOccoured implements _ErrorOccoured {
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
-    TResult Function(String userId)? passTurnOtherToUser,
+    TResult Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult Function(MatchFailure failure)? errorOccoured,
     required TResult orElse(),
   }) {

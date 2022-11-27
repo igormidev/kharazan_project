@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 
 void main() {

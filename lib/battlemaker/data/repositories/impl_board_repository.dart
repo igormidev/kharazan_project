@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/data/source/protocol_board_source.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/piece_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';

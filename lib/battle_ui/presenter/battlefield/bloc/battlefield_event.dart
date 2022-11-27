@@ -2,10 +2,23 @@ part of 'battlefield_bloc.dart';
 
 @freezed
 class BattlefieldEvent with _$BattlefieldEvent {
-  const factory BattlefieldEvent.makeMove(
+  const factory BattlefieldEvent.manegeMoveFromApi({
+    required String userId,
+    required CoordenatesInMove coordenatesInMove,
+    required String playerUserTurnId,
+    required List<BoardEntity> boardState,
+    required List<UserStateEntity> usersInTheMatchState,
+  }) = _ManegeMoveFromApi;
+
+  const factory BattlefieldEvent.makeMoveWithoutAnimation(
     final String userId,
     final String moveMaded,
-  ) = _OnMoveMaked;
+  ) = _MakeMoveWithoutAnimation;
+
+  const factory BattlefieldEvent.makeMoveWithAnimation(
+    final String userId,
+    final String moveMaded,
+  ) = _MakeMoveWithAnimation;
 
   const factory BattlefieldEvent.surrender(String userThatSurrenderID) =
       _Surrender;
@@ -17,9 +30,4 @@ class BattlefieldEvent with _$BattlefieldEvent {
 
   const factory BattlefieldEvent.pieceSelectedInCoordenate(
       PieceEntity piece, Coordenate coordenate) = _BattlefieldPieceSelected;
-
-  const factory BattlefieldEvent.setMatchState() = _SetMatchState;
-
-  const factory BattlefieldEvent.setPieces(List<BoardEntity> pieces) =
-      _SetPieces;
 }

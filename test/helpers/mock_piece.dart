@@ -1,7 +1,7 @@
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/collections/collection_pieces.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/piece_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_match_states_usecase/return_get_match_states_usecase.dart';
 

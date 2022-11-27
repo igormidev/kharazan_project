@@ -1,6 +1,6 @@
-import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
@@ -16,8 +16,7 @@ class ImplGetPieceValidMovimentationUsecase
   }) : _boardRepository = boardRepository;
 
   @override
-  FutureOr<Either<MatchFailure, List<Coordenate>>> call(
-      GetPieceValidMovesParam param) {
+  Either<MatchFailure, List<Coordenate>> call(GetPieceValidMovesParam param) {
     final coordenate = param.coordenate;
 
     final coordenatesResponse = _boardRepository.obtainCoordenatesInTheBoard();

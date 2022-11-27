@@ -1,6 +1,6 @@
-import 'coordenate_entity.dart';
 import 'package:equatable/equatable.dart';
 import 'collections/collection_pieces.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 
 class PieceEntity extends Equatable {
   const PieceEntity({

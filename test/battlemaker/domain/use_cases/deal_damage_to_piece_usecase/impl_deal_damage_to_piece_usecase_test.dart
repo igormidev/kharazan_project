@@ -3,6 +3,7 @@ import 'package:micro_kharazan/battlemaker/data/dto/piece_dto.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/deal_damage_to_piece_usecase/impl_deal_damage_to_piece_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/deal_damage_to_piece_usecase/param_deal_damage_to_piece_usecase.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:dartz/dartz.dart';
 import 'package:mocktail/mocktail.dart';
@@ -35,7 +36,7 @@ void main() {
       when(() => repository.updatePieceInCoordenate(any(), any()))
           .thenReturn(right(fakePiece));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<bool>());
@@ -46,7 +47,7 @@ void main() {
       when(() => repository.updatePieceInCoordenate(coordenate, any()))
           .thenReturn(right(fakePiece));
 
-      await usecase(param);
+      usecase(param);
       verify(() => repository.updatePieceInCoordenate(coordenate, any()))
           .called(1);
     });
@@ -60,7 +61,7 @@ void main() {
       // he will recive 1 of damage, less then the life, i.e. it was not a fatal blow
       param = const DealDamageToPieceParam(coordenates: coordenate, damage: 1);
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.asRightResult, false);
     });
@@ -71,7 +72,7 @@ void main() {
           // the piece has less then 1 of life, so it was a fatal damage
           .thenReturn(right(fakePiece.copyWith(life: -1)));
 
-      final response = await usecase(param);
+      final response = usecase(param);
       expect(response.asRightResult, true);
     });
 
@@ -94,7 +95,7 @@ void main() {
       when(() => repository.updatePieceInCoordenate(any(), any()))
           .thenReturn(left(MockMatchFailure()));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MockMatchFailure>());

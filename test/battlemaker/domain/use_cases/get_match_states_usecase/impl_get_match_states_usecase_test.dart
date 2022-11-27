@@ -38,7 +38,7 @@ void main() {
     when(() => matchRepository.getStateOfUsersOfMatch())
         .thenReturn(right(<UserStateEntity>[fakeUserState]));
 
-    final response = await getMatchStatesUsecase();
+    final response = getMatchStatesUsecase();
     const expectedReturnModel = fakeGetMatchStates;
     expect(response.isRight(), isTrue);
     expect(response.asRightResult, expectedReturnModel);
@@ -50,7 +50,7 @@ void main() {
     when(() => matchRepository.getStateOfUsersOfMatch())
         .thenReturn(right(<UserStateEntity>[fakeUserState]));
 
-    await getMatchStatesUsecase();
+    getMatchStatesUsecase();
     verify(() => boardRepository.obtainEntitiesInTheBoard()).called(1);
   });
 
@@ -60,7 +60,7 @@ void main() {
     when(() => matchRepository.getStateOfUsersOfMatch())
         .thenReturn(right(<UserStateEntity>[fakeUserState]));
 
-    await getMatchStatesUsecase();
+    getMatchStatesUsecase();
     verify(() => matchRepository.getStateOfUsersOfMatch()).called(1);
   });
 
@@ -73,7 +73,7 @@ void main() {
       when(() => matchRepository.getStateOfUsersOfMatch())
           .thenReturn(right(<UserStateEntity>[]));
 
-      final response = await getMatchStatesUsecase();
+      final response = getMatchStatesUsecase();
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<MockMatchFailure>());
       verifyNever(() => matchRepository.getStateOfUsersOfMatch());
@@ -87,7 +87,7 @@ void main() {
       when(() => matchRepository.getStateOfUsersOfMatch())
           .thenReturn(left(MockMatchFailure()));
 
-      final response = await getMatchStatesUsecase();
+      final response = getMatchStatesUsecase();
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<MockMatchFailure>());
       verify(() => boardRepository.obtainEntitiesInTheBoard()).called(1);

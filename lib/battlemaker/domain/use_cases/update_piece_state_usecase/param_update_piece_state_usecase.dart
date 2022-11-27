@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/piece_entity.dart';
 

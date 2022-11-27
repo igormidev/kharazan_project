@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/core/usecase_contract.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_match_states_usecase/protocol_get_match_states_usecase.dart';
@@ -131,7 +132,8 @@ void main() {
 
     test('Should add the pass turn event to the events stream', () async {
       await controller.passUserTurn('newID');
-      const expectedEvent = MatchEvent.passTurnOtherToUser(userId: 'newID');
+      const expectedEvent =
+          MatchEvent.passTurnOtherToUser(idOfTurnUser: 'newID');
       expect(await controller.outEvents.first, expectedEvent);
     });
   });
@@ -198,14 +200,14 @@ void main() {
     test('Should return the coordenates that came from the usecase', () async {
       when(() => getPieceValidMoves(moveParam))
           .thenAnswer((_) => right(fakeResult));
-      final response = await controller.getPieceValidMovimentation(coordenate);
+      final response = controller.getPieceValidMovimentation(coordenate);
       expect(response.asRightResult, equals(fakeResult));
     });
 
     test('Should return the usecase error case it accours', () async {
       when(() => getPieceValidMoves(moveParam))
           .thenAnswer((_) => left(MockMatchFailure()));
-      final response = await controller.getPieceValidMovimentation(coordenate);
+      final response = controller.getPieceValidMovimentation(coordenate);
       expect(response.asLeftResult, isA<MockMatchFailure>());
     });
   });
@@ -218,14 +220,14 @@ void main() {
     test('Should return the coordenates that came from the usecase', () async {
       when(() => getPieceValidMoves(moveParam))
           .thenAnswer((_) => right(fakeResult));
-      final response = await controller.getPieceValidAttacks(coordenate);
+      final response = controller.getPieceValidAttacks(coordenate);
       expect(response.asRightResult, equals(fakeResult));
     });
 
     test('Should return the usecase error case it accours', () async {
       when(() => getPieceValidMoves(moveParam))
           .thenAnswer((_) => left(MockMatchFailure()));
-      final response = await controller.getPieceValidAttacks(coordenate);
+      final response = controller.getPieceValidAttacks(coordenate);
       expect(response.asLeftResult, isA<MockMatchFailure>());
     });
   });

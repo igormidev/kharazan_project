@@ -9,6 +9,7 @@ import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
 import '../../../../helpers/failure_mocks.dart';
 import '../../../../helpers/mock_piece.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'auxiliary_functions_test.dart';
 
@@ -48,7 +49,7 @@ void main() {
       when(() => repository.obtainBoardEntityInCoordenate(any()))
           .thenReturn(right(fakeBoardEntity));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<List<Coordenate>>());
@@ -62,7 +63,7 @@ void main() {
       when(() => repository.obtainBoardEntityInCoordenate(any()))
           .thenReturn(right(mockEntity));
 
-      await usecase(param);
+      usecase(param);
 
       // Needs to be exactly the same coordinate of the param
       verify(() => mockEntity.piece.obtainAttackArea(param.coordenate))
@@ -79,7 +80,7 @@ void main() {
       when(() => repository.obtainBoardEntityInCoordenate(any()))
           .thenReturn(right(fakeBoardEntity));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MockMatchFailure>());
@@ -93,7 +94,7 @@ void main() {
       when(() => repository.obtainBoardEntityInCoordenate(any()))
           .thenReturn(left(MockMatchFailure()));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MockMatchFailure>());
@@ -105,7 +106,7 @@ void main() {
         () async {
       when(() => repository.obtainEntitiesInTheBoard())
           .thenReturn(left(MockMatchFailure()));
-      final response = await usecase(param);
+      final response = usecase(param);
       expect(response.isLeft(), isTrue);
       expect(response.asLeftResult, isA<MockMatchFailure>());
     });
@@ -113,7 +114,7 @@ void main() {
 
   group('Should filter the moves as expected', () {
     test('Should ontain all the entities from the board repository', () async {
-      await usecase(param);
+      usecase(param);
       verify(() => repository.obtainEntitiesInTheBoard()).called(1);
     });
   });

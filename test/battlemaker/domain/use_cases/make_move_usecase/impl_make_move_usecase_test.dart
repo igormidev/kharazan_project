@@ -1,6 +1,7 @@
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/core/usecase_contract.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
@@ -45,11 +46,14 @@ class MockProtocolMakeMoveUsecase extends Mock
 
 void main() {
   setUpAll(() {
-    const c = Coordenate(0, 0);
-    registerFallbackValue(const GetPieceParam(coordenates: c));
+    const originCoordenate = Coordenate(3, 3);
+    const destinyCoordenate = Coordenate(5, 6);
+    registerFallbackValue(const GetPieceParam(coordenates: originCoordenate));
     registerFallbackValue(
-        const DealDamageToPieceParam(damage: 0, coordenates: c));
-    registerFallbackValue(const ChangePiecePositionParam(coordenates: c));
+        const DealDamageToPieceParam(damage: 0, coordenates: originCoordenate));
+    registerFallbackValue(const ChangePiecePositionParam(
+        originCoordenate: originCoordenate,
+        destinyCoordenate: destinyCoordenate));
     registerFallbackValue(
       const CanUserMakeMoveParam(userId: '', neededManaToMakeMove: 1),
     );
@@ -97,7 +101,7 @@ void main() {
         'Should obtain piece with correct parameters '
         'in usecase of where the pieces are', () async {
       const param = MakeMoveParam(userId: 'testID', move: '5643');
-      await makeMoveUsecase(param);
+      makeMoveUsecase(param);
 
       // Should have exactly this coordenates, based on '5643' move
       const origin = GetPieceParam(coordenates: Coordenate(5, 6));
@@ -110,7 +114,7 @@ void main() {
       final invalidMoves = <String>['abcd', '12345', '12ab', '12', '123', ''];
       for (var invalidMove in invalidMoves) {
         final brokedParam = MakeMoveParam(userId: 'testID', move: invalidMove);
-        final response = await makeMoveUsecase(brokedParam);
+        final response = makeMoveUsecase(brokedParam);
         expect(response.asLeftResult, isA<ErrorWhileCastingMovement>());
       }
     });
@@ -121,7 +125,7 @@ void main() {
       const origin = GetPieceParam(coordenates: Coordenate(5, 6));
       const destiny = GetPieceParam(coordenates: Coordenate(4, 3));
       when(() => getPieceUsecase(origin)).thenReturn(left(MockMatchFailure()));
-      final responese = await makeMoveUsecase(param);
+      final responese = makeMoveUsecase(param);
       verify(() => getPieceUsecase(origin)).called(1);
       verifyNever(() => getPieceUsecase(destiny));
 
@@ -134,7 +138,7 @@ void main() {
       const origin = GetPieceParam(coordenates: Coordenate(5, 6));
       const destiny = GetPieceParam(coordenates: Coordenate(4, 3));
       when(() => getPieceUsecase(destiny)).thenReturn(left(MockMatchFailure()));
-      final responese = await makeMoveUsecase(param);
+      final responese = makeMoveUsecase(param);
       verify(() => getPieceUsecase(origin)).called(1);
       verify(() => getPieceUsecase(destiny)).called(1);
 
@@ -149,7 +153,7 @@ void main() {
       () async {
         // Returning null, so that means theres no piece in the origin coordenate
         when(() => getPieceUsecase(any())).thenReturn(right(null));
-        final responese = await makeMoveUsecase(param);
+        final responese = makeMoveUsecase(param);
 
         // If the origin coordenate is null, needs to return a error
         expect(responese.asLeftResult, isA<InvalidPieceLocation>());
@@ -162,7 +166,7 @@ void main() {
       () async {
         const origin = GetPieceParam(coordenates: Coordenate(5, 6));
         when(() => getPieceUsecase(origin)).thenReturn(right(fakePiece));
-        await makeMoveUsecase(param);
+        makeMoveUsecase(param);
 
         final expectedResponse = CanUserMakeMoveParam(
           userId: param.userId, // the id from the parameter
@@ -178,9 +182,9 @@ void main() {
       'Should return a error when the usecase validates that the user can not make move',
       () async {
         when(() => canUserMakeMoveUsecase(any()))
-            .thenAnswer((_) async => left(MockMatchFailure()));
+            .thenReturn(left(MockMatchFailure()));
 
-        final response = await makeMoveUsecase(param);
+        final response = makeMoveUsecase(param);
         expect(response.asLeftResult, isA<MockMatchFailure>());
       },
     );
@@ -193,7 +197,7 @@ void main() {
         // In this case, exists a piece in destiny, so the origin piece
         // is macking a attack, and not a movement (only changing position)
         when(() => getPieceUsecase(destiny)).thenReturn(right(fakePiece));
-        await makeMoveUsecase(param);
+        makeMoveUsecase(param);
         verifyNever(() => changePiecePositionUsecase(any()));
         verify(() => dealDamageToPieceUsecase(any())).called(1);
       },
@@ -207,7 +211,7 @@ void main() {
         // In this case, dosent exists a piece in destiny, so the origin piece
         // is macking a movement (only changing position), and not a attack move
         when(() => getPieceUsecase(destiny)).thenReturn(right(null));
-        await makeMoveUsecase(param);
+        makeMoveUsecase(param);
         verify(() => changePiecePositionUsecase(any())).called(1);
         verifyNever(() => dealDamageToPieceUsecase(any()));
       },
@@ -221,7 +225,7 @@ void main() {
         when(() => dealDamageToPieceUsecase(any()))
             .thenAnswer((_) => left(MockMatchFailure()));
 
-        final response = await makeMoveUsecase(param);
+        final response = makeMoveUsecase(param);
         expect(response.asLeftResult, isA<MockMatchFailure>());
       },
     );
@@ -234,7 +238,7 @@ void main() {
         when(() => changePiecePositionUsecase(any()))
             .thenAnswer((_) => left(MockMatchFailure()));
 
-        final response = await makeMoveUsecase(param);
+        final response = makeMoveUsecase(param);
         expect(response.asLeftResult, isA<MockMatchFailure>());
       },
     );
@@ -250,7 +254,7 @@ void main() {
             usersInTheMatchState: <UserStateEntity>[fakeUserState],
           )),
         );
-        final response = await makeMoveUsecase(param);
+        final response = makeMoveUsecase(param);
 
         final makeMoveReturn = ReturnMakeMoveUsecase(
           moveMaked: CoordenatesInMove.fromString('5643'),
@@ -268,7 +272,7 @@ void main() {
       () async {
         when(() => getMatchStatesUsecase())
             .thenAnswer((_) => left(MockMatchFailure()));
-        final response = await makeMoveUsecase(param);
+        final response = makeMoveUsecase(param);
 
         expect(response.asLeftResult, isA<MockMatchFailure>());
       },

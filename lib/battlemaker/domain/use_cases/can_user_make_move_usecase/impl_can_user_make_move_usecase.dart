@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/core/usecase_contract.dart';
@@ -15,7 +14,7 @@ class ImplCanUserMakeMoveUsecase implements ProtocolCanUserMakeMoveUsecase {
   }) : _matchStateRepository = matchStateRepository;
 
   @override
-  FutureOr<Either<MatchFailure, VoidSucess>> call(CanUserMakeMoveParam param) {
+  Either<MatchFailure, VoidSucess> call(CanUserMakeMoveParam param) {
     final neededManaToAttack = param.neededManaToMakeMove;
     final userId = param.userId;
 

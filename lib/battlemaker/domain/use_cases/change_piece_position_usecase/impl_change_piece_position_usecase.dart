@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/core/usecase_contract.dart';
@@ -16,16 +15,16 @@ class ImplChangePiecePositionUsecase
   }) : _repository = boardRepository;
 
   @override
-  FutureOr<Either<MatchFailure, VoidSucess>> call(
+  Either<MatchFailure, VoidSucess> call(
     ChangePiecePositionParam param,
   ) {
-    final coordenate = param.coordenates;
-
-    final removeResponse = _repository.removeEntityInCoordenate(coordenate);
+    final removeResponse =
+        _repository.removeEntityInCoordenate(param.originCoordenate);
     if (removeResponse.isLeft()) return removeResponse.asLeft();
+
     final entity = removeResponse.asRightResult; // Removed entity
     final moveResponse = _repository.createPieceInCoordenate(
-        coordenate, entity.piece, entity.pieceOwnerId);
+        param.destinyCoordenate, entity.piece, entity.pieceOwnerId);
     if (moveResponse.isLeft()) return moveResponse.asLeft();
 
     return right(VoidSucess());

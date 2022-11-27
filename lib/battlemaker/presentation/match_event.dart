@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
@@ -19,7 +20,7 @@ class MatchEvent with _$MatchEvent {
   }) = _UserSurrender;
 
   const factory MatchEvent.passTurnOtherToUser({
-    required String userId,
+    required String idOfTurnUser,
   }) = _PassTurn;
 
   const factory MatchEvent.errorOccoured({

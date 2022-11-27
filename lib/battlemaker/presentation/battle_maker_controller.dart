@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/core/usecase_contract.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_match_states_usecase/protocol_get_match_states_usecase.dart';
@@ -38,7 +39,7 @@ class BattleMakerController {
   Future<Either<MatchFailure, VoidSucess>> makeMove(
       String userId, String move) async {
     final param = MakeMoveParam(userId: userId, move: move);
-    final makeMoveResponse = await _makeMoveUsecase(param);
+    final makeMoveResponse = _makeMoveUsecase(param);
     if (makeMoveResponse.isLeft()) return left(makeMoveResponse.asLeftResult);
 
     // Event that will be added
@@ -55,10 +56,12 @@ class BattleMakerController {
     return right(VoidSucess());
   }
 
+  // Future<Either<Match>>
+
   /// Receives the [userId] of the player that is gonna assume the turn
   Future<Either<MatchFailure, VoidSucess>> passUserTurn(String userId) async {
     currentUserTurnId = userId;
-    final event = MatchEvent.passTurnOtherToUser(userId: userId);
+    final event = MatchEvent.passTurnOtherToUser(idOfTurnUser: userId);
     inEvents.add(event);
     return right(VoidSucess());
   }
@@ -73,7 +76,7 @@ class BattleMakerController {
   /// Obtain the current state of the board with all relevant info
   Future<Either<MatchFailure, BattleCurrentStateModel>>
       getTheBoardState() async {
-    final matchResponse = await _protocolGetMatchStatesUsecase();
+    final matchResponse = _protocolGetMatchStatesUsecase();
     if (matchResponse.isLeft()) return left(matchResponse.asLeftResult);
     final matchStates = matchResponse.asRightResult;
 
@@ -86,13 +89,13 @@ class BattleMakerController {
     return right(battleState);
   }
 
-  FutureOr<Either<MatchFailure, List<Coordenate>>> getPieceValidMovimentation(
+  Either<MatchFailure, List<Coordenate>> getPieceValidMovimentation(
       Coordenate coordenate) {
     final moveParam = GetPieceValidMovesParam(coordenate: coordenate);
     return _getPieceValidMovimentation(moveParam);
   }
 
-  FutureOr<Either<MatchFailure, List<Coordenate>>> getPieceValidAttacks(
+  Either<MatchFailure, List<Coordenate>> getPieceValidAttacks(
       Coordenate coordenate) {
     final moveParam = GetPieceValidMovesParam(coordenate: coordenate);
     return _getPieceValidAttacks(moveParam);

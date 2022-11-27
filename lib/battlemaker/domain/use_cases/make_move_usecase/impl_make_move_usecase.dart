@@ -1,6 +1,6 @@
-import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/can_user_make_move_usecase/param_can_user_make_move_usecase.dart';
@@ -37,8 +37,7 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
         _getPieceUsecase = getPieceUsecase;
 
   @override
-  FutureOr<Either<MatchFailure, ReturnMakeMoveUsecase>> call(
-      MakeMoveParam param) async {
+  Either<MatchFailure, ReturnMakeMoveUsecase> call(MakeMoveParam param) {
     // First, lets obtain the coordenates of the move
     final CoordenatesInMove coordenatesInMove;
     try {
@@ -70,7 +69,7 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
       userId: param.userId,
       neededManaToMakeMove: pieceOrigin.cost,
     );
-    final canOriginPieceMove = await _canUserMakeMoveUsecase(canMoveParam);
+    final canOriginPieceMove = _canUserMakeMoveUsecase(canMoveParam);
     if (canOriginPieceMove.isLeft()) return canOriginPieceMove.asLeft();
 
     // If dosen't exist a piece in the destiny, the user is just moving a piece of
@@ -81,18 +80,21 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
     if (doesExistsAPieceInDestiny) {
       final param = DealDamageToPieceParam(
           coordenates: destinyCoordenates, damage: pieceOrigin.damage);
-      final dealDamageResponse = await _dealDamageToPieceUsecase(param);
+      final dealDamageResponse = _dealDamageToPieceUsecase(param);
 
       if (dealDamageResponse.isLeft()) return dealDamageResponse.asLeft();
     } else {
-      final param = ChangePiecePositionParam(coordenates: originCoordenates);
-      final changeResponse = await _changePiecePositionUsecase(param);
+      final param = ChangePiecePositionParam(
+        originCoordenate: originCoordenates,
+        destinyCoordenate: destinyCoordenates,
+      );
+      final changeResponse = _changePiecePositionUsecase(param);
 
       if (changeResponse.isLeft()) return changeResponse.asLeft();
     }
 
     // Obtain the states of the match after the maded move impact
-    final matchStatesResponse = await _getMatchStatesUsecase();
+    final matchStatesResponse = _getMatchStatesUsecase();
     if (matchStatesResponse.isLeft()) return matchStatesResponse.asLeft();
     final matchStates = matchStatesResponse.asRightResult;
 

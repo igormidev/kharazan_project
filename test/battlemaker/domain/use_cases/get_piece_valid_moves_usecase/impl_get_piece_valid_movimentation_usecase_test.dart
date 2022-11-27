@@ -8,6 +8,7 @@ import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
 import '../../../../helpers/failure_mocks.dart';
 import '../../../../helpers/mock_piece.dart';
+
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'auxiliary_functions_test.dart';
 
@@ -41,7 +42,7 @@ void main() {
       when(() => repository.obtainEntitiesInTheBoard())
           .thenReturn(right([fakeBoardEntity]));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isRight(), equals(true));
       expect(response.asRightResult, isA<List<Coordenate>>());
@@ -61,7 +62,7 @@ void main() {
       when(() => repository.obtainEntitiesInTheBoard())
           .thenReturn(right([fakeBoardEntity]));
 
-      await usecase(param);
+      usecase(param);
 
       // Needs to be exactly the same coordinate of the param
       verify(() => pieceMock.obtainMovesArea(param.coordenate)).called(1);
@@ -77,7 +78,7 @@ void main() {
       when(() => repository.obtainPieceInCoordenate(any()))
           .thenReturn(right(fakePiece));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MockMatchFailure>());
@@ -93,7 +94,7 @@ void main() {
       when(() => repository.obtainPieceInCoordenate(any()))
           .thenReturn(left(MockMatchFailure()));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MockMatchFailure>());
@@ -109,7 +110,7 @@ void main() {
       when(() => repository.obtainPieceInCoordenate(any()))
           .thenReturn(left(MockMatchFailure()));
 
-      final response = await usecase(param);
+      final response = usecase(param);
 
       expect(response.isLeft(), equals(true));
       expect(response.asLeftResult, isA<MockMatchFailure>());

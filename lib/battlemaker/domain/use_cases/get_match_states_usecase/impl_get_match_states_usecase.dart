@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
@@ -18,7 +17,7 @@ class ImplGetMatchStatesUsecase implements ProtocolGetMatchStatesUsecase {
         _matchRepository = matchRepository;
 
   @override
-  FutureOr<Either<MatchFailure, ReturnGetMatchStatesUsecase>> call() {
+  Either<MatchFailure, ReturnGetMatchStatesUsecase> call() {
     final entitiesResponse = _boardRepository.obtainEntitiesInTheBoard();
     if (entitiesResponse.isLeft()) return entitiesResponse.asLeft();
     final entitiesInTheGame = entitiesResponse.asRightResult;

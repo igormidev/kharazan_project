@@ -31,7 +31,7 @@ void main() {
   test('Should get a piece in a coordenate', () async {
     when(() => repository.getUserState(any())).thenReturn(right(fakeUserState));
 
-    final response = await usecase(param);
+    final response = usecase(param);
 
     expect(response.isRight(), equals(true));
     expect(response.asRightResult, isA<VoidSucess>());
@@ -43,7 +43,7 @@ void main() {
     when(() => repository.getUserState(any()))
         .thenReturn(left(MockMatchFailure()));
 
-    final response = await usecase(param);
+    final response = usecase(param);
 
     expect(response.isLeft(), equals(true));
     expect(response.asLeftResult, isA<MatchFailure>());
@@ -58,7 +58,7 @@ void main() {
       right(fakeUserState.copyWith(currentMana: 4)),
     );
 
-    final response = await usecase(const CanUserMakeMoveParam(
+    final response = usecase(const CanUserMakeMoveParam(
       userId: '123',
       // Needs 5 mana to make the move, its more that the user have (4)
       neededManaToMakeMove: 5,
