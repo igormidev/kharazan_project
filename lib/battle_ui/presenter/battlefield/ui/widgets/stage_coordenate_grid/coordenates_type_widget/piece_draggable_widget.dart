@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/piece_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/board_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/piece_entity.dart';
 
 class PieceWidget extends StatelessWidget {
-  final BoardEntity entity;
+  final OldBoardEntity entity;
   final double size;
   const PieceWidget({required this.entity, required double size, super.key})
       : size = size - 16;

@@ -1,5 +1,5 @@
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/piece_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/piece_entity.dart';
 
 part 'collection_movements.dart';
 

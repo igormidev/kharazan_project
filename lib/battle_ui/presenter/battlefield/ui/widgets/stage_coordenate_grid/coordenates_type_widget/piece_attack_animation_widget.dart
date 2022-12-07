@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/board_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'piece_draggable_widget.dart';
 
 class PieceAttackAnimationWidget extends StatelessWidget {
-  final BoardEntity entity;
+  final Duration animationDuration;
+  final OldBoardEntity entity;
   final String valueKey;
   final double axisX;
   final double axisY;
@@ -14,6 +15,7 @@ class PieceAttackAnimationWidget extends StatelessWidget {
   final Coordenate destinyCoordenate;
 
   const PieceAttackAnimationWidget({
+    required this.animationDuration,
     required this.entity,
     required this.valueKey,
     required this.axisX,

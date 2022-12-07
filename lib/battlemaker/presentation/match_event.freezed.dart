@@ -21,7 +21,7 @@ mixin _$MatchEvent {
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
@@ -34,7 +34,7 @@ mixin _$MatchEvent {
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
@@ -47,7 +47,7 @@ mixin _$MatchEvent {
     TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
@@ -110,7 +110,7 @@ abstract class _$$_MoveMakedCopyWith<$Res> {
   $Res call(
       {CoordenatesInMove coordenatesInMove,
       String playerUserTurnId,
-      List<BoardEntity> boardState,
+      List<BoardFieldEntity> boardState,
       List<UserStateEntity> usersInTheMatchState});
 }
 
@@ -142,7 +142,7 @@ class __$$_MoveMakedCopyWithImpl<$Res>
       boardState: null == boardState
           ? _value._boardState
           : boardState // ignore: cast_nullable_to_non_nullable
-              as List<BoardEntity>,
+              as List<BoardFieldEntity>,
       usersInTheMatchState: null == usersInTheMatchState
           ? _value._usersInTheMatchState
           : usersInTheMatchState // ignore: cast_nullable_to_non_nullable
@@ -157,7 +157,7 @@ class _$_MoveMaked implements _MoveMaked {
   const _$_MoveMaked(
       {required this.coordenatesInMove,
       required this.playerUserTurnId,
-      required final List<BoardEntity> boardState,
+      required final List<BoardFieldEntity> boardState,
       required final List<UserStateEntity> usersInTheMatchState})
       : _boardState = boardState,
         _usersInTheMatchState = usersInTheMatchState;
@@ -166,9 +166,9 @@ class _$_MoveMaked implements _MoveMaked {
   final CoordenatesInMove coordenatesInMove;
   @override
   final String playerUserTurnId;
-  final List<BoardEntity> _boardState;
+  final List<BoardFieldEntity> _boardState;
   @override
-  List<BoardEntity> get boardState {
+  List<BoardFieldEntity> get boardState {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_boardState);
   }
@@ -220,7 +220,7 @@ class _$_MoveMaked implements _MoveMaked {
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
@@ -237,7 +237,7 @@ class _$_MoveMaked implements _MoveMaked {
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
@@ -254,7 +254,7 @@ class _$_MoveMaked implements _MoveMaked {
     TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
@@ -311,13 +311,13 @@ abstract class _MoveMaked implements MatchEvent {
   const factory _MoveMaked(
           {required final CoordenatesInMove coordenatesInMove,
           required final String playerUserTurnId,
-          required final List<BoardEntity> boardState,
+          required final List<BoardFieldEntity> boardState,
           required final List<UserStateEntity> usersInTheMatchState}) =
       _$_MoveMaked;
 
   CoordenatesInMove get coordenatesInMove;
   String get playerUserTurnId;
-  List<BoardEntity> get boardState;
+  List<BoardFieldEntity> get boardState;
   List<UserStateEntity> get usersInTheMatchState;
   @JsonKey(ignore: true)
   _$$_MoveMakedCopyWith<_$_MoveMaked> get copyWith =>
@@ -392,7 +392,7 @@ class _$_UserSurrender implements _UserSurrender {
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
@@ -408,7 +408,7 @@ class _$_UserSurrender implements _UserSurrender {
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
@@ -424,7 +424,7 @@ class _$_UserSurrender implements _UserSurrender {
     TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
@@ -554,7 +554,7 @@ class _$_PassTurn implements _PassTurn {
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
@@ -570,7 +570,7 @@ class _$_PassTurn implements _PassTurn {
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
@@ -586,7 +586,7 @@ class _$_PassTurn implements _PassTurn {
     TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
@@ -714,7 +714,7 @@ class _$_ErrorOccoured implements _ErrorOccoured {
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
@@ -730,7 +730,7 @@ class _$_ErrorOccoured implements _ErrorOccoured {
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
@@ -746,7 +746,7 @@ class _$_ErrorOccoured implements _ErrorOccoured {
     TResult Function(
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
-            List<BoardEntity> boardState,
+            List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,

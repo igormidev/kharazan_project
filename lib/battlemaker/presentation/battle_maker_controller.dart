@@ -10,6 +10,7 @@ import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_move
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_moves_usecase/protocol_get_piece_valid_moves_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/param_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/protocol_make_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/return_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/presentation/match_event.dart';
 import 'package:micro_kharazan/battlemaker/presentation/models/battle_current_model.dart';
 
@@ -43,11 +44,11 @@ class BattleMakerController {
     if (makeMoveResponse.isLeft()) return left(makeMoveResponse.asLeftResult);
 
     // Event that will be added
-    final matchResult = makeMoveResponse.asRightResult;
+    final ReturnMakeMoveUsecase matchResult = makeMoveResponse.asRightResult;
     final event = MatchEvent.moveMaked(
       coordenatesInMove: matchResult.moveMaked,
       playerUserTurnId: matchResult.playerThatMakedMoveId,
-      boardState: matchResult.boardState,
+      boardState: matchResult.boardStates,
       usersInTheMatchState: matchResult.usersInTheMatchState,
     );
 

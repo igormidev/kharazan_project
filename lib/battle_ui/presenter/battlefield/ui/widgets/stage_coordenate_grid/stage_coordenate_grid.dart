@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
-import 'package:micro_kharazan/battle_ui/domain/entities/animation_type.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/animation_type.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/protocol_stage_entity.dart';
@@ -91,7 +91,7 @@ class StageCoordenateGrid extends StatelessWidget {
 
                 return Stack(
                   children: state.entities.map(
-                    (AnimationTypeEntity coordenateEntity) {
+                    (AnimationInField coordenateEntity) {
                       final coordenate = coordenateEntity.entity.coordenate;
                       final axisX = (coordenate.axisX - 1) * multipliyer;
                       final axisY = (coordenate.axisY - 1) * multipliyer;
@@ -110,31 +110,33 @@ class StageCoordenateGrid extends StatelessWidget {
 
                         // The animation of a piece moving
                         pieceChangePosition: (
+                          animationDuration,
                           uniqueId,
                           entity,
                           originCoordenate,
                           destinyCoordenate,
                         ) {
                           return PieceChangePositionAnimationWidget(
+                            animationDuration: animationDuration,
                             originCoordenate: originCoordenate,
                             destinyCoordenate: destinyCoordenate,
                             coordenateMultipliyer: multipliyer,
                             valueKey: uniqueId,
                             entity: entity,
-                            // axisX: axisX,
-                            // axisY: axisY,
                             size: max,
                           );
                         },
 
                         // The animation of a piece attacking a other piece
                         pieceMakeAttack: (
+                          animationDuration,
                           entity,
                           uniqueId,
                           originCoordenate,
                           destinyCoordenate,
                         ) {
                           return PieceAttackAnimationWidget(
+                            animationDuration: animationDuration,
                             originCoordenate: originCoordenate,
                             destinyCoordenate: destinyCoordenate,
                             valueKey: uniqueId,

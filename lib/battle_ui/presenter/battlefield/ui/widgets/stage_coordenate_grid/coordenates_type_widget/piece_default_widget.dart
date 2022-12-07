@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/board_entity.dart';
 import 'piece_draggable_widget.dart';
 
 class PieceDefaultWidget extends StatelessWidget {
-  final BoardEntity entity;
+  final OldBoardEntity entity;
   final String valueKey;
   final double axisX;
   final double axisY;

@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 
 class BattleCurrentStateModel extends Equatable {
   final String currentUserId;
-  final List<BoardEntity> boardState;
+  final List<BoardFieldEntity> boardState;
   final List<UserStateEntity> usersInTheMatchState;
 
   const BattleCurrentStateModel({

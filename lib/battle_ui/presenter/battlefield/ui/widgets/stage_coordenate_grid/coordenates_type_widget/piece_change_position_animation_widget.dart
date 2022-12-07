@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:micro_kharazan/battle_ui/core/constants.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/board_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'piece_draggable_widget.dart';
 
 class PieceChangePositionAnimationWidget extends StatefulWidget {
-  final BoardEntity entity;
+  final Duration animationDuration;
+  final OldBoardEntity entity;
   final String valueKey;
   final double size;
   final double coordenateMultipliyer;
@@ -14,6 +14,7 @@ class PieceChangePositionAnimationWidget extends StatefulWidget {
   final Coordenate destinyCoordenate;
 
   const PieceChangePositionAnimationWidget({
+    required this.animationDuration,
     required this.valueKey,
     required this.entity,
     required this.size,
@@ -55,7 +56,7 @@ class _PieceChangePositionAnimationWidgetState
       top: axisY,
       height: widget.size,
       width: widget.size,
-      duration: Constants.changePosAnimationTime,
+      duration: widget.animationDuration,
       child: PieceWidget(entity: widget.entity, size: widget.size),
     );
   }

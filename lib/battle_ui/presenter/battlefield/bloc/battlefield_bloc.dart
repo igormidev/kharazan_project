@@ -6,14 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:micro_kharazan/battle_ui/core/constants.dart';
 import 'package:micro_kharazan/battle_ui/domain/usecases/change_piece_coordenate_usecase/protocol_change_piece_coordenate_usecase.dart';
-import 'package:micro_kharazan/battle_ui/domain/entities/animation_type.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/animation_type.dart';
 import 'package:micro_kharazan/battle_ui/domain/usecases/obtain_pieces_status_after_move_usecase/param_obtain_pieces_status_after_move_usecase.dart';
 import 'package:micro_kharazan/battle_ui/domain/usecases/obtain_pieces_status_after_move_usecase/protocol_obtain_pieces_status_after_move_usecase.dart';
-import 'package:micro_kharazan/battle_ui/domain/usecases/wrap_piece_in_move_with_animation_model/param_wrap_piece_in_move_with_animation_model_usecase.dart';
-import 'package:micro_kharazan/battle_ui/domain/usecases/wrap_piece_in_move_with_animation_model/protocol_wrap_piece_in_move_with_animation_model_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/wrap_piece_in_move_with_animation_model/param_wrap_piece_in_move_with_animation_model_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/wrap_piece_in_move_with_animation_model/protocol_wrap_piece_in_move_with_animation_model_usecase.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/piece_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/board_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/piece_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/presentation/battle_maker_controller.dart';
@@ -36,7 +36,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
 
   BattlefieldBloc({
     required BattleMakerController battleController,
-    required List<AnimationTypeEntity> entities,
+    required List<AnimationInField> entities,
     required List<UserStateEntity> usersInTheGame,
     required this.changePieceInCoordenate,
     required this.withPieceInMoveAnimationModelUsecase,
@@ -47,6 +47,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
           users: usersInTheGame,
         )) {
     // ==> Move handlers <==
+
     on<_MakeMoveWithAnimation>(_makeMoveWithAnimation);
     on<_MakeMoveWithoutAnimation>(_makeMoveWithoutAnimation);
     on<_ManegeMoveFromApi>(_manegeMoveFromApi);
@@ -206,7 +207,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
 
   BattlefieldState _getFailureState<T>(
     Either<MatchFailure, T> failure, [
-    List<AnimationTypeEntity>? enitites,
+    List<AnimationInField>? enitites,
   ]) {
     return BattlefieldState.withError(
       failure: failure.asLeftResult,

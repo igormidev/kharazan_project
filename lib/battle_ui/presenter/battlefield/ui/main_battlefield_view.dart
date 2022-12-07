@@ -5,23 +5,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:micro_kharazan/battle_ui/core/mock_pieces.dart';
 import 'package:micro_kharazan/battle_ui/domain/usecases/change_piece_coordenate_usecase/impl_change_piece_coordenate_usecase.dart';
 import 'package:micro_kharazan/battle_ui/domain/usecases/obtain_pieces_status_after_move_usecase/impl_obtain_pieces_status_after_move_usecase.dart';
-import 'package:micro_kharazan/battle_ui/domain/usecases/wrap_piece_in_move_with_animation_model/impl_wrap_piece_in_move_with_animation_model_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/get_move_entities_usecase/protocol_get_move_entities_usecase.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/coliseum_map.dart';
-import 'package:micro_kharazan/battlemaker/data/repositories/impl_board_repository.dart';
+import 'package:micro_kharazan/battlemaker/data/repositories/impl_piece_repository.dart';
 import 'package:micro_kharazan/battlemaker/data/repositories/impl_match_repository.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
-import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_match_state_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/can_user_make_move_usecase/impl_can_user_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/can_user_make_move_usecase/protocol_can_user_make_move_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/change_piece_position_usecase/impl_change_piece_position_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/change_piece_position_usecase/protocol_change_piece_position_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/deal_damage_to_piece_usecase/impl_deal_damage_to_piece_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/deal_damage_to_piece_usecase/protocol_deal_damage_to_piece_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/change_piece_position_usecase/impl_change_piece_position_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/change_piece_position_usecase/protocol_change_piece_position_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/deal_damage_to_piece_usecase/impl_deal_damage_to_piece_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/deal_damage_to_piece_usecase/protocol_deal_damage_to_piece_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_match_states_usecase/impl_get_match_states_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_match_states_usecase/protocol_get_match_states_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_usecase/impl_get_piece_usecase.dart';
@@ -64,7 +62,7 @@ class MainBattlefieldView extends StatelessWidget {
 
     const matchSource = ImplMatchSource(usersInTheGame: usersInTheGame);
 
-    final ProtocolBoardRepository boardRepo = ImplBoardRepository(boardSource);
+    final ProtocolBoardRepository boardRepo = ImplPieceRepository(boardSource);
     const ProtocolMatchStateRepository matchRepo =
         ImplMatchRepository(matchSource: matchSource);
 
@@ -92,7 +90,8 @@ class MainBattlefieldView extends StatelessWidget {
       changePiecePositionUsecase: changePiecePositionUsecase,
       dealDamageToPieceUsecase: dealDamageToPiece,
       canUserMakeMoveUsecase: canUserMakeMove,
-      getPieceUsecase: getPiece,
+      getPieceUsecase:
+          getPiece as ProtocolGetMoveEntitiesUsecase, // TODO: REMOVE
     );
 
     final ProtocolGetMatchStatesUsecase getMatchStatesUsecase =
@@ -152,7 +151,8 @@ class _DisposeWidgetState extends State<DisposeWidget> {
         moveMaked: (
           CoordenatesInMove coordenatesInMove,
           String playerUserTurnId,
-          List<BoardEntity> boardState,
+          List<OldBoardEntity> boardState,
+          List<AnimationInField> animationInMove,
           List<UserStateEntity> usersInTheMatchState,
         ) {
           bloc.add(BattlefieldEvent.manegeMoveFromApi(

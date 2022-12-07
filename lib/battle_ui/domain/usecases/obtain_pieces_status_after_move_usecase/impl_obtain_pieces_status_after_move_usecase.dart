@@ -1,5 +1,5 @@
 import 'package:micro_kharazan/battlemaker/data/dto/board_dto.dart';
-import 'package:micro_kharazan/battle_ui/domain/entities/animation_type.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/animation_type.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 
 import 'package:dartz/dartz.dart';
@@ -11,9 +11,9 @@ import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dar
 class ImplObtainPiecesStatusAfterMoveUsecase
     extends ProtocolObtainPiecesStatusAfterMoveUsecase {
   @override
-  Either<MatchFailure, List<AnimationTypeEntity>> call(
+  Either<MatchFailure, List<AnimationInField>> call(
       ParamObtainPiecesStatusAfterMoveUsecase param) {
-    final List<AnimationTypeEntity> currentEntities = param.entities;
+    final List<AnimationInField> currentEntities = param.entities;
     final CoordenatesInMove coordenatesInMove;
     try {
       coordenatesInMove = CoordenatesInMove.fromString(param.move);
@@ -39,13 +39,13 @@ class ImplObtainPiecesStatusAfterMoveUsecase
           ? coordenatesInMove.destiny
           : coordenatesInMove.origin;
 
-      currentEntities[indexOfOrigin] = AnimationTypeEntity.piece(
+      currentEntities[indexOfOrigin] = AnimationInField.piece(
         uniqueId: originPiece.uniqueId,
         entity:
             originPiece.entity.copyWith(coordenate: finalCoordenateAfterMove),
       );
     } else {
-      currentEntities[indexOfOrigin] = AnimationTypeEntity.piece(
+      currentEntities[indexOfOrigin] = AnimationInField.piece(
         uniqueId: originPiece.uniqueId,
         entity:
             originPiece.entity.copyWith(coordenate: coordenatesInMove.destiny),

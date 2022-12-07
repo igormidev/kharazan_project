@@ -1,18 +1,18 @@
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/board_entity.dart';
 
 class PieceAnimationModel {
   final String uuid;
-  final BoardEntity entity;
+  final OldBoardEntity entity;
 
   PieceAnimationModel._internal({String? uuid, required this.entity})
       : uuid = uuid ?? DateTime.now().toIso8601String();
 
-  factory PieceAnimationModel.fromEntity(BoardEntity entity) =>
+  factory PieceAnimationModel.fromEntity(OldBoardEntity entity) =>
       PieceAnimationModel._internal(entity: entity);
 
   PieceAnimationModel copyWith({
     String? uuid,
-    BoardEntity? entity,
+    OldBoardEntity? entity,
   }) {
     return PieceAnimationModel._internal(
       uuid: uuid ?? this.uuid,
@@ -22,10 +22,10 @@ class PieceAnimationModel {
 }
 
 extension PieceListExtension on List<PieceAnimationModel> {
-  List<BoardEntity> get entities => map((e) => e.entity).toList();
+  List<OldBoardEntity> get entities => map((e) => e.entity).toList();
 }
 
-extension PieceExtension on List<BoardEntity> {
+extension PieceExtension on List<OldBoardEntity> {
   List<PieceAnimationModel> get toPieceAnimation =>
       map((entity) => PieceAnimationModel.fromEntity(entity)).toList();
 }

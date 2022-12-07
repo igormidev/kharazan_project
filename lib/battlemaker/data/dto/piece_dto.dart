@@ -1,5 +1,5 @@
 import 'package:micro_kharazan/battlemaker/domain/entities/collections/collection_pieces.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/piece_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/piece_entity.dart';
 
 extension PieceDtoExtension on PieceEntity {
   PieceEntity copyWith({

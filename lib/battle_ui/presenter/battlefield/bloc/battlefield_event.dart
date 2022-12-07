@@ -6,7 +6,7 @@ class BattlefieldEvent with _$BattlefieldEvent {
     required String userId,
     required CoordenatesInMove coordenatesInMove,
     required String playerUserTurnId,
-    required List<BoardEntity> boardState,
+    required List<OldBoardEntity> boardState,
     required List<UserStateEntity> usersInTheMatchState,
   }) = _ManegeMoveFromApi;
 

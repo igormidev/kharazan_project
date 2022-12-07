@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
@@ -11,7 +11,7 @@ class MatchEvent with _$MatchEvent {
   const factory MatchEvent.moveMaked({
     required CoordenatesInMove coordenatesInMove,
     required String playerUserTurnId,
-    required List<BoardEntity> boardState,
+    required List<BoardFieldEntity> boardState,
     required List<UserStateEntity> usersInTheMatchState,
   }) = _MoveMaked;
 

@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-import 'package:micro_kharazan/battle_ui/domain/entities/animation_type.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/animation_type.dart';
 
 class ParamObtainPiecesStatusAfterMoveUsecase extends Equatable {
   final String move;
-  final List<AnimationTypeEntity> entities;
+  final List<AnimationInField> entities;
   const ParamObtainPiecesStatusAfterMoveUsecase({
     required this.entities,
     required this.move,

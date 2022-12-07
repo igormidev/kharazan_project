@@ -42,9 +42,35 @@ extension ListStringExtension on List<String?> {
   }
 }
 
-extension ListLessBoilerPlateExtension<T> on List<T?> {
+extension NullableListLessBoilerPlateExtension<T> on List<T?> {
   bool get hasANotNullElement => any((element) => element != null);
   List<T> get removeNull => whereType<T>().toList();
+}
+
+extension ListLessBoilerPlateExtension<T> on List<T> {
+  /// The single element satisfying [test].
+  ///
+  /// Returns `null` if there are either no elements
+  /// or more than one element satisfying [test].
+  ///
+  /// **Notice**: This behavior differs from [Iterable.singleWhere]
+  /// which always throws if there are more than one match,
+  /// and only calls the `orElse` function on zero matches.
+  T? singleWhereOrNull(bool Function(T element) test) {
+    T? result;
+    var found = false;
+    for (var element in this) {
+      if (test(element)) {
+        if (!found) {
+          result = element;
+          found = true;
+        } else {
+          return null;
+        }
+      }
+    }
+    return result;
+  }
 }
 
 extension ObjectLessBoilerPlateExtension on Object? {
