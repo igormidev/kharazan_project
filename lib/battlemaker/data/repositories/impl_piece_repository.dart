@@ -10,7 +10,7 @@ import 'package:micro_kharazan/sandbox_logger/sand_custom_logs.dart';
 class ImplPieceRepository implements ProtocolPieceRepository {
   final ProtocolBoardSource _boardDataSource;
 
-  const ImplPieceRepository(ProtocolBoardSource boardDataSource)
+  const ImplPieceRepository({required ProtocolBoardSource boardDataSource})
       : _boardDataSource = boardDataSource;
 
   @override
@@ -42,7 +42,7 @@ class ImplPieceRepository implements ProtocolPieceRepository {
     if (pieceEntity.isNull) return left(NoEntityFoundInCoordenate());
 
     final removedPieceResponse =
-        _boardDataSource.removeEntityWithId(pieceEntity!.uniqueId);
+        _boardDataSource.removeEntityWithId(pieceEntity!.uniqueBoardId);
     if (removedPieceResponse.isLeft()) return removedPieceResponse.asLeft();
 
     final pieceRemoved = removedPieceResponse.asRightResult;
@@ -90,5 +90,24 @@ class ImplPieceRepository implements ProtocolPieceRepository {
     } else {
       return left(NotAValidResponse());
     }
+  }
+
+  @override
+  Either<MatchFailure, BoardPieceEntity> updatePieceEntityWithId(
+    String uniqueBoardId,
+    BoardPieceEntity Function(BoardPieceEntity currentEntity) boardPieceEntity,
+  ) {
+    final entityResponse = _boardDataSource.getEntityById(uniqueBoardId);
+    if (entityResponse.isLeft()) return entityResponse.asLeft();
+    final entity = entityResponse.asRightResult;
+    if (entity is! BoardPieceEntity) return left(NotAValidResponse());
+
+    final response = _boardDataSource.updateEntityWithId(
+        uniqueBoardId, boardPieceEntity(entity));
+    if (response.isLeft()) return response.asLeft();
+
+    final pieceEntity = response.asRightResult;
+    if (pieceEntity is BoardPieceEntity) return right(pieceEntity);
+    return left(NotAValidResponse());
   }
 }

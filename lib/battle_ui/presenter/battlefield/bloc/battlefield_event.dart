@@ -2,21 +2,8 @@ part of 'battlefield_bloc.dart';
 
 @freezed
 class BattlefieldEvent with _$BattlefieldEvent {
-  const factory BattlefieldEvent.manegeMoveFromApi({
-    required String userId,
-    required CoordenatesInMove coordenatesInMove,
-    required String playerUserTurnId,
-    required List<OldBoardEntity> boardState,
-    required List<UserStateEntity> usersInTheMatchState,
-  }) = _ManegeMoveFromApi;
-
-  const factory BattlefieldEvent.makeMoveWithoutAnimation(
-    final String userId,
-    final String moveMaded,
-  ) = _MakeMoveWithoutAnimation;
-
   const factory BattlefieldEvent.makeMoveWithAnimation(
-    final String userId,
+    final String playerThatMakedMove,
     final String moveMaded,
   ) = _MakeMoveWithAnimation;
 

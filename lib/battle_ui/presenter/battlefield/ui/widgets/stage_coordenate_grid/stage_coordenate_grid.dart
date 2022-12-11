@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/animation_type.dart';
-import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
-import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/protocol_stage_entity.dart';
-import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_attack_animation_widget.dart';
+import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_attack_fatal_animation_widget.dart';
+import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_attack_non_fatal_animation_widget.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_change_position_animation_widget.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_default_widget.dart';
+import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/piece_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
+import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/protocol_stage_entity.dart';
 
 class StageCoordenateGrid extends StatelessWidget {
   final double maxSquareSize;
@@ -32,7 +34,7 @@ class StageCoordenateGrid extends StatelessWidget {
             // └─────────────────────────────────────────────────────────
             GestureDetector(
               onTap: () {
-                final bloc = context.read<BattlefieldBloc>();
+                // final bloc = context.read<BattlefieldBloc>();
                 // bloc.add(
                 //     BattlefieldEvent.setPieces(bloc.state.pieces.entities));
               },
@@ -87,63 +89,79 @@ class StageCoordenateGrid extends StatelessWidget {
               //     listEquals(previous.pieces, current.pieces) == false,
               builder: (context, state) {
                 final multipliyer = width * 0.125;
-                final max = width / stageEntity.stageLimits.biggerXInList;
+                final maxSize = width / stageEntity.stageLimits.biggerXInList;
 
                 return Stack(
                   children: state.entities.map(
-                    (AnimationInField coordenateEntity) {
-                      final coordenate = coordenateEntity.entity.coordenate;
+                    (BoardFieldEntity coordenateEntity) {
+                      final coordenate = coordenateEntity.coordenate;
                       final axisX = (coordenate.axisX - 1) * multipliyer;
                       final axisY = (coordenate.axisY - 1) * multipliyer;
 
-                      return coordenateEntity.when(
-                        // The default piece widget, without animation
-                        piece: (entity, uniqueId) {
-                          return PieceDefaultWidget(
-                            valueKey: uniqueId,
-                            entity: entity,
-                            axisX: axisX,
-                            axisY: axisY,
-                            size: max,
-                          );
-                        },
-
-                        // The animation of a piece moving
-                        pieceChangePosition: (
-                          animationDuration,
-                          uniqueId,
-                          entity,
-                          originCoordenate,
-                          destinyCoordenate,
-                        ) {
-                          return PieceChangePositionAnimationWidget(
-                            animationDuration: animationDuration,
-                            originCoordenate: originCoordenate,
-                            destinyCoordenate: destinyCoordenate,
-                            coordenateMultipliyer: multipliyer,
-                            valueKey: uniqueId,
-                            entity: entity,
-                            size: max,
-                          );
-                        },
-
-                        // The animation of a piece attacking a other piece
-                        pieceMakeAttack: (
-                          animationDuration,
-                          entity,
-                          uniqueId,
-                          originCoordenate,
-                          destinyCoordenate,
-                        ) {
-                          return PieceAttackAnimationWidget(
-                            animationDuration: animationDuration,
-                            originCoordenate: originCoordenate,
-                            destinyCoordenate: destinyCoordenate,
-                            valueKey: uniqueId,
-                            entity: entity,
-                            axisX: axisX,
-                            axisY: axisY,
-                            size: max,
+                      return coordenateEntity.map<Widget>(
+                        piece: (BoardPieceEntity pieceEntity) {
+                          return pieceEntity.pieceState.when<Widget>(
+                            normal: (PieceEntity piece) {
+                              return PieceDefaultWidget(
+                                valueKey: pieceEntity.uniqueBoardId,
+                                entity: pieceEntity,
+                                axisX: axisX,
+                                axisY: axisY,
+                                size: maxSize,
+                              );
+                            },
+                            pieceChangingPosition: (
+                              piece,
+                              animationTime,
+                              originCoordenate,
+                              destinyCoordenate,
+                            ) {
+                              return PieceChangePositionAnimationWidget(
+                                animationDuration: animationTime,
+                                valueKey: pieceEntity.uniqueBoardId,
+                                entity: pieceEntity,
+                                size: maxSize,
+                                originCoordenate: originCoordenate,
+                                destinyCoordenate: destinyCoordenate,
+                                coordenateMultipliyer: multipliyer,
+                              );
+                            },
+                            pieceMakingFatalAttack: (
+                              piece,
+                              animationTime,
+                              originCoordenate,
+                              destinyCoordenate,
+                            ) {
+                              return PieceAttackFatalAnimationWidget(
+                                animationDuration: animationTime,
+                                entity: pieceEntity,
+                                valueKey: pieceEntity.uniqueBoardId,
+                                axisX: axisX,
+                                axisY: axisY,
+                                size: maxSize,
+                                coordenateMultipliyer: multipliyer,
+                                originCoordenate: originCoordenate,
+                                destinyCoordenate: destinyCoordenate,
+                              );
+                            },
+                            pieceMakingNonFatalAttack: (
+                              piece,
+                              animationTime,
+                              originCoordenate,
+                              destinyCoordenate,
+                            ) {
+                              return PieceAttackNonFatalAnimationWidget(
+                                animationDuration: animationTime,
+                                entity: pieceEntity,
+                                valueKey: pieceEntity.uniqueBoardId,
+                                axisX: axisX,
+                                axisY: axisY,
+                                size: maxSize,
+                                coordenateMultipliyer: multipliyer,
+                                originCoordenate: originCoordenate,
+                                destinyCoordenate: destinyCoordenate,
+                              );
+                            },
                           );
                         },
                       );
@@ -152,39 +170,6 @@ class StageCoordenateGrid extends StatelessWidget {
                 );
               },
             ),
-
-            // ┌─────────────────────────────────────────────────────────
-            // │ The widget of each piece in the game
-            // └─────────────────────────────────────────────────────────
-            // BlocBuilder<BattlefieldBloc, BattlefieldState>(
-            //   buildWhen: (previous, current) =>
-            //       listEquals(previous.pieces, current.pieces) == false,
-            //   builder: (context, state) {
-            //     final List<PieceAnimationModel> entities = state.pieces;
-            //     return Stack(
-            //       children: entities.map(
-            //         (PieceAnimationModel pieceAnimationModel) {
-            //           final BoardEntity entity = pieceAnimationModel.entity;
-            //           final max = width / stageEntity.stageLimits.biggerXInList;
-            //           final multipliyer = width * 0.125;
-
-            //           return Positioned(
-            //             left: (entity.coordenate.axisX - 1) * multipliyer,
-            //             top: (entity.coordenate.axisY - 1) * multipliyer,
-            //             child: SizedBox(
-            //               height: max,
-            //               width: max,
-            //               child: Padding(
-            //                 padding: const EdgeInsets.all(12.0),
-            //                 child: PieceWidget(entity: entity, size: max),
-            //               ),
-            //             ),
-            //           );
-            //         },
-            //       ).toList(),
-            //     );
-            //   },
-            // ),
 
             // ┌─────────────────────────────────────────────────────────
             // │ The possible attacks dots of the selected piece
@@ -207,14 +192,13 @@ class StageCoordenateGrid extends StatelessWidget {
                         .read<BattlefieldBloc>()
                         .state
                         .entities
-                        .map((e) => e.entity)
-                        .toList()
                         .coordenatesInBoard
                         .contains(coordenate);
 
                     final color = isEnemyPieceCoordenate
                         ? const Color.fromARGB(255, 210, 88, 79)
                         : const Color.fromARGB(82, 202, 110, 35);
+
                     return Positioned(
                       left: ((coordenate.axisX - 1) * multipliyer) - align,
                       top: ((coordenate.axisY - 1) * multipliyer) - align,

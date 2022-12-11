@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/piece_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_piece_repository.dart';
 import 'param_get_piece_usecase.dart';
@@ -14,7 +14,7 @@ class ImplGetPieceUsecase implements ProtocolGetPieceUsecase {
   }) : _repository = boardRepository;
 
   @override
-  Either<MatchFailure, PieceEntity?> call(GetPieceParam param) {
+  Either<MatchFailure, BoardPieceEntity?> call(GetPieceParam param) {
     final coordenate = param.coordenates;
     final response = _repository.obtainPieceInCoordenate(coordenate);
 
@@ -27,6 +27,6 @@ class ImplGetPieceUsecase implements ProtocolGetPieceUsecase {
       // In case of other error, we will just return the error
       return response.asLeft();
     }
-    return right(response.asRightResult.pieceState.piece);
+    return right(response.asRightResult);
   }
 }

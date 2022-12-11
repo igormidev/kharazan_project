@@ -9,6 +9,8 @@ class Coordenate extends Equatable {
   @override
   String toString() => '(${axisX}x$axisY)';
 
+  String castToString() => '$axisX$axisY';
+
   factory Coordenate.fromString(String text) {
     text = text.replaceAll(' ', '');
     if (text.length != 2) throw CastingCoordenateError();
@@ -39,6 +41,8 @@ class CoordenatesInMove extends Equatable {
       destiny: Coordenate.fromString(destiny),
     );
   }
+
+  String castToString() => '$origin$destiny';
 
   @override
   String toString() => 'CoordenatesInMove(origin: $origin, destiny: $destiny)';

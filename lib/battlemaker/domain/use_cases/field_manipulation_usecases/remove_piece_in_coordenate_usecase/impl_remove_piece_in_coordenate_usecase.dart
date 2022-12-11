@@ -11,8 +11,8 @@ class ImplRemovePieceInCoordenateUsecase
   final ProtocolPieceRepository _repository;
 
   const ImplRemovePieceInCoordenateUsecase({
-    required ProtocolPieceRepository boardRepository,
-  }) : _repository = boardRepository;
+    required ProtocolPieceRepository pieceRepository,
+  }) : _repository = pieceRepository;
 
   @override
   Either<MatchFailure, VoidSucess> call(

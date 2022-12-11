@@ -17,22 +17,20 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TypeOfMoveEntity {
   CoordenatesInMove get coordenatesInMove => throw _privateConstructorUsedError;
-  PieceEntity get pieceInOrigin => throw _privateConstructorUsedError;
-  PieceEntity? get pieceInDestiny => throw _privateConstructorUsedError;
+  BoardPieceEntity get pieceInOrigin => throw _privateConstructorUsedError;
   List<BoardFieldEntity> get otherBoardEntities =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)
         pieceChangingPosition,
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)
         pieceAttackingOther,
   }) =>
@@ -41,14 +39,13 @@ mixin _$TypeOfMoveEntity {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceChangingPosition,
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
   }) =>
@@ -57,14 +54,13 @@ mixin _$TypeOfMoveEntity {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceChangingPosition,
     TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
     required TResult orElse(),
@@ -105,8 +101,7 @@ abstract class $TypeOfMoveEntityCopyWith<$Res> {
   @useResult
   $Res call(
       {CoordenatesInMove coordenatesInMove,
-      PieceEntity pieceInOrigin,
-      PieceEntity? pieceInDestiny,
+      BoardPieceEntity pieceInOrigin,
       List<BoardFieldEntity> otherBoardEntities});
 }
 
@@ -125,7 +120,6 @@ class _$TypeOfMoveEntityCopyWithImpl<$Res, $Val extends TypeOfMoveEntity>
   $Res call({
     Object? coordenatesInMove = null,
     Object? pieceInOrigin = null,
-    Object? pieceInDestiny = freezed,
     Object? otherBoardEntities = null,
   }) {
     return _then(_value.copyWith(
@@ -136,11 +130,7 @@ class _$TypeOfMoveEntityCopyWithImpl<$Res, $Val extends TypeOfMoveEntity>
       pieceInOrigin: null == pieceInOrigin
           ? _value.pieceInOrigin
           : pieceInOrigin // ignore: cast_nullable_to_non_nullable
-              as PieceEntity,
-      pieceInDestiny: freezed == pieceInDestiny
-          ? _value.pieceInDestiny
-          : pieceInDestiny // ignore: cast_nullable_to_non_nullable
-              as PieceEntity?,
+              as BoardPieceEntity,
       otherBoardEntities: null == otherBoardEntities
           ? _value.otherBoardEntities
           : otherBoardEntities // ignore: cast_nullable_to_non_nullable
@@ -160,8 +150,7 @@ abstract class _$$_MoveTypeChangePiecePositionCopyWith<$Res>
   @useResult
   $Res call(
       {CoordenatesInMove coordenatesInMove,
-      PieceEntity pieceInOrigin,
-      PieceEntity? pieceInDestiny,
+      BoardPieceEntity pieceInOrigin,
       List<BoardFieldEntity> otherBoardEntities});
 }
 
@@ -179,7 +168,6 @@ class __$$_MoveTypeChangePiecePositionCopyWithImpl<$Res>
   $Res call({
     Object? coordenatesInMove = null,
     Object? pieceInOrigin = null,
-    Object? pieceInDestiny = freezed,
     Object? otherBoardEntities = null,
   }) {
     return _then(_$_MoveTypeChangePiecePosition(
@@ -190,11 +178,7 @@ class __$$_MoveTypeChangePiecePositionCopyWithImpl<$Res>
       pieceInOrigin: null == pieceInOrigin
           ? _value.pieceInOrigin
           : pieceInOrigin // ignore: cast_nullable_to_non_nullable
-              as PieceEntity,
-      pieceInDestiny: freezed == pieceInDestiny
-          ? _value.pieceInDestiny
-          : pieceInDestiny // ignore: cast_nullable_to_non_nullable
-              as PieceEntity?,
+              as BoardPieceEntity,
       otherBoardEntities: null == otherBoardEntities
           ? _value._otherBoardEntities
           : otherBoardEntities // ignore: cast_nullable_to_non_nullable
@@ -209,16 +193,13 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
   const _$_MoveTypeChangePiecePosition(
       {required this.coordenatesInMove,
       required this.pieceInOrigin,
-      required this.pieceInDestiny,
       required final List<BoardFieldEntity> otherBoardEntities})
       : _otherBoardEntities = otherBoardEntities;
 
   @override
   final CoordenatesInMove coordenatesInMove;
   @override
-  final PieceEntity pieceInOrigin;
-  @override
-  final PieceEntity? pieceInDestiny;
+  final BoardPieceEntity pieceInOrigin;
   final List<BoardFieldEntity> _otherBoardEntities;
   @override
   List<BoardFieldEntity> get otherBoardEntities {
@@ -228,7 +209,7 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
 
   @override
   String toString() {
-    return 'TypeOfMoveEntity.pieceChangingPosition(coordenatesInMove: $coordenatesInMove, pieceInOrigin: $pieceInOrigin, pieceInDestiny: $pieceInDestiny, otherBoardEntities: $otherBoardEntities)';
+    return 'TypeOfMoveEntity.pieceChangingPosition(coordenatesInMove: $coordenatesInMove, pieceInOrigin: $pieceInOrigin, otherBoardEntities: $otherBoardEntities)';
   }
 
   @override
@@ -238,17 +219,18 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
             other is _$_MoveTypeChangePiecePosition &&
             (identical(other.coordenatesInMove, coordenatesInMove) ||
                 other.coordenatesInMove == coordenatesInMove) &&
-            (identical(other.pieceInOrigin, pieceInOrigin) ||
-                other.pieceInOrigin == pieceInOrigin) &&
-            (identical(other.pieceInDestiny, pieceInDestiny) ||
-                other.pieceInDestiny == pieceInDestiny) &&
+            const DeepCollectionEquality()
+                .equals(other.pieceInOrigin, pieceInOrigin) &&
             const DeepCollectionEquality()
                 .equals(other._otherBoardEntities, _otherBoardEntities));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, coordenatesInMove, pieceInOrigin,
-      pieceInDestiny, const DeepCollectionEquality().hash(_otherBoardEntities));
+  int get hashCode => Object.hash(
+      runtimeType,
+      coordenatesInMove,
+      const DeepCollectionEquality().hash(pieceInOrigin),
+      const DeepCollectionEquality().hash(_otherBoardEntities));
 
   @JsonKey(ignore: true)
   @override
@@ -262,19 +244,18 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
   TResult when<TResult extends Object?>({
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)
         pieceChangingPosition,
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)
         pieceAttackingOther,
   }) {
     return pieceChangingPosition(
-        coordenatesInMove, pieceInOrigin, pieceInDestiny, otherBoardEntities);
+        coordenatesInMove, pieceInOrigin, otherBoardEntities);
   }
 
   @override
@@ -282,19 +263,18 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceChangingPosition,
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
   }) {
     return pieceChangingPosition?.call(
-        coordenatesInMove, pieceInOrigin, pieceInDestiny, otherBoardEntities);
+        coordenatesInMove, pieceInOrigin, otherBoardEntities);
   }
 
   @override
@@ -302,21 +282,20 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceChangingPosition,
     TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
     required TResult orElse(),
   }) {
     if (pieceChangingPosition != null) {
       return pieceChangingPosition(
-          coordenatesInMove, pieceInOrigin, pieceInDestiny, otherBoardEntities);
+          coordenatesInMove, pieceInOrigin, otherBoardEntities);
     }
     return orElse();
   }
@@ -358,17 +337,14 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
 abstract class _MoveTypeChangePiecePosition implements TypeOfMoveEntity {
   const factory _MoveTypeChangePiecePosition(
           {required final CoordenatesInMove coordenatesInMove,
-          required final PieceEntity pieceInOrigin,
-          required final PieceEntity? pieceInDestiny,
+          required final BoardPieceEntity pieceInOrigin,
           required final List<BoardFieldEntity> otherBoardEntities}) =
       _$_MoveTypeChangePiecePosition;
 
   @override
   CoordenatesInMove get coordenatesInMove;
   @override
-  PieceEntity get pieceInOrigin;
-  @override
-  PieceEntity? get pieceInDestiny;
+  BoardPieceEntity get pieceInOrigin;
   @override
   List<BoardFieldEntity> get otherBoardEntities;
   @override
@@ -387,8 +363,8 @@ abstract class _$$_PieceAttackingOtherCopyWith<$Res>
   @useResult
   $Res call(
       {CoordenatesInMove coordenatesInMove,
-      PieceEntity pieceInOrigin,
-      PieceEntity? pieceInDestiny,
+      BoardPieceEntity pieceInOrigin,
+      BoardPieceEntity? pieceInDestiny,
       List<BoardFieldEntity> otherBoardEntities});
 }
 
@@ -405,7 +381,7 @@ class __$$_PieceAttackingOtherCopyWithImpl<$Res>
   $Res call({
     Object? coordenatesInMove = null,
     Object? pieceInOrigin = null,
-    Object? pieceInDestiny = freezed,
+    Object? pieceInDestiny = null,
     Object? otherBoardEntities = null,
   }) {
     return _then(_$_PieceAttackingOther(
@@ -416,11 +392,11 @@ class __$$_PieceAttackingOtherCopyWithImpl<$Res>
       pieceInOrigin: null == pieceInOrigin
           ? _value.pieceInOrigin
           : pieceInOrigin // ignore: cast_nullable_to_non_nullable
-              as PieceEntity,
-      pieceInDestiny: freezed == pieceInDestiny
+              as BoardPieceEntity,
+      pieceInDestiny: null == pieceInDestiny
           ? _value.pieceInDestiny
           : pieceInDestiny // ignore: cast_nullable_to_non_nullable
-              as PieceEntity?,
+              as BoardPieceEntity?,
       otherBoardEntities: null == otherBoardEntities
           ? _value._otherBoardEntities
           : otherBoardEntities // ignore: cast_nullable_to_non_nullable
@@ -442,9 +418,9 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
   @override
   final CoordenatesInMove coordenatesInMove;
   @override
-  final PieceEntity pieceInOrigin;
+  final BoardPieceEntity pieceInOrigin;
   @override
-  final PieceEntity? pieceInDestiny;
+  final BoardPieceEntity? pieceInDestiny;
   final List<BoardFieldEntity> _otherBoardEntities;
   @override
   List<BoardFieldEntity> get otherBoardEntities {
@@ -464,17 +440,21 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
             other is _$_PieceAttackingOther &&
             (identical(other.coordenatesInMove, coordenatesInMove) ||
                 other.coordenatesInMove == coordenatesInMove) &&
-            (identical(other.pieceInOrigin, pieceInOrigin) ||
-                other.pieceInOrigin == pieceInOrigin) &&
-            (identical(other.pieceInDestiny, pieceInDestiny) ||
-                other.pieceInDestiny == pieceInDestiny) &&
+            const DeepCollectionEquality()
+                .equals(other.pieceInOrigin, pieceInOrigin) &&
+            const DeepCollectionEquality()
+                .equals(other.pieceInDestiny, pieceInDestiny) &&
             const DeepCollectionEquality()
                 .equals(other._otherBoardEntities, _otherBoardEntities));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, coordenatesInMove, pieceInOrigin,
-      pieceInDestiny, const DeepCollectionEquality().hash(_otherBoardEntities));
+  int get hashCode => Object.hash(
+      runtimeType,
+      coordenatesInMove,
+      const DeepCollectionEquality().hash(pieceInOrigin),
+      const DeepCollectionEquality().hash(pieceInDestiny),
+      const DeepCollectionEquality().hash(_otherBoardEntities));
 
   @JsonKey(ignore: true)
   @override
@@ -488,14 +468,13 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
   TResult when<TResult extends Object?>({
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)
         pieceChangingPosition,
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)
         pieceAttackingOther,
   }) {
@@ -508,14 +487,13 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceChangingPosition,
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
   }) {
@@ -528,14 +506,13 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceChangingPosition,
     TResult Function(
             CoordenatesInMove coordenatesInMove,
-            PieceEntity pieceInOrigin,
-            PieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInOrigin,
+            BoardPieceEntity? pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
     required TResult orElse(),
@@ -584,17 +561,16 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
 abstract class _PieceAttackingOther implements TypeOfMoveEntity {
   const factory _PieceAttackingOther(
           {required final CoordenatesInMove coordenatesInMove,
-          required final PieceEntity pieceInOrigin,
-          required final PieceEntity? pieceInDestiny,
+          required final BoardPieceEntity pieceInOrigin,
+          required final BoardPieceEntity? pieceInDestiny,
           required final List<BoardFieldEntity> otherBoardEntities}) =
       _$_PieceAttackingOther;
 
   @override
   CoordenatesInMove get coordenatesInMove;
   @override
-  PieceEntity get pieceInOrigin;
-  @override
-  PieceEntity? get pieceInDestiny;
+  BoardPieceEntity get pieceInOrigin;
+  BoardPieceEntity? get pieceInDestiny;
   @override
   List<BoardFieldEntity> get otherBoardEntities;
   @override

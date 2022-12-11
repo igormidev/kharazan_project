@@ -12,5 +12,5 @@ class UserStateEntity extends Equatable {
   });
 
   @override
-  List<Object> get props => [playerId, currentMana];
+  List<Object> get props => [displayName, playerId, currentMana];
 }

@@ -33,7 +33,6 @@ class ImplDefineTypeOfMoveUsecase extends ProtocolDefineTypeOfMoveUsecase {
       final typeOfMove = TypeOfMoveEntity.pieceChangingPosition(
         coordenatesInMove: coordenatesInMove,
         pieceInOrigin: pieceInOrigin,
-        pieceInDestiny: pieceInDestiny,
         otherBoardEntities: otherBoardEntities,
       );
       return right(ReturnDefineTypeOfMoveUsecase(typeOfMoveEntity: typeOfMove));

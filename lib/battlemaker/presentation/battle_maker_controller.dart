@@ -37,8 +37,7 @@ class BattleMakerController {
   StreamSink get inEvents => _eventsStream.sink;
   Stream<MatchEvent> get outEvents => _eventsStream.stream;
 
-  Future<Either<MatchFailure, VoidSucess>> makeMove(
-      String userId, String move) async {
+  Either<MatchFailure, VoidSucess> makeMove(String userId, String move) {
     final param = MakeMoveParam(userId: userId, move: move);
     final makeMoveResponse = _makeMoveUsecase(param);
     if (makeMoveResponse.isLeft()) return left(makeMoveResponse.asLeftResult);

@@ -8,19 +8,14 @@ part 'board_field_entity.freezed.dart';
 @freezed
 class BoardFieldEntity with _$BoardFieldEntity {
   const factory BoardFieldEntity.piece({
+    /// The id of the user that can control the piece
+    required String pieceOwnerId,
+
     /// The [coordenate] that indicate where is the [piece]
     required Coordenate coordenate,
 
     /// The [piece] that is in the [coordenate]
     required PieceState pieceState,
-
-    /// The id of the user that can control the piece
-    required String pieceOwnerId,
-    required String uniqueId,
+    required String uniqueBoardId,
   }) = BoardPieceEntity;
-
-  const factory BoardFieldEntity.damageArea({
-    required String uniqueId,
-    required Coordenate coordenate,
-  }) = BoardDamageArea;
 }

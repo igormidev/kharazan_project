@@ -38,3 +38,8 @@ extension BoardListEntityExtensions on List<BoardPieceEntity> {
   List<Coordenate> get coordenatesInBoard =>
       map((entity) => entity.coordenate).toList();
 }
+
+extension BoardFieldEntityExtension on List<BoardFieldEntity> {
+  List<Coordenate> get coordenatesInBoard =>
+      map((entity) => entity.coordenate).toList();
+}

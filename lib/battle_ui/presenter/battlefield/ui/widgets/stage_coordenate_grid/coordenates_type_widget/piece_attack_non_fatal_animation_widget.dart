@@ -3,34 +3,38 @@ import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'piece_draggable_widget.dart';
 
-class PieceChangePositionAnimationWidget extends StatefulWidget {
+class PieceAttackNonFatalAnimationWidget extends StatefulWidget {
   final Duration animationDuration;
   final BoardPieceEntity entity;
   final String valueKey;
+  final double axisX;
+  final double axisY;
   final double size;
   final double coordenateMultipliyer;
 
   final Coordenate originCoordenate;
   final Coordenate destinyCoordenate;
 
-  const PieceChangePositionAnimationWidget({
+  const PieceAttackNonFatalAnimationWidget({
     required this.animationDuration,
-    required this.valueKey,
     required this.entity,
+    required this.valueKey,
+    required this.axisX,
+    required this.axisY,
     required this.size,
+    required this.coordenateMultipliyer,
     required this.originCoordenate,
     required this.destinyCoordenate,
-    required this.coordenateMultipliyer,
     super.key,
   });
 
   @override
-  State<PieceChangePositionAnimationWidget> createState() =>
-      _PieceChangePositionAnimationWidgetState();
+  State<PieceAttackNonFatalAnimationWidget> createState() =>
+      _PieceAttackNonFatalAnimationWidgetState();
 }
 
-class _PieceChangePositionAnimationWidgetState
-    extends State<PieceChangePositionAnimationWidget> {
+class _PieceAttackNonFatalAnimationWidgetState
+    extends State<PieceAttackNonFatalAnimationWidget> {
   late double axisX =
       (widget.originCoordenate.axisX - 1) * widget.coordenateMultipliyer;
   late double axisY =
@@ -53,8 +57,8 @@ class _PieceChangePositionAnimationWidgetState
     return AnimatedPositioned(
       duration: widget.animationDuration,
       key: ValueKey(widget.valueKey),
-      left: axisX,
-      top: axisY,
+      left: widget.axisX,
+      top: widget.axisY,
       height: widget.size,
       width: widget.size,
       child: PieceWidget(entity: widget.entity, size: widget.size),

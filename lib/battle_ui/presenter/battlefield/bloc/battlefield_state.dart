@@ -4,20 +4,20 @@ part of 'battlefield_bloc.dart';
 class BattlefieldState with _$BattlefieldState {
   const factory BattlefieldState.normal({
     required List<UserStateEntity> users,
-    required List<AnimationInField> entities,
+    required List<BoardFieldEntity> entities,
   }) = _BattlefieldInitialState;
 
   const factory BattlefieldState.pieceSelected({
     required List<Coordenate> possiblePieceMovementArea,
     required List<Coordenate> possiblePieceAttackArea,
     required List<UserStateEntity> users,
-    required List<AnimationInField> entities,
+    required List<BoardFieldEntity> entities,
     required Coordenate selectedPieceCoordenate,
   }) = _PieceSelected;
 
   const factory BattlefieldState.withError({
     required MatchFailure failure,
     required List<UserStateEntity> users,
-    required List<AnimationInField> entities,
+    required List<BoardFieldEntity> entities,
   }) = _WithError;
 }

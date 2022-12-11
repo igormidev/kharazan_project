@@ -21,17 +21,17 @@ class ImplGetPieceValidMovesAttackUsecase
 
   @override
   Either<MatchFailure, List<Coordenate>> call(GetPieceValidMovesParam param) {
-    final coordenate = param.coordenate;
-
     final matchResponse = _boardRepository.obtainCoordenatesInTheBoard();
     if (matchResponse.isLeft()) return matchResponse.asLeft();
     final field = matchResponse.asRightResult;
 
-    final entityResponse = _pieceRepository.obtainPieceInCoordenate(coordenate);
+    final entityResponse =
+        _pieceRepository.obtainPieceInCoordenate(param.coordenate);
     if (entityResponse.isLeft()) return entityResponse.asLeft();
+    final pieceEntity = entityResponse.asRightResult;
     final piece = entityResponse.asRightResult.pieceState.piece;
 
-    final possibleAttackArea = piece.obtainAttackArea(param.coordenate);
+    final possibleAttackArea = piece.obtainAttackArea(pieceEntity.coordenate);
     final validAttackArea =
         getCoordenatesInsideLimits(field, possibleAttackArea);
 

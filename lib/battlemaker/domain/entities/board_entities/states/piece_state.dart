@@ -17,10 +17,17 @@ class PieceState with _$PieceState {
     required Coordenate destinyCoordenate,
   }) = _PieceChangePosition;
 
-  const factory PieceState.pieceMakingAttack({
+  const factory PieceState.pieceMakingFatalAttack({
     required PieceEntity piece,
     required Duration animationTime,
     required Coordenate originCoordenate,
     required Coordenate destinyCoordenate,
   }) = _PieceAttackMove;
+
+  const factory PieceState.pieceMakingNonFatalAttack({
+    required PieceEntity piece,
+    required Duration animationTime,
+    required Coordenate originCoordenate,
+    required Coordenate destinyCoordenate,
+  }) = _PieceNonFatalAttackMove;
 }

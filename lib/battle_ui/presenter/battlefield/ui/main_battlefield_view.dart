@@ -3,12 +3,21 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:micro_kharazan/battle_ui/core/mock_pieces.dart';
-import 'package:micro_kharazan/battle_ui/domain/usecases/change_piece_coordenate_usecase/impl_change_piece_coordenate_usecase.dart';
-import 'package:micro_kharazan/battle_ui/domain/usecases/obtain_pieces_status_after_move_usecase/impl_obtain_pieces_status_after_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/data/repositories/impl_board_repository.dart';
+import 'package:micro_kharazan/battlemaker/data/repositories/impl_piece_repository.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
+import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_piece_repository.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/define_type_of_move_usecase/impl_define_type_of_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/define_type_of_move_usecase/protocol_define_type_of_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/execute_typed_move_usecase/impl_execute_typed_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/execute_typed_move_usecase/protocol_execute_typed_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/remove_piece_in_coordenate_usecase/impl_remove_piece_in_coordenate_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/remove_piece_in_coordenate_usecase/protocol_remove_piece_in_coordenate_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/get_move_entities_usecase/impl_get_move_entities_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_move_entities_usecase/protocol_get_move_entities_usecase.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/coliseum_map.dart';
-import 'package:micro_kharazan/battlemaker/data/repositories/impl_piece_repository.dart';
 import 'package:micro_kharazan/battlemaker/data/repositories/impl_match_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
@@ -28,6 +37,12 @@ import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_move
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_moves_usecase/impl_get_piece_valid_movimentation_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/impl_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/protocol_make_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_change_position_animation_state_usecase/impl_update_piece_to_change_position_animation_state_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_change_position_animation_state_usecase/protocol_update_piece_to_change_position_animation_state_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_fatal_attack_animation_state_usecase/impl_update_piece_to_making_fatal_attack_animation_state_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_fatal_attack_animation_state_usecase/protocol_update_piece_to_making_fatal_attack_animation_state_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_non_fatal_attack_animation_state_usecase/impl_update_piece_to_making_non_fatal_attack_animation_state_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_non_fatal_attack_animation_state_usecase/protocol_update_piece_to_making_non_fatal_attack_animation_state_usecase.dart';
 import 'package:micro_kharazan/battlemaker/external/source/impl_board_source.dart';
 import 'package:micro_kharazan/battlemaker/external/source/impl_match_source.dart';
 import 'package:micro_kharazan/battlemaker/presentation/battle_maker_controller.dart';
@@ -43,7 +58,7 @@ class MainBattlefieldView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final boardSource = ImplBoardSource(
-      piecesInTheBoard: mockEntities.map((e) => e.entity).toList(),
+      piecesInTheBoard: mockEntities,
       fieldLimits: const ColiseumMap().stageLimits,
     );
 
@@ -62,41 +77,75 @@ class MainBattlefieldView extends StatelessWidget {
 
     const matchSource = ImplMatchSource(usersInTheGame: usersInTheGame);
 
-    final ProtocolBoardRepository boardRepo = ImplPieceRepository(boardSource);
+    final ProtocolBoardRepository boardRepository =
+        ImplBoardRepository(boardDataSource: boardSource);
+    final ProtocolPieceRepository pieceRepository =
+        ImplPieceRepository(boardDataSource: boardSource);
     const ProtocolMatchStateRepository matchRepo =
         ImplMatchRepository(matchSource: matchSource);
 
-    final getValidMoves =
-        ImplGetPieceValidMovimentationUsecase(boardRepository: boardRepo);
-    final getValidAttacks =
-        ImplGetPieceValidMovesAttackUsecase(boardRepository: boardRepo);
+    final getValidMoves = ImplGetPieceValidMovimentationUsecase(
+        boardRepository: boardRepository, pieceRepository: pieceRepository);
+    final getValidAttacks = ImplGetPieceValidMovesAttackUsecase(
+        boardRepository: boardRepository, pieceRepository: pieceRepository);
 
     final ProtocolGetMatchStatesUsecase getMatchStates =
         ImplGetMatchStatesUsecase(
-      boardRepository: boardRepo,
+      boardRepository: pieceRepository,
       matchRepository: matchRepo,
     );
     final ProtocolChangePiecePositionUsecase changePiecePositionUsecase =
-        ImplChangePiecePositionUsecase(boardRepository: boardRepo);
+        ImplChangePiecePositionUsecase(boardRepository: pieceRepository);
     final ProtocolDealDamageToPieceUsecase dealDamageToPiece =
-        ImplDealDamageToPieceUsecase(boardRepository: boardRepo);
+        ImplDealDamageToPieceUsecase(boardRepository: pieceRepository);
     const ProtocolCanUserMakeMoveUsecase canUserMakeMove =
         ImplCanUserMakeMoveUsecase(matchStateRepository: matchRepo);
-    final ProtocolGetPieceUsecase getPiece =
-        ImplGetPieceUsecase(boardRepository: boardRepo);
+    final ProtocolGetPieceUsecase getPieceUsecase =
+        ImplGetPieceUsecase(boardRepository: pieceRepository);
+    final ProtocolRemovePieceInCoordenateUsecase
+        removePieceInCoordenateUsecase =
+        ImplRemovePieceInCoordenateUsecase(pieceRepository: pieceRepository);
+    final ProtocolUpdatePieceToMakingFatalAttackAnimationStateUsecase
+        updatePieceToMakingFatalAttackAnimationStateUsecase =
+        ImplUpdatePieceToMakingFatalAttackAnimationStateUsecase(
+            pieceRepository: pieceRepository);
+    final ProtocolUpdatePieceToMakingNonFatalAttackAnimationStateUsecase
+        updatePieceToMakingNonFatalAttackAnimationStateUsecase =
+        ImplUpdatePieceToMakingNonFatalAttackAnimationStateUsecase(
+            pieceRepository: pieceRepository);
+    final ProtocolUpdatePieceToChangePositionAnimationStateUsecase
+        updatePieceToChangePositionAnimationStateUsecase =
+        ImplUpdatePieceToChangePositionAnimationStateUsecase(
+            pieceRepository: pieceRepository);
 
-    final ProtocolMakeMoveUsecase makeMoveUsecase = ImplMakeMoveUsecase(
-      getMatchStatesUsecase: getMatchStates,
+    final ProtocolDefineTypeOfMoveUsecase defineTypeOfMoveUsecase =
+        ImplDefineTypeOfMoveUsecase();
+    final ProtocolGetMoveEntitiesUsecase getMoveEntitiesUsecase =
+        ImplGetMoveEntitiesUsecase(getPieceUsecase: getPieceUsecase);
+    final ProtocolExecuteTypedMoveUsecase executeTypedMoveUsecase =
+        ImplExecuteTypedMoveUsecase(
       changePiecePositionUsecase: changePiecePositionUsecase,
       dealDamageToPieceUsecase: dealDamageToPiece,
+      updatePieceToChangePositionAnimationStateUsecase:
+          updatePieceToChangePositionAnimationStateUsecase,
+      updatePieceToMakingNonFatalAttackAnimationStateUsecase:
+          updatePieceToMakingNonFatalAttackAnimationStateUsecase,
+      updatePieceToMakingFatalAttackAnimationStateUsecase:
+          updatePieceToMakingFatalAttackAnimationStateUsecase,
+      removePieceInCoordenateUsecase: removePieceInCoordenateUsecase,
+    );
+
+    final ProtocolMakeMoveUsecase makeMoveUsecase = ImplMakeMoveUsecase(
+      defineTypeOfMoveUsecase: defineTypeOfMoveUsecase,
+      getMatchStatesUsecase: getMatchStates,
       canUserMakeMoveUsecase: canUserMakeMove,
-      getPieceUsecase:
-          getPiece as ProtocolGetMoveEntitiesUsecase, // TODO: REMOVE
+      getPieceUsecase: getMoveEntitiesUsecase,
+      executeTypedMoveUsecase: executeTypedMoveUsecase,
     );
 
     final ProtocolGetMatchStatesUsecase getMatchStatesUsecase =
         ImplGetMatchStatesUsecase(
-      boardRepository: boardRepo,
+      boardRepository: pieceRepository,
       matchRepository: matchRepo,
     );
 
@@ -108,17 +157,11 @@ class MainBattlefieldView extends StatelessWidget {
       getPieceValidMovimentation: getValidMoves,
     );
 
-    final wrapAnimationUsecase = ImplWrapPieceInMoveWithAnimationModelUsecase();
-
     return BlocProvider(
       create: (_) => BattlefieldBloc(
-        obtainPiecesStatusAfterMoveUsecase:
-            ImplObtainPiecesStatusAfterMoveUsecase(),
-        changePieceInCoordenate: ImplChangePieceCoordenateUsecase(),
         usersInTheGame: usersInTheGame,
         battleController: controller,
         entities: mockEntities,
-        withPieceInMoveAnimationModelUsecase: wrapAnimationUsecase,
       ),
       child: const DisposeWidget(),
     );
@@ -151,16 +194,12 @@ class _DisposeWidgetState extends State<DisposeWidget> {
         moveMaked: (
           CoordenatesInMove coordenatesInMove,
           String playerUserTurnId,
-          List<OldBoardEntity> boardState,
-          List<AnimationInField> animationInMove,
+          List<BoardFieldEntity> boardState,
           List<UserStateEntity> usersInTheMatchState,
         ) {
-          bloc.add(BattlefieldEvent.manegeMoveFromApi(
-            userId: playerUserTurnId,
-            coordenatesInMove: coordenatesInMove,
-            playerUserTurnId: playerUserTurnId,
-            boardState: boardState,
-            usersInTheMatchState: usersInTheMatchState,
+          bloc.add(BattlefieldEvent.makeMoveWithAnimation(
+            playerUserTurnId,
+            coordenatesInMove.castToString(),
           ));
         },
       );

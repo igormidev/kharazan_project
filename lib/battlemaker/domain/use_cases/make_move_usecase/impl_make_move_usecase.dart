@@ -39,8 +39,8 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
 
   @override
   Either<MatchFailure, ReturnMakeMoveUsecase> call(MakeMoveParam param) {
-    final moveEntitiesResponse =
-        _getMoveEntitiesUsecase(ParamGetMoveEntitiesUsecase(move: param.move));
+    final getEntitiesParam = ParamGetMoveEntitiesUsecase(move: param.move);
+    final moveEntitiesResponse = _getMoveEntitiesUsecase(getEntitiesParam);
     if (moveEntitiesResponse.isLeft()) {
       return left(moveEntitiesResponse.asLeftResult);
     }
@@ -50,7 +50,7 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
     // Verify if user has mana to make the move and other validations
     final canMoveParam = CanUserMakeMoveParam(
       userId: param.userId,
-      neededManaToMakeMove: moveEntities.pieceInOrigin.cost,
+      neededManaToMakeMove: moveEntities.pieceInOrigin.pieceState.piece.cost,
     );
     final canOriginPieceMove = _canUserMakeMoveUsecase(canMoveParam);
     if (canOriginPieceMove.isLeft()) return canOriginPieceMove.asLeft();

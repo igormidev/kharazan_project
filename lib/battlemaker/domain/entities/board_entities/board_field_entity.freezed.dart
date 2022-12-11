@@ -16,51 +16,50 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$BoardFieldEntity {
+  /// The id of the user that can control the piece
+  String get pieceOwnerId => throw _privateConstructorUsedError;
+
   /// The [coordenate] that indicate where is the [piece]
   Coordenate get coordenate => throw _privateConstructorUsedError;
-  String get uniqueId => throw _privateConstructorUsedError;
+
+  /// The [piece] that is in the [coordenate]
+  PieceState get pieceState => throw _privateConstructorUsedError;
+  String get uniqueBoardId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)
+    required TResult Function(String pieceOwnerId, Coordenate coordenate,
+            PieceState pieceState, String uniqueBoardId)
         piece,
-    required TResult Function(String uniqueId, Coordenate coordenate)
-        damageArea,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)?
+    TResult? Function(String pieceOwnerId, Coordenate coordenate,
+            PieceState pieceState, String uniqueBoardId)?
         piece,
-    TResult? Function(String uniqueId, Coordenate coordenate)? damageArea,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)?
+    TResult Function(String pieceOwnerId, Coordenate coordenate,
+            PieceState pieceState, String uniqueBoardId)?
         piece,
-    TResult Function(String uniqueId, Coordenate coordenate)? damageArea,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(BoardPieceEntity value) piece,
-    required TResult Function(BoardDamageArea value) damageArea,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(BoardPieceEntity value)? piece,
-    TResult? Function(BoardDamageArea value)? damageArea,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(BoardPieceEntity value)? piece,
-    TResult Function(BoardDamageArea value)? damageArea,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -76,7 +75,13 @@ abstract class $BoardFieldEntityCopyWith<$Res> {
           BoardFieldEntity value, $Res Function(BoardFieldEntity) then) =
       _$BoardFieldEntityCopyWithImpl<$Res, BoardFieldEntity>;
   @useResult
-  $Res call({Coordenate coordenate, String uniqueId});
+  $Res call(
+      {String pieceOwnerId,
+      Coordenate coordenate,
+      PieceState pieceState,
+      String uniqueBoardId});
+
+  $PieceStateCopyWith<$Res> get pieceState;
 }
 
 /// @nodoc
@@ -92,19 +97,37 @@ class _$BoardFieldEntityCopyWithImpl<$Res, $Val extends BoardFieldEntity>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? pieceOwnerId = null,
     Object? coordenate = null,
-    Object? uniqueId = null,
+    Object? pieceState = null,
+    Object? uniqueBoardId = null,
   }) {
     return _then(_value.copyWith(
+      pieceOwnerId: null == pieceOwnerId
+          ? _value.pieceOwnerId
+          : pieceOwnerId // ignore: cast_nullable_to_non_nullable
+              as String,
       coordenate: null == coordenate
           ? _value.coordenate
           : coordenate // ignore: cast_nullable_to_non_nullable
               as Coordenate,
-      uniqueId: null == uniqueId
-          ? _value.uniqueId
-          : uniqueId // ignore: cast_nullable_to_non_nullable
+      pieceState: null == pieceState
+          ? _value.pieceState
+          : pieceState // ignore: cast_nullable_to_non_nullable
+              as PieceState,
+      uniqueBoardId: null == uniqueBoardId
+          ? _value.uniqueBoardId
+          : uniqueBoardId // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PieceStateCopyWith<$Res> get pieceState {
+    return $PieceStateCopyWith<$Res>(_value.pieceState, (value) {
+      return _then(_value.copyWith(pieceState: value) as $Val);
+    });
   }
 }
 
@@ -117,11 +140,12 @@ abstract class _$$BoardPieceEntityCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Coordenate coordenate,
+      {String pieceOwnerId,
+      Coordenate coordenate,
       PieceState pieceState,
-      String pieceOwnerId,
-      String uniqueId});
+      String uniqueBoardId});
 
+  @override
   $PieceStateCopyWith<$Res> get pieceState;
 }
 
@@ -136,12 +160,16 @@ class __$$BoardPieceEntityCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? pieceOwnerId = null,
     Object? coordenate = null,
     Object? pieceState = null,
-    Object? pieceOwnerId = null,
-    Object? uniqueId = null,
+    Object? uniqueBoardId = null,
   }) {
     return _then(_$BoardPieceEntity(
+      pieceOwnerId: null == pieceOwnerId
+          ? _value.pieceOwnerId
+          : pieceOwnerId // ignore: cast_nullable_to_non_nullable
+              as String,
       coordenate: null == coordenate
           ? _value.coordenate
           : coordenate // ignore: cast_nullable_to_non_nullable
@@ -150,23 +178,11 @@ class __$$BoardPieceEntityCopyWithImpl<$Res>
           ? _value.pieceState
           : pieceState // ignore: cast_nullable_to_non_nullable
               as PieceState,
-      pieceOwnerId: null == pieceOwnerId
-          ? _value.pieceOwnerId
-          : pieceOwnerId // ignore: cast_nullable_to_non_nullable
-              as String,
-      uniqueId: null == uniqueId
-          ? _value.uniqueId
-          : uniqueId // ignore: cast_nullable_to_non_nullable
+      uniqueBoardId: null == uniqueBoardId
+          ? _value.uniqueBoardId
+          : uniqueBoardId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $PieceStateCopyWith<$Res> get pieceState {
-    return $PieceStateCopyWith<$Res>(_value.pieceState, (value) {
-      return _then(_value.copyWith(pieceState: value));
-    });
   }
 }
 
@@ -174,10 +190,14 @@ class __$$BoardPieceEntityCopyWithImpl<$Res>
 
 class _$BoardPieceEntity implements BoardPieceEntity {
   const _$BoardPieceEntity(
-      {required this.coordenate,
+      {required this.pieceOwnerId,
+      required this.coordenate,
       required this.pieceState,
-      required this.pieceOwnerId,
-      required this.uniqueId});
+      required this.uniqueBoardId});
+
+  /// The id of the user that can control the piece
+  @override
+  final String pieceOwnerId;
 
   /// The [coordenate] that indicate where is the [piece]
   @override
@@ -186,16 +206,12 @@ class _$BoardPieceEntity implements BoardPieceEntity {
   /// The [piece] that is in the [coordenate]
   @override
   final PieceState pieceState;
-
-  /// The id of the user that can control the piece
   @override
-  final String pieceOwnerId;
-  @override
-  final String uniqueId;
+  final String uniqueBoardId;
 
   @override
   String toString() {
-    return 'BoardFieldEntity.piece(coordenate: $coordenate, pieceState: $pieceState, pieceOwnerId: $pieceOwnerId, uniqueId: $uniqueId)';
+    return 'BoardFieldEntity.piece(pieceOwnerId: $pieceOwnerId, coordenate: $coordenate, pieceState: $pieceState, uniqueBoardId: $uniqueBoardId)';
   }
 
   @override
@@ -203,19 +219,19 @@ class _$BoardPieceEntity implements BoardPieceEntity {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BoardPieceEntity &&
+            (identical(other.pieceOwnerId, pieceOwnerId) ||
+                other.pieceOwnerId == pieceOwnerId) &&
             (identical(other.coordenate, coordenate) ||
                 other.coordenate == coordenate) &&
             (identical(other.pieceState, pieceState) ||
                 other.pieceState == pieceState) &&
-            (identical(other.pieceOwnerId, pieceOwnerId) ||
-                other.pieceOwnerId == pieceOwnerId) &&
-            (identical(other.uniqueId, uniqueId) ||
-                other.uniqueId == uniqueId));
+            (identical(other.uniqueBoardId, uniqueBoardId) ||
+                other.uniqueBoardId == uniqueBoardId));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, coordenate, pieceState, pieceOwnerId, uniqueId);
+  int get hashCode => Object.hash(
+      runtimeType, pieceOwnerId, coordenate, pieceState, uniqueBoardId);
 
   @JsonKey(ignore: true)
   @override
@@ -226,37 +242,33 @@ class _$BoardPieceEntity implements BoardPieceEntity {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)
+    required TResult Function(String pieceOwnerId, Coordenate coordenate,
+            PieceState pieceState, String uniqueBoardId)
         piece,
-    required TResult Function(String uniqueId, Coordenate coordenate)
-        damageArea,
   }) {
-    return piece(coordenate, pieceState, pieceOwnerId, uniqueId);
+    return piece(pieceOwnerId, coordenate, pieceState, uniqueBoardId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)?
+    TResult? Function(String pieceOwnerId, Coordenate coordenate,
+            PieceState pieceState, String uniqueBoardId)?
         piece,
-    TResult? Function(String uniqueId, Coordenate coordenate)? damageArea,
   }) {
-    return piece?.call(coordenate, pieceState, pieceOwnerId, uniqueId);
+    return piece?.call(pieceOwnerId, coordenate, pieceState, uniqueBoardId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)?
+    TResult Function(String pieceOwnerId, Coordenate coordenate,
+            PieceState pieceState, String uniqueBoardId)?
         piece,
-    TResult Function(String uniqueId, Coordenate coordenate)? damageArea,
     required TResult orElse(),
   }) {
     if (piece != null) {
-      return piece(coordenate, pieceState, pieceOwnerId, uniqueId);
+      return piece(pieceOwnerId, coordenate, pieceState, uniqueBoardId);
     }
     return orElse();
   }
@@ -265,7 +277,6 @@ class _$BoardPieceEntity implements BoardPieceEntity {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(BoardPieceEntity value) piece,
-    required TResult Function(BoardDamageArea value) damageArea,
   }) {
     return piece(this);
   }
@@ -274,7 +285,6 @@ class _$BoardPieceEntity implements BoardPieceEntity {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(BoardPieceEntity value)? piece,
-    TResult? Function(BoardDamageArea value)? damageArea,
   }) {
     return piece?.call(this);
   }
@@ -283,7 +293,6 @@ class _$BoardPieceEntity implements BoardPieceEntity {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(BoardPieceEntity value)? piece,
-    TResult Function(BoardDamageArea value)? damageArea,
     required TResult orElse(),
   }) {
     if (piece != null) {
@@ -295,183 +304,27 @@ class _$BoardPieceEntity implements BoardPieceEntity {
 
 abstract class BoardPieceEntity implements BoardFieldEntity {
   const factory BoardPieceEntity(
-      {required final Coordenate coordenate,
+      {required final String pieceOwnerId,
+      required final Coordenate coordenate,
       required final PieceState pieceState,
-      required final String pieceOwnerId,
-      required final String uniqueId}) = _$BoardPieceEntity;
+      required final String uniqueBoardId}) = _$BoardPieceEntity;
 
   @override
-
-  /// The [coordenate] that indicate where is the [piece]
-  Coordenate get coordenate;
-
-  /// The [piece] that is in the [coordenate]
-  PieceState get pieceState;
 
   /// The id of the user that can control the piece
   String get pieceOwnerId;
   @override
-  String get uniqueId;
+
+  /// The [coordenate] that indicate where is the [piece]
+  Coordenate get coordenate;
+  @override
+
+  /// The [piece] that is in the [coordenate]
+  PieceState get pieceState;
+  @override
+  String get uniqueBoardId;
   @override
   @JsonKey(ignore: true)
   _$$BoardPieceEntityCopyWith<_$BoardPieceEntity> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$BoardDamageAreaCopyWith<$Res>
-    implements $BoardFieldEntityCopyWith<$Res> {
-  factory _$$BoardDamageAreaCopyWith(
-          _$BoardDamageArea value, $Res Function(_$BoardDamageArea) then) =
-      __$$BoardDamageAreaCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String uniqueId, Coordenate coordenate});
-}
-
-/// @nodoc
-class __$$BoardDamageAreaCopyWithImpl<$Res>
-    extends _$BoardFieldEntityCopyWithImpl<$Res, _$BoardDamageArea>
-    implements _$$BoardDamageAreaCopyWith<$Res> {
-  __$$BoardDamageAreaCopyWithImpl(
-      _$BoardDamageArea _value, $Res Function(_$BoardDamageArea) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? uniqueId = null,
-    Object? coordenate = null,
-  }) {
-    return _then(_$BoardDamageArea(
-      uniqueId: null == uniqueId
-          ? _value.uniqueId
-          : uniqueId // ignore: cast_nullable_to_non_nullable
-              as String,
-      coordenate: null == coordenate
-          ? _value.coordenate
-          : coordenate // ignore: cast_nullable_to_non_nullable
-              as Coordenate,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$BoardDamageArea implements BoardDamageArea {
-  const _$BoardDamageArea({required this.uniqueId, required this.coordenate});
-
-  @override
-  final String uniqueId;
-  @override
-  final Coordenate coordenate;
-
-  @override
-  String toString() {
-    return 'BoardFieldEntity.damageArea(uniqueId: $uniqueId, coordenate: $coordenate)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$BoardDamageArea &&
-            (identical(other.uniqueId, uniqueId) ||
-                other.uniqueId == uniqueId) &&
-            (identical(other.coordenate, coordenate) ||
-                other.coordenate == coordenate));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, uniqueId, coordenate);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$BoardDamageAreaCopyWith<_$BoardDamageArea> get copyWith =>
-      __$$BoardDamageAreaCopyWithImpl<_$BoardDamageArea>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)
-        piece,
-    required TResult Function(String uniqueId, Coordenate coordenate)
-        damageArea,
-  }) {
-    return damageArea(uniqueId, coordenate);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)?
-        piece,
-    TResult? Function(String uniqueId, Coordenate coordenate)? damageArea,
-  }) {
-    return damageArea?.call(uniqueId, coordenate);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Coordenate coordenate, PieceState pieceState,
-            String pieceOwnerId, String uniqueId)?
-        piece,
-    TResult Function(String uniqueId, Coordenate coordenate)? damageArea,
-    required TResult orElse(),
-  }) {
-    if (damageArea != null) {
-      return damageArea(uniqueId, coordenate);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(BoardPieceEntity value) piece,
-    required TResult Function(BoardDamageArea value) damageArea,
-  }) {
-    return damageArea(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(BoardPieceEntity value)? piece,
-    TResult? Function(BoardDamageArea value)? damageArea,
-  }) {
-    return damageArea?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(BoardPieceEntity value)? piece,
-    TResult Function(BoardDamageArea value)? damageArea,
-    required TResult orElse(),
-  }) {
-    if (damageArea != null) {
-      return damageArea(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class BoardDamageArea implements BoardFieldEntity {
-  const factory BoardDamageArea(
-      {required final String uniqueId,
-      required final Coordenate coordenate}) = _$BoardDamageArea;
-
-  @override
-  String get uniqueId;
-  @override
-  Coordenate get coordenate;
-  @override
-  @JsonKey(ignore: true)
-  _$$BoardDamageAreaCopyWith<_$BoardDamageArea> get copyWith =>
       throw _privateConstructorUsedError;
 }
