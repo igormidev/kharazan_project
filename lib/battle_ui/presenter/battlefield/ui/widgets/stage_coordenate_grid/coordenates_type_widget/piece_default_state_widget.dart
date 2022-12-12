@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
-import 'piece_draggable_widget.dart';
+import 'piece_widget.dart';
 
-class PieceDefaultWidget extends StatelessWidget {
+class PieceDefaultStateWidget extends StatelessWidget {
   final BoardPieceEntity entity;
   final String valueKey;
   final double axisX;
   final double axisY;
   final double size;
 
-  const PieceDefaultWidget({
+  const PieceDefaultStateWidget({
     required this.entity,
     required this.valueKey,
     required this.axisX,
@@ -21,7 +21,6 @@ class PieceDefaultWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      key: ValueKey(valueKey),
       left: axisX,
       top: axisY,
       height: size,

@@ -1,7 +1,6 @@
+import 'states/piece_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
-
-import 'states/piece_state.dart';
 
 part 'board_field_entity.freezed.dart';
 

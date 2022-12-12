@@ -14,15 +14,15 @@ abstract class ProtocolPieceRepository {
       BoardPieceEntity entity);
 
   /// Will obtain the [BoardPieceEntity] in the [coordenate] if exists,
-  /// return a [NoEntityFoundInCoordenate] otherwise
+  /// return a [NoPieceFoundInCoordenate] otherwise
   Either<MatchFailure, BoardPieceEntity> obtainPieceInCoordenate(
       Coordenate coordenate);
 
   /// Will update the entity with the same [uniqueBoardId] with [boardPieceEntity]
   Either<MatchFailure, BoardPieceEntity> updatePieceEntityWithId(
-      String uniqueBoardId,
-      BoardPieceEntity Function(BoardPieceEntity currentEntity)
-          boardPieceEntity);
+    String uniqueBoardId,
+    BoardPieceEntity Function(BoardPieceEntity currentEntity) boardPieceEntity,
+  );
 
   /// Obtain the entities in the board
   Either<MatchFailure, List<BoardPieceEntity>> obtainPiecesInTheBoard();

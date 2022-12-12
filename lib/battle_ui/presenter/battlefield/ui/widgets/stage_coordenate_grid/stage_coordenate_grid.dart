@@ -1,10 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_attack_fatal_animation_widget.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_attack_non_fatal_animation_widget.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_change_position_animation_widget.dart';
-import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_default_widget.dart';
+import 'package:micro_kharazan/battle_ui/presenter/battlefield/ui/widgets/stage_coordenate_grid/coordenates_type_widget/piece_default_state_widget.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/piece_entity.dart';
@@ -85,8 +86,8 @@ class StageCoordenateGrid extends StatelessWidget {
             // │ The entities in each coordenates
             // └─────────────────────────────────────────────────────────
             BlocBuilder<BattlefieldBloc, BattlefieldState>(
-              // buildWhen: (previous, current) =>
-              //     listEquals(previous.pieces, current.pieces) == false,
+              buildWhen: (previous, current) =>
+                  listEquals(previous.entities, current.entities) == false,
               builder: (context, state) {
                 final multipliyer = width * 0.125;
                 final maxSize = width / stageEntity.stageLimits.biggerXInList;
@@ -102,7 +103,8 @@ class StageCoordenateGrid extends StatelessWidget {
                         piece: (BoardPieceEntity pieceEntity) {
                           return pieceEntity.pieceState.when<Widget>(
                             normal: (PieceEntity piece) {
-                              return PieceDefaultWidget(
+                              return PieceDefaultStateWidget(
+                                key: ValueKey(pieceEntity.uniqueBoardId),
                                 valueKey: pieceEntity.uniqueBoardId,
                                 entity: pieceEntity,
                                 axisX: axisX,
@@ -117,6 +119,7 @@ class StageCoordenateGrid extends StatelessWidget {
                               destinyCoordenate,
                             ) {
                               return PieceChangePositionAnimationWidget(
+                                key: ValueKey(pieceEntity.uniqueBoardId),
                                 animationDuration: animationTime,
                                 valueKey: pieceEntity.uniqueBoardId,
                                 entity: pieceEntity,
@@ -133,6 +136,7 @@ class StageCoordenateGrid extends StatelessWidget {
                               destinyCoordenate,
                             ) {
                               return PieceAttackFatalAnimationWidget(
+                                key: ValueKey(pieceEntity.uniqueBoardId),
                                 animationDuration: animationTime,
                                 entity: pieceEntity,
                                 valueKey: pieceEntity.uniqueBoardId,
@@ -151,9 +155,10 @@ class StageCoordenateGrid extends StatelessWidget {
                               destinyCoordenate,
                             ) {
                               return PieceAttackNonFatalAnimationWidget(
+                                key: ValueKey(pieceEntity.uniqueBoardId),
+                                valueKey: pieceEntity.uniqueBoardId,
                                 animationDuration: animationTime,
                                 entity: pieceEntity,
-                                valueKey: pieceEntity.uniqueBoardId,
                                 axisX: axisX,
                                 axisY: axisY,
                                 size: maxSize,
@@ -214,8 +219,8 @@ class StageCoordenateGrid extends StatelessWidget {
 
                               bloc.add(
                                 BattlefieldEvent.makeMoveWithAnimation(
-                                  'user1',
-                                  move,
+                                  playerThatMakedMove: 'player1',
+                                  moveMaded: move,
                                 ),
                               );
                             },
@@ -269,8 +274,8 @@ class GestureWrapper extends StatelessWidget {
 
             bloc.add(
               BattlefieldEvent.makeMoveWithAnimation(
-                'user1',
-                move,
+                playerThatMakedMove: 'player1',
+                moveMaded: move,
               ),
             );
           },

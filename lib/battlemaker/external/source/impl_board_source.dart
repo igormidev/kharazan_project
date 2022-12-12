@@ -30,22 +30,22 @@ class ImplBoardSource extends ProtocolBoardSource {
   @override
   Either<MatchFailure, BoardFieldEntity> updateEntityWithId(
       String uniqueBoardEntityId, BoardFieldEntity entity) {
-    final index = _entitiesInTheBoard.indexWithBoardId(uniqueBoardEntityId);
-    if (index == -1) return left(NoEntityFoundInCoordenate());
+    final index = _entitiesInTheBoard.entityIndexWithId(uniqueBoardEntityId);
+    if (index == -1) return left(NoPieceFoundInCoordenate());
 
     try {
       _entitiesInTheBoard[index] = entity;
       return right(entity);
     } catch (_) {
-      return left(NoEntityFoundInCoordenate());
+      return left(NoPieceFoundInCoordenate());
     }
   }
 
   @override
   Either<MatchFailure, BoardFieldEntity> removeEntityWithId(
       String uniqueBoardEntityId) {
-    final index = _entitiesInTheBoard.indexWithBoardId(uniqueBoardEntityId);
-    if (index == -1) return left(NoEntityFoundInCoordenate());
+    final index = _entitiesInTheBoard.entityIndexWithId(uniqueBoardEntityId);
+    if (index == -1) return left(NoPieceFoundInCoordenate());
     final BoardFieldEntity entity = _entitiesInTheBoard[index];
     _entitiesInTheBoard.removeAt(index);
     return right(entity);
@@ -55,12 +55,12 @@ class ImplBoardSource extends ProtocolBoardSource {
   Either<MatchFailure, BoardFieldEntity> getEntityById(
     String uniqueBoardEntityId,
   ) {
-    final index = _entitiesInTheBoard.indexWithBoardId(uniqueBoardEntityId);
-    if (index == -1) return left(NoEntityFoundInCoordenate());
+    final index = _entitiesInTheBoard.entityIndexWithId(uniqueBoardEntityId);
+    if (index == -1) return left(NoPieceFoundInCoordenate());
     try {
       return right(_entitiesInTheBoard[index]);
     } catch (_) {
-      return left(NoEntityFoundInCoordenate());
+      return left(NoPieceFoundInCoordenate());
     }
   }
 
@@ -86,6 +86,6 @@ class ImplBoardSource extends ProtocolBoardSource {
 }
 
 extension _BoardListEntityExtension on List<BoardFieldEntity> {
-  int indexWithBoardId(String uniqueBoardEntityId) =>
+  int entityIndexWithId(String uniqueBoardEntityId) =>
       indexWhere((entity) => entity.uniqueBoardId == uniqueBoardEntityId);
 }

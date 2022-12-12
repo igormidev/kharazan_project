@@ -18,26 +18,25 @@ class ImplDealDamageToPieceUsecase implements ProtocolDealDamageToPieceUsecase {
   Either<MatchFailure, ReturnDealDamageToPieceUsecase> call(
     DealDamageToPieceParam param,
   ) {
-    final destinyCoordenate = param.targetPieceCoordenates;
-    final destinyPieceResponse =
-        _repository.removePieceInCoordenate(destinyCoordenate);
-    if (destinyPieceResponse.isLeft()) return destinyPieceResponse.asLeft();
-
-    final pieceState = destinyPieceResponse.asRightResult.pieceState;
-    final newEntityAfterDamage = destinyPieceResponse.asRightResult.copyWith(
-      coordenate: destinyCoordenate,
-      pieceState: pieceState.copyWith(
-        piece: pieceState.piece.copyWith(
-          life: pieceState.piece.life - param.damage,
-        ),
-      ),
+    final destinyPieceResponse = _repository.updatePieceEntityWithId(
+      param.uniquePieceEntityId,
+      (currentEntity) {
+        return currentEntity.copyWith(
+          pieceState: currentEntity.pieceState.copyWith(
+            piece: currentEntity.pieceState.piece.copyWith(
+              life: currentEntity.pieceState.piece.life - param.damage,
+            ),
+          ),
+        );
+      },
     );
 
-    final moveResponse = _repository.createPieceInBoard(newEntityAfterDamage);
-    if (moveResponse.isLeft()) return moveResponse.asLeft();
+    if (destinyPieceResponse.isLeft()) return destinyPieceResponse.asLeft();
+    final pieceAfterUpdate = destinyPieceResponse.asRightResult.pieceState;
+    final wasDamageFatal = pieceAfterUpdate.piece.pieceIsAlive == false;
 
-    final wasDamageFatal = pieceState.piece.pieceIsAlive == false;
-    return right(ReturnDealDamageToPieceUsecase(
-        didDamageKillTargetPiece: wasDamageFatal));
+    return right(
+      ReturnDealDamageToPieceUsecase(didDamageKillTargetPiece: wasDamageFatal),
+    );
   }
 }

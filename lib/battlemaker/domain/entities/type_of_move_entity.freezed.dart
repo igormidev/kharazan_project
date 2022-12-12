@@ -30,7 +30,7 @@ mixin _$TypeOfMoveEntity {
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)
         pieceAttackingOther,
   }) =>
@@ -45,7 +45,7 @@ mixin _$TypeOfMoveEntity {
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
   }) =>
@@ -60,7 +60,7 @@ mixin _$TypeOfMoveEntity {
     TResult Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
     required TResult orElse(),
@@ -250,7 +250,7 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)
         pieceAttackingOther,
   }) {
@@ -269,7 +269,7 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
   }) {
@@ -288,7 +288,7 @@ class _$_MoveTypeChangePiecePosition implements _MoveTypeChangePiecePosition {
     TResult Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
     required TResult orElse(),
@@ -364,7 +364,7 @@ abstract class _$$_PieceAttackingOtherCopyWith<$Res>
   $Res call(
       {CoordenatesInMove coordenatesInMove,
       BoardPieceEntity pieceInOrigin,
-      BoardPieceEntity? pieceInDestiny,
+      BoardPieceEntity pieceInDestiny,
       List<BoardFieldEntity> otherBoardEntities});
 }
 
@@ -396,7 +396,7 @@ class __$$_PieceAttackingOtherCopyWithImpl<$Res>
       pieceInDestiny: null == pieceInDestiny
           ? _value.pieceInDestiny
           : pieceInDestiny // ignore: cast_nullable_to_non_nullable
-              as BoardPieceEntity?,
+              as BoardPieceEntity,
       otherBoardEntities: null == otherBoardEntities
           ? _value._otherBoardEntities
           : otherBoardEntities // ignore: cast_nullable_to_non_nullable
@@ -420,7 +420,7 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
   @override
   final BoardPieceEntity pieceInOrigin;
   @override
-  final BoardPieceEntity? pieceInDestiny;
+  final BoardPieceEntity pieceInDestiny;
   final List<BoardFieldEntity> _otherBoardEntities;
   @override
   List<BoardFieldEntity> get otherBoardEntities {
@@ -474,7 +474,7 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
     required TResult Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)
         pieceAttackingOther,
   }) {
@@ -493,7 +493,7 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
     TResult? Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
   }) {
@@ -512,7 +512,7 @@ class _$_PieceAttackingOther implements _PieceAttackingOther {
     TResult Function(
             CoordenatesInMove coordenatesInMove,
             BoardPieceEntity pieceInOrigin,
-            BoardPieceEntity? pieceInDestiny,
+            BoardPieceEntity pieceInDestiny,
             List<BoardFieldEntity> otherBoardEntities)?
         pieceAttackingOther,
     required TResult orElse(),
@@ -562,7 +562,7 @@ abstract class _PieceAttackingOther implements TypeOfMoveEntity {
   const factory _PieceAttackingOther(
           {required final CoordenatesInMove coordenatesInMove,
           required final BoardPieceEntity pieceInOrigin,
-          required final BoardPieceEntity? pieceInDestiny,
+          required final BoardPieceEntity pieceInDestiny,
           required final List<BoardFieldEntity> otherBoardEntities}) =
       _$_PieceAttackingOther;
 
@@ -570,7 +570,7 @@ abstract class _PieceAttackingOther implements TypeOfMoveEntity {
   CoordenatesInMove get coordenatesInMove;
   @override
   BoardPieceEntity get pieceInOrigin;
-  BoardPieceEntity? get pieceInDestiny;
+  BoardPieceEntity get pieceInDestiny;
   @override
   List<BoardFieldEntity> get otherBoardEntities;
   @override

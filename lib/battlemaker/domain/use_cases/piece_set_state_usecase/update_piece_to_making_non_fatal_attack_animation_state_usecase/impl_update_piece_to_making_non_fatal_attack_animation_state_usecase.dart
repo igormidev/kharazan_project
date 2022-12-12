@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:micro_kharazan/battle_ui/core/constants.dart';
+import 'package:micro_kharazan/battlemaker/core/constants.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/core/usecase_contract.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
-import 'piece_draggable_widget.dart';
+import 'piece_widget.dart';
 
 class PieceChangePositionAnimationWidget extends StatefulWidget {
   final Duration animationDuration;
@@ -40,11 +40,21 @@ class _PieceChangePositionAnimationWidgetState
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      final destinyCoordenate = widget.destinyCoordenate;
-      setState(() {
-        axisX = (destinyCoordenate.axisX - 1) * widget.coordenateMultipliyer;
-        axisY = (destinyCoordenate.axisY - 1) * widget.coordenateMultipliyer;
-      });
+      _updateUIMove();
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant PieceChangePositionAnimationWidget oldWidget) {
+    _updateUIMove();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _updateUIMove() {
+    final destinyCoordenate = widget.destinyCoordenate;
+    setState(() {
+      axisX = (destinyCoordenate.axisX - 1) * widget.coordenateMultipliyer;
+      axisY = (destinyCoordenate.axisY - 1) * widget.coordenateMultipliyer;
     });
   }
 
@@ -52,7 +62,6 @@ class _PieceChangePositionAnimationWidgetState
   Widget build(BuildContext context) {
     return AnimatedPositioned(
       duration: widget.animationDuration,
-      key: ValueKey(widget.valueKey),
       left: axisX,
       top: axisY,
       height: widget.size,

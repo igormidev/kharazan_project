@@ -15,7 +15,7 @@ class TypeOfMoveEntity with _$TypeOfMoveEntity {
   const factory TypeOfMoveEntity.pieceAttackingOther({
     required CoordenatesInMove coordenatesInMove,
     required BoardPieceEntity pieceInOrigin,
-    required BoardPieceEntity? pieceInDestiny,
+    required BoardPieceEntity pieceInDestiny,
     required List<BoardFieldEntity> otherBoardEntities,
   }) = _PieceAttackingOther;
 }

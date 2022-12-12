@@ -62,7 +62,7 @@ mixin _$PieceState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_DefaultPiece value) normal,
+    required TResult Function(DefaultPieceState value) normal,
     required TResult Function(_PieceChangePosition value) pieceChangingPosition,
     required TResult Function(_PieceAttackMove value) pieceMakingFatalAttack,
     required TResult Function(_PieceNonFatalAttackMove value)
@@ -71,7 +71,7 @@ mixin _$PieceState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_DefaultPiece value)? normal,
+    TResult? Function(DefaultPieceState value)? normal,
     TResult? Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult? Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult? Function(_PieceNonFatalAttackMove value)?
@@ -80,7 +80,7 @@ mixin _$PieceState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_DefaultPiece value)? normal,
+    TResult Function(DefaultPieceState value)? normal,
     TResult Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult Function(_PieceNonFatalAttackMove value)? pieceMakingNonFatalAttack,
@@ -127,22 +127,22 @@ class _$PieceStateCopyWithImpl<$Res, $Val extends PieceState>
 }
 
 /// @nodoc
-abstract class _$$_DefaultPieceCopyWith<$Res>
+abstract class _$$DefaultPieceStateCopyWith<$Res>
     implements $PieceStateCopyWith<$Res> {
-  factory _$$_DefaultPieceCopyWith(
-          _$_DefaultPiece value, $Res Function(_$_DefaultPiece) then) =
-      __$$_DefaultPieceCopyWithImpl<$Res>;
+  factory _$$DefaultPieceStateCopyWith(
+          _$DefaultPieceState value, $Res Function(_$DefaultPieceState) then) =
+      __$$DefaultPieceStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({PieceEntity piece});
 }
 
 /// @nodoc
-class __$$_DefaultPieceCopyWithImpl<$Res>
-    extends _$PieceStateCopyWithImpl<$Res, _$_DefaultPiece>
-    implements _$$_DefaultPieceCopyWith<$Res> {
-  __$$_DefaultPieceCopyWithImpl(
-      _$_DefaultPiece _value, $Res Function(_$_DefaultPiece) _then)
+class __$$DefaultPieceStateCopyWithImpl<$Res>
+    extends _$PieceStateCopyWithImpl<$Res, _$DefaultPieceState>
+    implements _$$DefaultPieceStateCopyWith<$Res> {
+  __$$DefaultPieceStateCopyWithImpl(
+      _$DefaultPieceState _value, $Res Function(_$DefaultPieceState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -150,7 +150,7 @@ class __$$_DefaultPieceCopyWithImpl<$Res>
   $Res call({
     Object? piece = null,
   }) {
-    return _then(_$_DefaultPiece(
+    return _then(_$DefaultPieceState(
       piece: null == piece
           ? _value.piece
           : piece // ignore: cast_nullable_to_non_nullable
@@ -161,8 +161,8 @@ class __$$_DefaultPieceCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_DefaultPiece implements _DefaultPiece {
-  const _$_DefaultPiece({required this.piece});
+class _$DefaultPieceState implements DefaultPieceState {
+  const _$DefaultPieceState({required this.piece});
 
   @override
   final PieceEntity piece;
@@ -176,7 +176,7 @@ class _$_DefaultPiece implements _DefaultPiece {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_DefaultPiece &&
+            other is _$DefaultPieceState &&
             (identical(other.piece, piece) || other.piece == piece));
   }
 
@@ -186,8 +186,8 @@ class _$_DefaultPiece implements _DefaultPiece {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_DefaultPieceCopyWith<_$_DefaultPiece> get copyWith =>
-      __$$_DefaultPieceCopyWithImpl<_$_DefaultPiece>(this, _$identity);
+  _$$DefaultPieceStateCopyWith<_$DefaultPieceState> get copyWith =>
+      __$$DefaultPieceStateCopyWithImpl<_$DefaultPieceState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -247,7 +247,7 @@ class _$_DefaultPiece implements _DefaultPiece {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_DefaultPiece value) normal,
+    required TResult Function(DefaultPieceState value) normal,
     required TResult Function(_PieceChangePosition value) pieceChangingPosition,
     required TResult Function(_PieceAttackMove value) pieceMakingFatalAttack,
     required TResult Function(_PieceNonFatalAttackMove value)
@@ -259,7 +259,7 @@ class _$_DefaultPiece implements _DefaultPiece {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_DefaultPiece value)? normal,
+    TResult? Function(DefaultPieceState value)? normal,
     TResult? Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult? Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult? Function(_PieceNonFatalAttackMove value)?
@@ -271,7 +271,7 @@ class _$_DefaultPiece implements _DefaultPiece {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_DefaultPiece value)? normal,
+    TResult Function(DefaultPieceState value)? normal,
     TResult Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult Function(_PieceNonFatalAttackMove value)? pieceMakingNonFatalAttack,
@@ -284,15 +284,15 @@ class _$_DefaultPiece implements _DefaultPiece {
   }
 }
 
-abstract class _DefaultPiece implements PieceState {
-  const factory _DefaultPiece({required final PieceEntity piece}) =
-      _$_DefaultPiece;
+abstract class DefaultPieceState implements PieceState {
+  const factory DefaultPieceState({required final PieceEntity piece}) =
+      _$DefaultPieceState;
 
   @override
   PieceEntity get piece;
   @override
   @JsonKey(ignore: true)
-  _$$_DefaultPieceCopyWith<_$_DefaultPiece> get copyWith =>
+  _$$DefaultPieceStateCopyWith<_$DefaultPieceState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -457,7 +457,7 @@ class _$_PieceChangePosition implements _PieceChangePosition {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_DefaultPiece value) normal,
+    required TResult Function(DefaultPieceState value) normal,
     required TResult Function(_PieceChangePosition value) pieceChangingPosition,
     required TResult Function(_PieceAttackMove value) pieceMakingFatalAttack,
     required TResult Function(_PieceNonFatalAttackMove value)
@@ -469,7 +469,7 @@ class _$_PieceChangePosition implements _PieceChangePosition {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_DefaultPiece value)? normal,
+    TResult? Function(DefaultPieceState value)? normal,
     TResult? Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult? Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult? Function(_PieceNonFatalAttackMove value)?
@@ -481,7 +481,7 @@ class _$_PieceChangePosition implements _PieceChangePosition {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_DefaultPiece value)? normal,
+    TResult Function(DefaultPieceState value)? normal,
     TResult Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult Function(_PieceNonFatalAttackMove value)? pieceMakingNonFatalAttack,
@@ -672,7 +672,7 @@ class _$_PieceAttackMove implements _PieceAttackMove {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_DefaultPiece value) normal,
+    required TResult Function(DefaultPieceState value) normal,
     required TResult Function(_PieceChangePosition value) pieceChangingPosition,
     required TResult Function(_PieceAttackMove value) pieceMakingFatalAttack,
     required TResult Function(_PieceNonFatalAttackMove value)
@@ -684,7 +684,7 @@ class _$_PieceAttackMove implements _PieceAttackMove {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_DefaultPiece value)? normal,
+    TResult? Function(DefaultPieceState value)? normal,
     TResult? Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult? Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult? Function(_PieceNonFatalAttackMove value)?
@@ -696,7 +696,7 @@ class _$_PieceAttackMove implements _PieceAttackMove {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_DefaultPiece value)? normal,
+    TResult Function(DefaultPieceState value)? normal,
     TResult Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult Function(_PieceNonFatalAttackMove value)? pieceMakingNonFatalAttack,
@@ -889,7 +889,7 @@ class _$_PieceNonFatalAttackMove implements _PieceNonFatalAttackMove {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_DefaultPiece value) normal,
+    required TResult Function(DefaultPieceState value) normal,
     required TResult Function(_PieceChangePosition value) pieceChangingPosition,
     required TResult Function(_PieceAttackMove value) pieceMakingFatalAttack,
     required TResult Function(_PieceNonFatalAttackMove value)
@@ -901,7 +901,7 @@ class _$_PieceNonFatalAttackMove implements _PieceNonFatalAttackMove {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_DefaultPiece value)? normal,
+    TResult? Function(DefaultPieceState value)? normal,
     TResult? Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult? Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult? Function(_PieceNonFatalAttackMove value)?
@@ -913,7 +913,7 @@ class _$_PieceNonFatalAttackMove implements _PieceNonFatalAttackMove {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_DefaultPiece value)? normal,
+    TResult Function(DefaultPieceState value)? normal,
     TResult Function(_PieceChangePosition value)? pieceChangingPosition,
     TResult Function(_PieceAttackMove value)? pieceMakingFatalAttack,
     TResult Function(_PieceNonFatalAttackMove value)? pieceMakingNonFatalAttack,

@@ -37,6 +37,8 @@ import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_move
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_moves_usecase/impl_get_piece_valid_movimentation_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/impl_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/make_move_usecase/protocol_make_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/remove_all_piece_animations_usecase/impl_remove_all_piece_animations_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/remove_all_piece_animations_usecase/protocol_remove_all_piece_animations_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_change_position_animation_state_usecase/impl_update_piece_to_change_position_animation_state_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_change_position_animation_state_usecase/protocol_update_piece_to_change_position_animation_state_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_fatal_attack_animation_state_usecase/impl_update_piece_to_making_fatal_attack_animation_state_usecase.dart';
@@ -65,12 +67,12 @@ class MainBattlefieldView extends StatelessWidget {
     const usersInTheGame = [
       UserStateEntity(
         displayName: 'zNeutro',
-        playerId: 'user1',
+        playerId: 'player1',
         currentMana: 50,
       ),
       UserStateEntity(
         displayName: 'The BOT',
-        playerId: 'user2',
+        playerId: 'player2',
         currentMana: 50,
       ),
     ];
@@ -117,6 +119,9 @@ class MainBattlefieldView extends StatelessWidget {
         updatePieceToChangePositionAnimationStateUsecase =
         ImplUpdatePieceToChangePositionAnimationStateUsecase(
             pieceRepository: pieceRepository);
+    final ProtocolRemoveAllPieceAnimationsUsecase
+        removeAllPieceAnimationsUsecase =
+        ImplRemoveAllPieceAnimationsUsecase(pieceRepository: pieceRepository);
 
     final ProtocolDefineTypeOfMoveUsecase defineTypeOfMoveUsecase =
         ImplDefineTypeOfMoveUsecase();
@@ -133,6 +138,7 @@ class MainBattlefieldView extends StatelessWidget {
       updatePieceToMakingFatalAttackAnimationStateUsecase:
           updatePieceToMakingFatalAttackAnimationStateUsecase,
       removePieceInCoordenateUsecase: removePieceInCoordenateUsecase,
+      removeAllPieceAnimationsUsecase: removeAllPieceAnimationsUsecase,
     );
 
     final ProtocolMakeMoveUsecase makeMoveUsecase = ImplMakeMoveUsecase(
@@ -150,7 +156,7 @@ class MainBattlefieldView extends StatelessWidget {
     );
 
     final controller = BattleMakerController.createMatch(
-      firstUserToMoveId: 'user1',
+      firstUserToMoveId: 'player1',
       makeMoveUsecase: makeMoveUsecase,
       protocolGetMatchStatesUsecase: getMatchStatesUsecase,
       getPieceValidAttacks: getValidAttacks,
@@ -197,9 +203,11 @@ class _DisposeWidgetState extends State<DisposeWidget> {
           List<BoardFieldEntity> boardState,
           List<UserStateEntity> usersInTheMatchState,
         ) {
-          bloc.add(BattlefieldEvent.makeMoveWithAnimation(
-            playerUserTurnId,
-            coordenatesInMove.castToString(),
+          bloc.add(BattlefieldEvent.updateBoardStateAfterMove(
+            coordenatesInMove: coordenatesInMove,
+            playerUserTurnId: playerUserTurnId,
+            boardState: boardState,
+            usersInTheMatchState: usersInTheMatchState,
           ));
         },
       );

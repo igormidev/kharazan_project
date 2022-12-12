@@ -39,7 +39,7 @@ class ImplPieceRepository implements ProtocolPieceRepository {
       return entity.coordenate == coordenate;
     });
 
-    if (pieceEntity.isNull) return left(NoEntityFoundInCoordenate());
+    if (pieceEntity.isNull) return left(NoPieceFoundInCoordenate());
 
     final removedPieceResponse =
         _boardDataSource.removeEntityWithId(pieceEntity!.uniqueBoardId);
@@ -82,9 +82,10 @@ class ImplPieceRepository implements ProtocolPieceRepository {
 
     final listEntities = entityResponse.asRightResult;
     final pieceEntity = listEntities.singleWhereOrNull((entity) {
-      return entity.coordenate == coordenate;
+      return (entity.coordenate == coordenate) && (entity is BoardPieceEntity);
     });
 
+    if (pieceEntity == null) return left(NoPieceFoundInCoordenate());
     if (pieceEntity is BoardPieceEntity) {
       return right(pieceEntity);
     } else {

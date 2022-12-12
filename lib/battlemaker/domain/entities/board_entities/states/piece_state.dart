@@ -8,7 +8,7 @@ part 'piece_state.freezed.dart';
 class PieceState with _$PieceState {
   const factory PieceState.normal({
     required PieceEntity piece,
-  }) = _DefaultPiece;
+  }) = DefaultPieceState;
 
   const factory PieceState.pieceChangingPosition({
     required PieceEntity piece,

@@ -13,7 +13,7 @@ class PieceWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final piece = entity.pieceState.piece;
-    final isWhite = entity.pieceOwnerId == 'user1';
+    final isWhite = entity.pieceOwnerId == 'player1';
     final img = isWhite ? piece.whiteDisplayImage : piece.blackDisplayImage;
 
     final coordenate = entity.coordenate;
@@ -26,12 +26,9 @@ class PieceWidget extends StatelessWidget {
         onDragStarted: () {
           final bloc = context.read<BattlefieldBloc>();
           bloc.add(
-              BattlefieldEvent.pieceSelectedInCoordenate(piece, coordenate));
+            BattlefieldEvent.pieceSelectedInCoordenate(piece, coordenate),
+          );
         },
-        // onDragCompleted: () => print('onDragCompleted'),
-        // onDraggableCanceled: (_, __) => print('onDraggableCanceled'),
-        // onDragEnd: (_) => print('onDragEnd'),
-        // onDragUpdate: (_) => print('onDragUpdate'),
         childWhenDragging: Opacity(opacity: .4, child: Image.asset(img)),
         feedback: SizedBox(height: size, width: size, child: Image.asset(img)),
         child: Image.asset(img),

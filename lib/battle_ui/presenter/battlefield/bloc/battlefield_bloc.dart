@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,12 +34,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     // ==> Move handlers <==
 
     on<_MakeMoveWithAnimation>(_makeMoveWithAnimation);
-
-    // on<_AttackPieceWithAnimation>(_attackPieceWithAnimation);
-    // on<_AttackPieceWithoutAnimation>(_attackPieceWithoutAnimation);
-    // on<_ChangePiecePositionWithAnimation>(_changePiecePositionWithAnimation);
-    // on<_ChangePiecePositionWithoutAnimation>(
-    //     _changePiecePositionWithoutAnimation);
+    on<_UpdateBoardStateAfterMove>(_updateBoardStateAfterMove);
 
     on<_BattlefieldPieceSelected>(_manegePieceSelection);
     on<_Surrender>(_surrender);
@@ -58,22 +54,40 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     );
 
     if (realMoveResponse.isLeft()) {
-      _getFailureState(realMoveResponse);
+      emit(_getFailureState(realMoveResponse));
       return;
     }
   }
 
   // ==> End Move handlers <==
 
+  // ==> Start update ui handlers <==
+
+  FutureOr<void> _updateBoardStateAfterMove(
+    _UpdateBoardStateAfterMove event,
+    Emitter<BattlefieldState> emit,
+  ) {
+    emit(BattlefieldState.normal(
+      users: event.usersInTheMatchState,
+      entities: List.from([...event.boardState]),
+    ));
+  }
+
+  // ==> End update ui handlers <==
+
   FutureOr<void> _surrender(
     _Surrender event,
     Emitter<BattlefieldState> emit,
-  ) {}
+  ) {
+    log('surrender');
+  }
 
   FutureOr<void> _passTurn(
     _PassTurn event,
     Emitter<BattlefieldState> emit,
-  ) {}
+  ) {
+    log('pass turn');
+  }
 
   FutureOr<void> _notificateFailure(
     _NotificateFailure event,
@@ -106,8 +120,8 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     emit(BattlefieldState.pieceSelected(
       possiblePieceAttackArea: possibleAttacks,
       possiblePieceMovementArea: possibleMovimentation,
-      entities: state.entities,
-      users: state.users,
+      entities: List.from([...state.entities]),
+      users: List.from([...state.users]),
       selectedPieceCoordenate: event.coordenate,
     ));
   }

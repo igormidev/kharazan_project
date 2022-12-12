@@ -13,6 +13,7 @@ import 'package:micro_kharazan/battlemaker/domain/use_cases/execute_typed_move_u
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/remove_piece_in_coordenate_usecase/param_remove_piece_in_coordenate_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/remove_piece_in_coordenate_usecase/protocol_remove_piece_in_coordenate_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/remove_all_piece_animations_usecase/protocol_remove_all_piece_animations_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_change_position_animation_state_usecase/param_update_piece_to_change_position_animation_state_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_change_position_animation_state_usecase/protocol_update_piece_to_change_position_animation_state_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_fatal_attack_animation_state_usecase/param_update_piece_to_making_fatal_attack_animation_state_usecase.dart';
@@ -33,6 +34,8 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   final ProtocolUpdatePieceToMakingFatalAttackAnimationStateUsecase
       _updatePieceToMakingFatalAttackAnimationStateUsecase;
   final ProtocolRemovePieceInCoordenateUsecase _removePieceInCoordenateUsecase;
+  final ProtocolRemoveAllPieceAnimationsUsecase
+      _removeAllPieceAnimationsUsecase;
 
   const ImplExecuteTypedMoveUsecase({
     required ProtocolChangePiecePositionUsecase changePiecePositionUsecase,
@@ -45,6 +48,8 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
         updatePieceToMakingFatalAttackAnimationStateUsecase,
     required ProtocolRemovePieceInCoordenateUsecase
         removePieceInCoordenateUsecase,
+    required ProtocolRemoveAllPieceAnimationsUsecase
+        removeAllPieceAnimationsUsecase,
   })  : _changePiecePositionUsecase = changePiecePositionUsecase,
         _dealDamageToPieceUsecase = dealDamageToPieceUsecase,
         _updatePieceToChangePositionAnimationStateUsecase =
@@ -53,7 +58,8 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
             updatePieceToMakingNonFatalAttackAnimationStateUsecase,
         _updatePieceToMakingFatalAttackAnimationStateUsecase =
             updatePieceToMakingFatalAttackAnimationStateUsecase,
-        _removePieceInCoordenateUsecase = removePieceInCoordenateUsecase;
+        _removePieceInCoordenateUsecase = removePieceInCoordenateUsecase,
+        _removeAllPieceAnimationsUsecase = removeAllPieceAnimationsUsecase;
 
   @override
   Either<MatchFailure, VoidSucess> call(ParamExecuteTypedMoveUsecase param) {
@@ -73,6 +79,15 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
     BoardPieceEntity uniqueId,
     List<BoardFieldEntity> otherBoardEntities,
   ) {
+    // ┌─────────────────────────────────────────────────────────
+    // │ Remove all current animations in pieces, replacing it
+    // │ to the default piece state without animation
+    // └─────────────────────────────────────────────────────────
+    final removePieceAnimationResponse = _removeAllPieceAnimationsUsecase();
+    if (removePieceAnimationResponse.isLeft()) {
+      return removePieceAnimationResponse.asLeft();
+    }
+
     // ┌─────────────────────────────────────────────────────────
     // │ First, lets change piece position in the field
     // └─────────────────────────────────────────────────────────
@@ -107,14 +122,23 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   Either<MatchFailure, VoidSucess> onPieceAttackingOther(
     CoordenatesInMove coordenatesInMove,
     BoardPieceEntity pieceEntityInOrigin,
-    BoardPieceEntity? pieceEntityInDestiny,
+    BoardPieceEntity pieceEntityInDestiny,
     List<BoardFieldEntity> otherBoardEntities,
   ) {
+    // ┌─────────────────────────────────────────────────────────
+    // │ Remove all current animations in pieces, replacing it
+    // │ to the default piece state without animation
+    // └─────────────────────────────────────────────────────────
+    final removePieceAnimationResponse = _removeAllPieceAnimationsUsecase();
+    if (removePieceAnimationResponse.isLeft()) {
+      return removePieceAnimationResponse.asLeft();
+    }
+
     // ┌─────────────────────────────────────────────────────────
     // │ Deal the damage to the target piece, reducing its life
     // └─────────────────────────────────────────────────────────
     final param = DealDamageToPieceParam(
-      targetPieceCoordenates: coordenatesInMove.destiny,
+      uniquePieceEntityId: pieceEntityInDestiny.uniqueBoardId,
       damage: pieceEntityInOrigin.pieceState.piece.damage,
     );
     final dealDamageResponse = _dealDamageToPieceUsecase(param);
@@ -151,28 +175,28 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
       // └─────────────────────────────────────────────────────────
       final pieceAttackParam =
           ParamUpdatePieceToMakingFatalAttackAnimationStateUsecase(
-        uniqueBoardId: pieceEntityInOrigin.pieceOwnerId,
+        uniqueBoardId: pieceEntityInOrigin.uniqueBoardId,
         originCoordenate: coordenatesInMove.origin,
         destinyCoordenate: coordenatesInMove.destiny,
       );
       final pieceAttackResponse =
           _updatePieceToMakingFatalAttackAnimationStateUsecase(
               pieceAttackParam);
-      if (pieceAttackResponse.isRight()) return pieceAttackResponse.asRight();
+      if (pieceAttackResponse.isLeft()) return pieceAttackResponse.asLeft();
     } else {
       // ┌─────────────────────────────────────────────────────────
       // │ Update the state of the piece to a NOT fatal attack animation
       // └─────────────────────────────────────────────────────────
       final pieceAttackParam =
           ParamUpdatePieceToMakingNonFatalAttackAnimationStateUsecase(
-        uniqueBoardId: pieceEntityInOrigin.pieceOwnerId,
+        uniqueBoardId: pieceEntityInOrigin.uniqueBoardId,
         originCoordenate: coordenatesInMove.origin,
         destinyCoordenate: coordenatesInMove.destiny,
       );
       final pieceAttackResponse =
           _updatePieceToMakingNonFatalAttackAnimationStateUsecase(
               pieceAttackParam);
-      if (pieceAttackResponse.isRight()) return pieceAttackResponse.asRight();
+      if (pieceAttackResponse.isLeft()) return pieceAttackResponse.asLeft();
     }
 
     return right(VoidSucess());

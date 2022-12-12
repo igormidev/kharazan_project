@@ -20,7 +20,7 @@ class ImplGetPieceUsecase implements ProtocolGetPieceUsecase {
 
     if (response.isLeft()) {
       // If there is no entity in the coordenate we will return null
-      if (response.asLeftResult is NoEntityFoundInCoordenate) {
+      if (response.asLeftResult is NoPieceFoundInCoordenate) {
         return right(null);
       }
 

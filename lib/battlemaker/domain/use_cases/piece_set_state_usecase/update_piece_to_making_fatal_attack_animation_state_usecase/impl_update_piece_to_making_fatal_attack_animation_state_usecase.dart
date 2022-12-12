@@ -1,4 +1,4 @@
-import 'package:micro_kharazan/battle_ui/core/constants.dart';
+import 'package:micro_kharazan/battlemaker/core/constants.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/states/piece_state.dart';

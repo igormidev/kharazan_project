@@ -4,7 +4,7 @@ class InvalidPieceLocation extends MatchFailure {}
 
 class DosentHaveMana extends MatchFailure {}
 
-class NoEntityFoundInCoordenate extends MatchFailure {}
+class NoPieceFoundInCoordenate extends MatchFailure {}
 
 class EntityWithThatIdAlreadyExists extends MatchFailure {}
 
