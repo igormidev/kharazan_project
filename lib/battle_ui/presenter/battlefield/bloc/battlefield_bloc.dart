@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entities/piece_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/move_animation_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/presentation/battle_maker_controller.dart';
@@ -27,7 +27,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     required List<BoardFieldEntity> entities,
     required List<UserStateEntity> usersInTheGame,
   })  : _battleController = battleController,
-        super(BattlefieldState.normal(
+        super(BattlefieldState.defaultState(
           entities: entities,
           users: usersInTheGame,
         )) {
@@ -35,6 +35,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
 
     on<_MakeMoveWithAnimation>(_makeMoveWithAnimation);
     on<_UpdateBoardStateAfterMove>(_updateBoardStateAfterMove);
+    on<_UnSelectPiece>(_unSelectPiece);
 
     on<_BattlefieldPieceSelected>(_manegePieceSelection);
     on<_Surrender>(_surrender);
@@ -67,10 +68,23 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     _UpdateBoardStateAfterMove event,
     Emitter<BattlefieldState> emit,
   ) {
-    emit(BattlefieldState.normal(
+    emit(BattlefieldState.defaultStateWithAnimations(
       users: event.usersInTheMatchState,
       entities: List.from([...event.boardState]),
+      animationsInMove: List.from([...event.animationsInMove]),
     ));
+  }
+
+  FutureOr<void> _unSelectPiece(
+    _UnSelectPiece event,
+    Emitter<BattlefieldState> emit,
+  ) {
+    emit(
+      BattlefieldState.defaultState(
+        users: state.users,
+        entities: state.entities,
+      ),
+    );
   }
 
   // ==> End update ui handlers <==
@@ -101,14 +115,14 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     Emitter<BattlefieldState> emit,
   ) async {
     final possibleAttacksResponse =
-        _battleController.getPieceValidAttacks(event.coordenate);
+        _battleController.getPieceValidAttacks(event.piece.coordenate);
     if (possibleAttacksResponse.isLeft()) {
       emit(_getFailureState(possibleAttacksResponse));
       return;
     }
 
     final possibleMovesResponse =
-        _battleController.getPieceValidMovimentation(event.coordenate);
+        _battleController.getPieceValidMovimentation(event.piece.coordenate);
     if (possibleMovesResponse.isLeft()) {
       emit(_getFailureState(possibleMovesResponse));
       return;
@@ -122,7 +136,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
       possiblePieceMovementArea: possibleMovimentation,
       entities: List.from([...state.entities]),
       users: List.from([...state.users]),
-      selectedPieceCoordenate: event.coordenate,
+      selectedPiece: event.piece,
     ));
   }
 

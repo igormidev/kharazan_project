@@ -101,7 +101,7 @@ class UserDisplay extends StatelessWidget {
       alignment: Alignment.centerRight,
       children: [
         Container(
-          height: 40,
+          height: 50,
           width: 210,
           padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
           decoration: BoxDecoration(

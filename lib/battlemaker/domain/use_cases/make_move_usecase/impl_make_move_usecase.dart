@@ -71,6 +71,7 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
         ParamExecuteTypedMoveUsecase(typeOfMoveEntity: typeOfMove);
     final executeTypedMove = _executeTypedMoveUsecase(executeTypedMoveParam);
     if (executeTypedMove.isLeft()) return executeTypedMove.asLeft();
+    final animationsInMove = executeTypedMove.asRightResult.animationsInMove;
 
     // Obtain the states of the match after the maded move impact
     final matchStatesResponse = _getMatchStatesUsecase();
@@ -81,6 +82,7 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
       playerThatMakedMoveId: param.userId,
       boardStates: matchStates.boardState,
       usersInTheMatchState: matchStates.usersInTheMatchState,
+      animationsInMove: animationsInMove,
     );
     return right(returnMakeMoveUsecase);
   }

@@ -22,7 +22,8 @@ mixin _$MatchEvent {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
     required TResult Function(String idOfTurnUser) passTurnOtherToUser,
@@ -35,7 +36,8 @@ mixin _$MatchEvent {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
     TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
@@ -48,7 +50,8 @@ mixin _$MatchEvent {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
     TResult Function(String idOfTurnUser)? passTurnOtherToUser,
@@ -111,7 +114,8 @@ abstract class _$$_MoveMakedCopyWith<$Res> {
       {CoordenatesInMove coordenatesInMove,
       String playerUserTurnId,
       List<BoardFieldEntity> boardState,
-      List<UserStateEntity> usersInTheMatchState});
+      List<UserStateEntity> usersInTheMatchState,
+      List<MoveAnimationEntity> animationsInMove});
 }
 
 /// @nodoc
@@ -129,6 +133,7 @@ class __$$_MoveMakedCopyWithImpl<$Res>
     Object? playerUserTurnId = null,
     Object? boardState = null,
     Object? usersInTheMatchState = null,
+    Object? animationsInMove = null,
   }) {
     return _then(_$_MoveMaked(
       coordenatesInMove: null == coordenatesInMove
@@ -147,6 +152,10 @@ class __$$_MoveMakedCopyWithImpl<$Res>
           ? _value._usersInTheMatchState
           : usersInTheMatchState // ignore: cast_nullable_to_non_nullable
               as List<UserStateEntity>,
+      animationsInMove: null == animationsInMove
+          ? _value._animationsInMove
+          : animationsInMove // ignore: cast_nullable_to_non_nullable
+              as List<MoveAnimationEntity>,
     ));
   }
 }
@@ -158,9 +167,11 @@ class _$_MoveMaked implements _MoveMaked {
       {required this.coordenatesInMove,
       required this.playerUserTurnId,
       required final List<BoardFieldEntity> boardState,
-      required final List<UserStateEntity> usersInTheMatchState})
+      required final List<UserStateEntity> usersInTheMatchState,
+      required final List<MoveAnimationEntity> animationsInMove})
       : _boardState = boardState,
-        _usersInTheMatchState = usersInTheMatchState;
+        _usersInTheMatchState = usersInTheMatchState,
+        _animationsInMove = animationsInMove;
 
   @override
   final CoordenatesInMove coordenatesInMove;
@@ -180,9 +191,16 @@ class _$_MoveMaked implements _MoveMaked {
     return EqualUnmodifiableListView(_usersInTheMatchState);
   }
 
+  final List<MoveAnimationEntity> _animationsInMove;
+  @override
+  List<MoveAnimationEntity> get animationsInMove {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_animationsInMove);
+  }
+
   @override
   String toString() {
-    return 'MatchEvent.moveMaked(coordenatesInMove: $coordenatesInMove, playerUserTurnId: $playerUserTurnId, boardState: $boardState, usersInTheMatchState: $usersInTheMatchState)';
+    return 'MatchEvent.moveMaked(coordenatesInMove: $coordenatesInMove, playerUserTurnId: $playerUserTurnId, boardState: $boardState, usersInTheMatchState: $usersInTheMatchState, animationsInMove: $animationsInMove)';
   }
 
   @override
@@ -197,7 +215,9 @@ class _$_MoveMaked implements _MoveMaked {
             const DeepCollectionEquality()
                 .equals(other._boardState, _boardState) &&
             const DeepCollectionEquality()
-                .equals(other._usersInTheMatchState, _usersInTheMatchState));
+                .equals(other._usersInTheMatchState, _usersInTheMatchState) &&
+            const DeepCollectionEquality()
+                .equals(other._animationsInMove, _animationsInMove));
   }
 
   @override
@@ -206,7 +226,8 @@ class _$_MoveMaked implements _MoveMaked {
       coordenatesInMove,
       playerUserTurnId,
       const DeepCollectionEquality().hash(_boardState),
-      const DeepCollectionEquality().hash(_usersInTheMatchState));
+      const DeepCollectionEquality().hash(_usersInTheMatchState),
+      const DeepCollectionEquality().hash(_animationsInMove));
 
   @JsonKey(ignore: true)
   @override
@@ -221,14 +242,15 @@ class _$_MoveMaked implements _MoveMaked {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
     required TResult Function(String idOfTurnUser) passTurnOtherToUser,
     required TResult Function(MatchFailure failure) errorOccoured,
   }) {
-    return moveMaked(
-        coordenatesInMove, playerUserTurnId, boardState, usersInTheMatchState);
+    return moveMaked(coordenatesInMove, playerUserTurnId, boardState,
+        usersInTheMatchState, animationsInMove);
   }
 
   @override
@@ -238,14 +260,15 @@ class _$_MoveMaked implements _MoveMaked {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
     TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult? Function(MatchFailure failure)? errorOccoured,
   }) {
-    return moveMaked?.call(
-        coordenatesInMove, playerUserTurnId, boardState, usersInTheMatchState);
+    return moveMaked?.call(coordenatesInMove, playerUserTurnId, boardState,
+        usersInTheMatchState, animationsInMove);
   }
 
   @override
@@ -255,7 +278,8 @@ class _$_MoveMaked implements _MoveMaked {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
     TResult Function(String idOfTurnUser)? passTurnOtherToUser,
@@ -264,7 +288,7 @@ class _$_MoveMaked implements _MoveMaked {
   }) {
     if (moveMaked != null) {
       return moveMaked(coordenatesInMove, playerUserTurnId, boardState,
-          usersInTheMatchState);
+          usersInTheMatchState, animationsInMove);
     }
     return orElse();
   }
@@ -312,13 +336,15 @@ abstract class _MoveMaked implements MatchEvent {
           {required final CoordenatesInMove coordenatesInMove,
           required final String playerUserTurnId,
           required final List<BoardFieldEntity> boardState,
-          required final List<UserStateEntity> usersInTheMatchState}) =
+          required final List<UserStateEntity> usersInTheMatchState,
+          required final List<MoveAnimationEntity> animationsInMove}) =
       _$_MoveMaked;
 
   CoordenatesInMove get coordenatesInMove;
   String get playerUserTurnId;
   List<BoardFieldEntity> get boardState;
   List<UserStateEntity> get usersInTheMatchState;
+  List<MoveAnimationEntity> get animationsInMove;
   @JsonKey(ignore: true)
   _$$_MoveMakedCopyWith<_$_MoveMaked> get copyWith =>
       throw _privateConstructorUsedError;
@@ -393,7 +419,8 @@ class _$_UserSurrender implements _UserSurrender {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
     required TResult Function(String idOfTurnUser) passTurnOtherToUser,
@@ -409,7 +436,8 @@ class _$_UserSurrender implements _UserSurrender {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
     TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
@@ -425,7 +453,8 @@ class _$_UserSurrender implements _UserSurrender {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
     TResult Function(String idOfTurnUser)? passTurnOtherToUser,
@@ -555,7 +584,8 @@ class _$_PassTurn implements _PassTurn {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
     required TResult Function(String idOfTurnUser) passTurnOtherToUser,
@@ -571,7 +601,8 @@ class _$_PassTurn implements _PassTurn {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
     TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
@@ -587,7 +618,8 @@ class _$_PassTurn implements _PassTurn {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
     TResult Function(String idOfTurnUser)? passTurnOtherToUser,
@@ -715,7 +747,8 @@ class _$_ErrorOccoured implements _ErrorOccoured {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         moveMaked,
     required TResult Function(String surrenderingUserId) surrender,
     required TResult Function(String idOfTurnUser) passTurnOtherToUser,
@@ -731,7 +764,8 @@ class _$_ErrorOccoured implements _ErrorOccoured {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult? Function(String surrenderingUserId)? surrender,
     TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
@@ -747,7 +781,8 @@ class _$_ErrorOccoured implements _ErrorOccoured {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         moveMaked,
     TResult Function(String surrenderingUserId)? surrender,
     TResult Function(String idOfTurnUser)? passTurnOtherToUser,

@@ -1,4 +1,6 @@
+import 'package:micro_kharazan/battlemaker/core/constants.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/move_animation_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/type_of_move_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/change_piece_position_usecase/param_change_piece_position_usecase.dart';
@@ -7,7 +9,6 @@ import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_u
 import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/deal_damage_to_piece_usecase/protocol_deal_damage_to_piece_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/execute_typed_move_usecase/param_execute_typed_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
-import 'package:micro_kharazan/battlemaker/core/usecase_contract.dart';
 import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/execute_typed_move_usecase/protocol_execute_typed_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
@@ -20,6 +21,8 @@ import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usec
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_fatal_attack_animation_state_usecase/protocol_update_piece_to_making_fatal_attack_animation_state_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_non_fatal_attack_animation_state_usecase/param_update_piece_to_making_non_fatal_attack_animation_state_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/piece_set_state_usecase/update_piece_to_making_non_fatal_attack_animation_state_usecase/protocol_update_piece_to_making_non_fatal_attack_animation_state_usecase.dart';
+
+import 'return_execute_typed_move_usecase.dart';
 
 class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   // ==> Field manipulation
@@ -62,10 +65,12 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
         _removeAllPieceAnimationsUsecase = removeAllPieceAnimationsUsecase;
 
   @override
-  Either<MatchFailure, VoidSucess> call(ParamExecuteTypedMoveUsecase param) {
+  Either<MatchFailure, ReturnExecuteTypedMoveUsecase> call(
+    ParamExecuteTypedMoveUsecase param,
+  ) {
     final TypeOfMoveEntity typeOfMove = param.typeOfMoveEntity;
 
-    return typeOfMove.when<Either<MatchFailure, VoidSucess>>(
+    return typeOfMove.when<Either<MatchFailure, ReturnExecuteTypedMoveUsecase>>(
       pieceChangingPosition: onPieceChangingPosition,
       pieceAttackingOther: onPieceAttackingOther,
     );
@@ -74,7 +79,7 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   // ┌─────────────────────────────────────────────────────────
   // │ The animation of a piece changing his current position
   // └─────────────────────────────────────────────────────────
-  Either<MatchFailure, VoidSucess> onPieceChangingPosition(
+  Either<MatchFailure, ReturnExecuteTypedMoveUsecase> onPieceChangingPosition(
     CoordenatesInMove coordenatesInMove,
     BoardPieceEntity uniqueId,
     List<BoardFieldEntity> otherBoardEntities,
@@ -113,18 +118,21 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
         _updatePieceToChangePositionAnimationStateUsecase(animationParam);
     if (animationResponse.isLeft()) return animationResponse.asLeft();
 
-    return right(VoidSucess());
+    return right(const ReturnExecuteTypedMoveUsecase(animationsInMove: []));
   }
 
   // ┌─────────────────────────────────────────────────────────
   // │ The animation of one piece attackig other
   // └─────────────────────────────────────────────────────────
-  Either<MatchFailure, VoidSucess> onPieceAttackingOther(
+  Either<MatchFailure, ReturnExecuteTypedMoveUsecase> onPieceAttackingOther(
     CoordenatesInMove coordenatesInMove,
     BoardPieceEntity pieceEntityInOrigin,
     BoardPieceEntity pieceEntityInDestiny,
     List<BoardFieldEntity> otherBoardEntities,
   ) {
+    // All animations in move will be added here
+    final List<MoveAnimationEntity> animationInMove = [];
+
     // ┌─────────────────────────────────────────────────────────
     // │ Remove all current animations in pieces, replacing it
     // │ to the default piece state without animation
@@ -198,7 +206,15 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
               pieceAttackParam);
       if (pieceAttackResponse.isLeft()) return pieceAttackResponse.asLeft();
     }
+    final damage = pieceEntityInOrigin.pieceState.piece.damage;
+    animationInMove.add(MoveAnimationEntity.damageIndicator(
+      damageTaken: damage,
+      duration: Constants.changeAttackAnimationTime,
+      coordenate: pieceEntityInDestiny.coordenate,
+    ));
 
-    return right(VoidSucess());
+    return right(ReturnExecuteTypedMoveUsecase(
+      animationsInMove: animationInMove,
+    ));
   }
 }

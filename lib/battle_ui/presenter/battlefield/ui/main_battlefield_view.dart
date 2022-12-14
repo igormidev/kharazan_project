@@ -6,6 +6,7 @@ import 'package:micro_kharazan/battle_ui/core/mock_pieces.dart';
 import 'package:micro_kharazan/battlemaker/data/repositories/impl_board_repository.dart';
 import 'package:micro_kharazan/battlemaker/data/repositories/impl_piece_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/move_animation_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_piece_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/define_type_of_move_usecase/impl_define_type_of_move_usecase.dart';
@@ -197,17 +198,17 @@ class _DisposeWidgetState extends State<DisposeWidget> {
         errorOccoured: (MatchFailure failure) {
           bloc.add(BattlefieldEvent.notificateFailure(failure));
         },
-        moveMaked: (
-          CoordenatesInMove coordenatesInMove,
-          String playerUserTurnId,
-          List<BoardFieldEntity> boardState,
-          List<UserStateEntity> usersInTheMatchState,
-        ) {
+        moveMaked: (CoordenatesInMove coordenatesInMove,
+            String playerUserTurnId,
+            List<BoardFieldEntity> boardState,
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove) {
           bloc.add(BattlefieldEvent.updateBoardStateAfterMove(
             coordenatesInMove: coordenatesInMove,
             playerUserTurnId: playerUserTurnId,
             boardState: boardState,
             usersInTheMatchState: usersInTheMatchState,
+            animationsInMove: animationsInMove,
           ));
         },
       );

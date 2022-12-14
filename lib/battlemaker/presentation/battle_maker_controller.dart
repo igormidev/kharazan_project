@@ -49,14 +49,14 @@ class BattleMakerController {
       playerUserTurnId: matchResult.playerThatMakedMoveId,
       boardState: matchResult.boardStates,
       usersInTheMatchState: matchResult.usersInTheMatchState,
+      animationsInMove: matchResult.animationsInMove,
     );
 
     inEvents.add(event);
     currentUserTurnId = matchResult.playerThatMakedMoveId;
+
     return right(VoidSucess());
   }
-
-  // Future<Either<Match>>
 
   /// Receives the [userId] of the player that is gonna assume the turn
   Future<Either<MatchFailure, VoidSucess>> passUserTurn(String userId) async {

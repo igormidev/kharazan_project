@@ -24,13 +24,14 @@ mixin _$BattlefieldEvent {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         updateBoardStateAfterMove,
     required TResult Function(String userThatSurrenderID) surrender,
     required TResult Function(String userTurnID) passTurn,
     required TResult Function(MatchFailure failure) notificateFailure,
-    required TResult Function(PieceEntity piece, Coordenate coordenate)
-        pieceSelectedInCoordenate,
+    required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
+    required TResult Function() unSelectPiece,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,13 +42,14 @@ mixin _$BattlefieldEvent {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult? Function(String userThatSurrenderID)? surrender,
     TResult? Function(String userTurnID)? passTurn,
     TResult? Function(MatchFailure failure)? notificateFailure,
-    TResult? Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult? Function()? unSelectPiece,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -58,13 +60,14 @@ mixin _$BattlefieldEvent {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult Function(String userThatSurrenderID)? surrender,
     TResult Function(String userTurnID)? passTurn,
     TResult Function(MatchFailure failure)? notificateFailure,
-    TResult Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult Function()? unSelectPiece,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -79,6 +82,7 @@ mixin _$BattlefieldEvent {
     required TResult Function(_NotificateFailure value) notificateFailure,
     required TResult Function(_BattlefieldPieceSelected value)
         pieceSelectedInCoordenate,
+    required TResult Function(_UnSelectPiece value) unSelectPiece,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -91,6 +95,7 @@ mixin _$BattlefieldEvent {
     TResult? Function(_NotificateFailure value)? notificateFailure,
     TResult? Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult? Function(_UnSelectPiece value)? unSelectPiece,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -103,6 +108,7 @@ mixin _$BattlefieldEvent {
     TResult Function(_NotificateFailure value)? notificateFailure,
     TResult Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult Function(_UnSelectPiece value)? unSelectPiece,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -208,13 +214,14 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         updateBoardStateAfterMove,
     required TResult Function(String userThatSurrenderID) surrender,
     required TResult Function(String userTurnID) passTurn,
     required TResult Function(MatchFailure failure) notificateFailure,
-    required TResult Function(PieceEntity piece, Coordenate coordenate)
-        pieceSelectedInCoordenate,
+    required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
+    required TResult Function() unSelectPiece,
   }) {
     return makeMoveWithAnimation(playerThatMakedMove, moveMaded);
   }
@@ -228,13 +235,14 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult? Function(String userThatSurrenderID)? surrender,
     TResult? Function(String userTurnID)? passTurn,
     TResult? Function(MatchFailure failure)? notificateFailure,
-    TResult? Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult? Function()? unSelectPiece,
   }) {
     return makeMoveWithAnimation?.call(playerThatMakedMove, moveMaded);
   }
@@ -248,13 +256,14 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult Function(String userThatSurrenderID)? surrender,
     TResult Function(String userTurnID)? passTurn,
     TResult Function(MatchFailure failure)? notificateFailure,
-    TResult Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult Function()? unSelectPiece,
     required TResult orElse(),
   }) {
     if (makeMoveWithAnimation != null) {
@@ -275,6 +284,7 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
     required TResult Function(_NotificateFailure value) notificateFailure,
     required TResult Function(_BattlefieldPieceSelected value)
         pieceSelectedInCoordenate,
+    required TResult Function(_UnSelectPiece value) unSelectPiece,
   }) {
     return makeMoveWithAnimation(this);
   }
@@ -290,6 +300,7 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
     TResult? Function(_NotificateFailure value)? notificateFailure,
     TResult? Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult? Function(_UnSelectPiece value)? unSelectPiece,
   }) {
     return makeMoveWithAnimation?.call(this);
   }
@@ -305,6 +316,7 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
     TResult Function(_NotificateFailure value)? notificateFailure,
     TResult Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult Function(_UnSelectPiece value)? unSelectPiece,
     required TResult orElse(),
   }) {
     if (makeMoveWithAnimation != null) {
@@ -337,7 +349,8 @@ abstract class _$$_UpdateBoardStateAfterMoveCopyWith<$Res> {
       {CoordenatesInMove coordenatesInMove,
       String playerUserTurnId,
       List<BoardFieldEntity> boardState,
-      List<UserStateEntity> usersInTheMatchState});
+      List<UserStateEntity> usersInTheMatchState,
+      List<MoveAnimationEntity> animationsInMove});
 }
 
 /// @nodoc
@@ -356,6 +369,7 @@ class __$$_UpdateBoardStateAfterMoveCopyWithImpl<$Res>
     Object? playerUserTurnId = null,
     Object? boardState = null,
     Object? usersInTheMatchState = null,
+    Object? animationsInMove = null,
   }) {
     return _then(_$_UpdateBoardStateAfterMove(
       coordenatesInMove: null == coordenatesInMove
@@ -374,6 +388,10 @@ class __$$_UpdateBoardStateAfterMoveCopyWithImpl<$Res>
           ? _value._usersInTheMatchState
           : usersInTheMatchState // ignore: cast_nullable_to_non_nullable
               as List<UserStateEntity>,
+      animationsInMove: null == animationsInMove
+          ? _value._animationsInMove
+          : animationsInMove // ignore: cast_nullable_to_non_nullable
+              as List<MoveAnimationEntity>,
     ));
   }
 }
@@ -385,9 +403,11 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
       {required this.coordenatesInMove,
       required this.playerUserTurnId,
       required final List<BoardFieldEntity> boardState,
-      required final List<UserStateEntity> usersInTheMatchState})
+      required final List<UserStateEntity> usersInTheMatchState,
+      required final List<MoveAnimationEntity> animationsInMove})
       : _boardState = boardState,
-        _usersInTheMatchState = usersInTheMatchState;
+        _usersInTheMatchState = usersInTheMatchState,
+        _animationsInMove = animationsInMove;
 
   @override
   final CoordenatesInMove coordenatesInMove;
@@ -407,9 +427,16 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
     return EqualUnmodifiableListView(_usersInTheMatchState);
   }
 
+  final List<MoveAnimationEntity> _animationsInMove;
+  @override
+  List<MoveAnimationEntity> get animationsInMove {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_animationsInMove);
+  }
+
   @override
   String toString() {
-    return 'BattlefieldEvent.updateBoardStateAfterMove(coordenatesInMove: $coordenatesInMove, playerUserTurnId: $playerUserTurnId, boardState: $boardState, usersInTheMatchState: $usersInTheMatchState)';
+    return 'BattlefieldEvent.updateBoardStateAfterMove(coordenatesInMove: $coordenatesInMove, playerUserTurnId: $playerUserTurnId, boardState: $boardState, usersInTheMatchState: $usersInTheMatchState, animationsInMove: $animationsInMove)';
   }
 
   @override
@@ -424,7 +451,9 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
             const DeepCollectionEquality()
                 .equals(other._boardState, _boardState) &&
             const DeepCollectionEquality()
-                .equals(other._usersInTheMatchState, _usersInTheMatchState));
+                .equals(other._usersInTheMatchState, _usersInTheMatchState) &&
+            const DeepCollectionEquality()
+                .equals(other._animationsInMove, _animationsInMove));
   }
 
   @override
@@ -433,7 +462,8 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
       coordenatesInMove,
       playerUserTurnId,
       const DeepCollectionEquality().hash(_boardState),
-      const DeepCollectionEquality().hash(_usersInTheMatchState));
+      const DeepCollectionEquality().hash(_usersInTheMatchState),
+      const DeepCollectionEquality().hash(_animationsInMove));
 
   @JsonKey(ignore: true)
   @override
@@ -451,16 +481,17 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         updateBoardStateAfterMove,
     required TResult Function(String userThatSurrenderID) surrender,
     required TResult Function(String userTurnID) passTurn,
     required TResult Function(MatchFailure failure) notificateFailure,
-    required TResult Function(PieceEntity piece, Coordenate coordenate)
-        pieceSelectedInCoordenate,
+    required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
+    required TResult Function() unSelectPiece,
   }) {
-    return updateBoardStateAfterMove(
-        coordenatesInMove, playerUserTurnId, boardState, usersInTheMatchState);
+    return updateBoardStateAfterMove(coordenatesInMove, playerUserTurnId,
+        boardState, usersInTheMatchState, animationsInMove);
   }
 
   @override
@@ -472,16 +503,17 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult? Function(String userThatSurrenderID)? surrender,
     TResult? Function(String userTurnID)? passTurn,
     TResult? Function(MatchFailure failure)? notificateFailure,
-    TResult? Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult? Function()? unSelectPiece,
   }) {
-    return updateBoardStateAfterMove?.call(
-        coordenatesInMove, playerUserTurnId, boardState, usersInTheMatchState);
+    return updateBoardStateAfterMove?.call(coordenatesInMove, playerUserTurnId,
+        boardState, usersInTheMatchState, animationsInMove);
   }
 
   @override
@@ -493,18 +525,19 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult Function(String userThatSurrenderID)? surrender,
     TResult Function(String userTurnID)? passTurn,
     TResult Function(MatchFailure failure)? notificateFailure,
-    TResult Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult Function()? unSelectPiece,
     required TResult orElse(),
   }) {
     if (updateBoardStateAfterMove != null) {
       return updateBoardStateAfterMove(coordenatesInMove, playerUserTurnId,
-          boardState, usersInTheMatchState);
+          boardState, usersInTheMatchState, animationsInMove);
     }
     return orElse();
   }
@@ -521,6 +554,7 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
     required TResult Function(_NotificateFailure value) notificateFailure,
     required TResult Function(_BattlefieldPieceSelected value)
         pieceSelectedInCoordenate,
+    required TResult Function(_UnSelectPiece value) unSelectPiece,
   }) {
     return updateBoardStateAfterMove(this);
   }
@@ -536,6 +570,7 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
     TResult? Function(_NotificateFailure value)? notificateFailure,
     TResult? Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult? Function(_UnSelectPiece value)? unSelectPiece,
   }) {
     return updateBoardStateAfterMove?.call(this);
   }
@@ -551,6 +586,7 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
     TResult Function(_NotificateFailure value)? notificateFailure,
     TResult Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult Function(_UnSelectPiece value)? unSelectPiece,
     required TResult orElse(),
   }) {
     if (updateBoardStateAfterMove != null) {
@@ -565,13 +601,15 @@ abstract class _UpdateBoardStateAfterMove implements BattlefieldEvent {
           {required final CoordenatesInMove coordenatesInMove,
           required final String playerUserTurnId,
           required final List<BoardFieldEntity> boardState,
-          required final List<UserStateEntity> usersInTheMatchState}) =
+          required final List<UserStateEntity> usersInTheMatchState,
+          required final List<MoveAnimationEntity> animationsInMove}) =
       _$_UpdateBoardStateAfterMove;
 
   CoordenatesInMove get coordenatesInMove;
   String get playerUserTurnId;
   List<BoardFieldEntity> get boardState;
   List<UserStateEntity> get usersInTheMatchState;
+  List<MoveAnimationEntity> get animationsInMove;
   @JsonKey(ignore: true)
   _$$_UpdateBoardStateAfterMoveCopyWith<_$_UpdateBoardStateAfterMove>
       get copyWith => throw _privateConstructorUsedError;
@@ -648,13 +686,14 @@ class _$_Surrender implements _Surrender {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         updateBoardStateAfterMove,
     required TResult Function(String userThatSurrenderID) surrender,
     required TResult Function(String userTurnID) passTurn,
     required TResult Function(MatchFailure failure) notificateFailure,
-    required TResult Function(PieceEntity piece, Coordenate coordenate)
-        pieceSelectedInCoordenate,
+    required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
+    required TResult Function() unSelectPiece,
   }) {
     return surrender(userThatSurrenderID);
   }
@@ -668,13 +707,14 @@ class _$_Surrender implements _Surrender {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult? Function(String userThatSurrenderID)? surrender,
     TResult? Function(String userTurnID)? passTurn,
     TResult? Function(MatchFailure failure)? notificateFailure,
-    TResult? Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult? Function()? unSelectPiece,
   }) {
     return surrender?.call(userThatSurrenderID);
   }
@@ -688,13 +728,14 @@ class _$_Surrender implements _Surrender {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult Function(String userThatSurrenderID)? surrender,
     TResult Function(String userTurnID)? passTurn,
     TResult Function(MatchFailure failure)? notificateFailure,
-    TResult Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult Function()? unSelectPiece,
     required TResult orElse(),
   }) {
     if (surrender != null) {
@@ -715,6 +756,7 @@ class _$_Surrender implements _Surrender {
     required TResult Function(_NotificateFailure value) notificateFailure,
     required TResult Function(_BattlefieldPieceSelected value)
         pieceSelectedInCoordenate,
+    required TResult Function(_UnSelectPiece value) unSelectPiece,
   }) {
     return surrender(this);
   }
@@ -730,6 +772,7 @@ class _$_Surrender implements _Surrender {
     TResult? Function(_NotificateFailure value)? notificateFailure,
     TResult? Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult? Function(_UnSelectPiece value)? unSelectPiece,
   }) {
     return surrender?.call(this);
   }
@@ -745,6 +788,7 @@ class _$_Surrender implements _Surrender {
     TResult Function(_NotificateFailure value)? notificateFailure,
     TResult Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult Function(_UnSelectPiece value)? unSelectPiece,
     required TResult orElse(),
   }) {
     if (surrender != null) {
@@ -834,13 +878,14 @@ class _$_PassTurn implements _PassTurn {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         updateBoardStateAfterMove,
     required TResult Function(String userThatSurrenderID) surrender,
     required TResult Function(String userTurnID) passTurn,
     required TResult Function(MatchFailure failure) notificateFailure,
-    required TResult Function(PieceEntity piece, Coordenate coordenate)
-        pieceSelectedInCoordenate,
+    required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
+    required TResult Function() unSelectPiece,
   }) {
     return passTurn(userTurnID);
   }
@@ -854,13 +899,14 @@ class _$_PassTurn implements _PassTurn {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult? Function(String userThatSurrenderID)? surrender,
     TResult? Function(String userTurnID)? passTurn,
     TResult? Function(MatchFailure failure)? notificateFailure,
-    TResult? Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult? Function()? unSelectPiece,
   }) {
     return passTurn?.call(userTurnID);
   }
@@ -874,13 +920,14 @@ class _$_PassTurn implements _PassTurn {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult Function(String userThatSurrenderID)? surrender,
     TResult Function(String userTurnID)? passTurn,
     TResult Function(MatchFailure failure)? notificateFailure,
-    TResult Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult Function()? unSelectPiece,
     required TResult orElse(),
   }) {
     if (passTurn != null) {
@@ -901,6 +948,7 @@ class _$_PassTurn implements _PassTurn {
     required TResult Function(_NotificateFailure value) notificateFailure,
     required TResult Function(_BattlefieldPieceSelected value)
         pieceSelectedInCoordenate,
+    required TResult Function(_UnSelectPiece value) unSelectPiece,
   }) {
     return passTurn(this);
   }
@@ -916,6 +964,7 @@ class _$_PassTurn implements _PassTurn {
     TResult? Function(_NotificateFailure value)? notificateFailure,
     TResult? Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult? Function(_UnSelectPiece value)? unSelectPiece,
   }) {
     return passTurn?.call(this);
   }
@@ -931,6 +980,7 @@ class _$_PassTurn implements _PassTurn {
     TResult Function(_NotificateFailure value)? notificateFailure,
     TResult Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult Function(_UnSelectPiece value)? unSelectPiece,
     required TResult orElse(),
   }) {
     if (passTurn != null) {
@@ -1020,13 +1070,14 @@ class _$_NotificateFailure implements _NotificateFailure {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         updateBoardStateAfterMove,
     required TResult Function(String userThatSurrenderID) surrender,
     required TResult Function(String userTurnID) passTurn,
     required TResult Function(MatchFailure failure) notificateFailure,
-    required TResult Function(PieceEntity piece, Coordenate coordenate)
-        pieceSelectedInCoordenate,
+    required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
+    required TResult Function() unSelectPiece,
   }) {
     return notificateFailure(failure);
   }
@@ -1040,13 +1091,14 @@ class _$_NotificateFailure implements _NotificateFailure {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult? Function(String userThatSurrenderID)? surrender,
     TResult? Function(String userTurnID)? passTurn,
     TResult? Function(MatchFailure failure)? notificateFailure,
-    TResult? Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult? Function()? unSelectPiece,
   }) {
     return notificateFailure?.call(failure);
   }
@@ -1060,13 +1112,14 @@ class _$_NotificateFailure implements _NotificateFailure {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult Function(String userThatSurrenderID)? surrender,
     TResult Function(String userTurnID)? passTurn,
     TResult Function(MatchFailure failure)? notificateFailure,
-    TResult Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult Function()? unSelectPiece,
     required TResult orElse(),
   }) {
     if (notificateFailure != null) {
@@ -1087,6 +1140,7 @@ class _$_NotificateFailure implements _NotificateFailure {
     required TResult Function(_NotificateFailure value) notificateFailure,
     required TResult Function(_BattlefieldPieceSelected value)
         pieceSelectedInCoordenate,
+    required TResult Function(_UnSelectPiece value) unSelectPiece,
   }) {
     return notificateFailure(this);
   }
@@ -1102,6 +1156,7 @@ class _$_NotificateFailure implements _NotificateFailure {
     TResult? Function(_NotificateFailure value)? notificateFailure,
     TResult? Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult? Function(_UnSelectPiece value)? unSelectPiece,
   }) {
     return notificateFailure?.call(this);
   }
@@ -1117,6 +1172,7 @@ class _$_NotificateFailure implements _NotificateFailure {
     TResult Function(_NotificateFailure value)? notificateFailure,
     TResult Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult Function(_UnSelectPiece value)? unSelectPiece,
     required TResult orElse(),
   }) {
     if (notificateFailure != null) {
@@ -1143,7 +1199,7 @@ abstract class _$$_BattlefieldPieceSelectedCopyWith<$Res> {
           $Res Function(_$_BattlefieldPieceSelected) then) =
       __$$_BattlefieldPieceSelectedCopyWithImpl<$Res>;
   @useResult
-  $Res call({PieceEntity piece, Coordenate coordenate});
+  $Res call({BoardPieceEntity piece});
 }
 
 /// @nodoc
@@ -1158,17 +1214,12 @@ class __$$_BattlefieldPieceSelectedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? piece = null,
-    Object? coordenate = null,
   }) {
     return _then(_$_BattlefieldPieceSelected(
       null == piece
           ? _value.piece
           : piece // ignore: cast_nullable_to_non_nullable
-              as PieceEntity,
-      null == coordenate
-          ? _value.coordenate
-          : coordenate // ignore: cast_nullable_to_non_nullable
-              as Coordenate,
+              as BoardPieceEntity,
     ));
   }
 }
@@ -1176,16 +1227,14 @@ class __$$_BattlefieldPieceSelectedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
-  const _$_BattlefieldPieceSelected(this.piece, this.coordenate);
+  const _$_BattlefieldPieceSelected(this.piece);
 
   @override
-  final PieceEntity piece;
-  @override
-  final Coordenate coordenate;
+  final BoardPieceEntity piece;
 
   @override
   String toString() {
-    return 'BattlefieldEvent.pieceSelectedInCoordenate(piece: $piece, coordenate: $coordenate)';
+    return 'BattlefieldEvent.pieceSelectedInCoordenate(piece: $piece)';
   }
 
   @override
@@ -1193,13 +1242,12 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BattlefieldPieceSelected &&
-            (identical(other.piece, piece) || other.piece == piece) &&
-            (identical(other.coordenate, coordenate) ||
-                other.coordenate == coordenate));
+            const DeepCollectionEquality().equals(other.piece, piece));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, piece, coordenate);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(piece));
 
   @JsonKey(ignore: true)
   @override
@@ -1217,15 +1265,16 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
         updateBoardStateAfterMove,
     required TResult Function(String userThatSurrenderID) surrender,
     required TResult Function(String userTurnID) passTurn,
     required TResult Function(MatchFailure failure) notificateFailure,
-    required TResult Function(PieceEntity piece, Coordenate coordenate)
-        pieceSelectedInCoordenate,
+    required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
+    required TResult Function() unSelectPiece,
   }) {
-    return pieceSelectedInCoordenate(piece, coordenate);
+    return pieceSelectedInCoordenate(piece);
   }
 
   @override
@@ -1237,15 +1286,16 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult? Function(String userThatSurrenderID)? surrender,
     TResult? Function(String userTurnID)? passTurn,
     TResult? Function(MatchFailure failure)? notificateFailure,
-    TResult? Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult? Function()? unSelectPiece,
   }) {
-    return pieceSelectedInCoordenate?.call(piece, coordenate);
+    return pieceSelectedInCoordenate?.call(piece);
   }
 
   @override
@@ -1257,17 +1307,18 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
             CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState)?
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
         updateBoardStateAfterMove,
     TResult Function(String userThatSurrenderID)? surrender,
     TResult Function(String userTurnID)? passTurn,
     TResult Function(MatchFailure failure)? notificateFailure,
-    TResult Function(PieceEntity piece, Coordenate coordenate)?
-        pieceSelectedInCoordenate,
+    TResult Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult Function()? unSelectPiece,
     required TResult orElse(),
   }) {
     if (pieceSelectedInCoordenate != null) {
-      return pieceSelectedInCoordenate(piece, coordenate);
+      return pieceSelectedInCoordenate(piece);
     }
     return orElse();
   }
@@ -1284,6 +1335,7 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
     required TResult Function(_NotificateFailure value) notificateFailure,
     required TResult Function(_BattlefieldPieceSelected value)
         pieceSelectedInCoordenate,
+    required TResult Function(_UnSelectPiece value) unSelectPiece,
   }) {
     return pieceSelectedInCoordenate(this);
   }
@@ -1299,6 +1351,7 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
     TResult? Function(_NotificateFailure value)? notificateFailure,
     TResult? Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult? Function(_UnSelectPiece value)? unSelectPiece,
   }) {
     return pieceSelectedInCoordenate?.call(this);
   }
@@ -1314,6 +1367,7 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
     TResult Function(_NotificateFailure value)? notificateFailure,
     TResult Function(_BattlefieldPieceSelected value)?
         pieceSelectedInCoordenate,
+    TResult Function(_UnSelectPiece value)? unSelectPiece,
     required TResult orElse(),
   }) {
     if (pieceSelectedInCoordenate != null) {
@@ -1324,15 +1378,173 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
 }
 
 abstract class _BattlefieldPieceSelected implements BattlefieldEvent {
-  const factory _BattlefieldPieceSelected(
-          final PieceEntity piece, final Coordenate coordenate) =
+  const factory _BattlefieldPieceSelected(final BoardPieceEntity piece) =
       _$_BattlefieldPieceSelected;
 
-  PieceEntity get piece;
-  Coordenate get coordenate;
+  BoardPieceEntity get piece;
   @JsonKey(ignore: true)
   _$$_BattlefieldPieceSelectedCopyWith<_$_BattlefieldPieceSelected>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_UnSelectPieceCopyWith<$Res> {
+  factory _$$_UnSelectPieceCopyWith(
+          _$_UnSelectPiece value, $Res Function(_$_UnSelectPiece) then) =
+      __$$_UnSelectPieceCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_UnSelectPieceCopyWithImpl<$Res>
+    extends _$BattlefieldEventCopyWithImpl<$Res, _$_UnSelectPiece>
+    implements _$$_UnSelectPieceCopyWith<$Res> {
+  __$$_UnSelectPieceCopyWithImpl(
+      _$_UnSelectPiece _value, $Res Function(_$_UnSelectPiece) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_UnSelectPiece implements _UnSelectPiece {
+  const _$_UnSelectPiece();
+
+  @override
+  String toString() {
+    return 'BattlefieldEvent.unSelectPiece()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_UnSelectPiece);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String playerThatMakedMove, String moveMaded)
+        makeMoveWithAnimation,
+    required TResult Function(
+            CoordenatesInMove coordenatesInMove,
+            String playerUserTurnId,
+            List<BoardFieldEntity> boardState,
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)
+        updateBoardStateAfterMove,
+    required TResult Function(String userThatSurrenderID) surrender,
+    required TResult Function(String userTurnID) passTurn,
+    required TResult Function(MatchFailure failure) notificateFailure,
+    required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
+    required TResult Function() unSelectPiece,
+  }) {
+    return unSelectPiece();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String playerThatMakedMove, String moveMaded)?
+        makeMoveWithAnimation,
+    TResult? Function(
+            CoordenatesInMove coordenatesInMove,
+            String playerUserTurnId,
+            List<BoardFieldEntity> boardState,
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
+        updateBoardStateAfterMove,
+    TResult? Function(String userThatSurrenderID)? surrender,
+    TResult? Function(String userTurnID)? passTurn,
+    TResult? Function(MatchFailure failure)? notificateFailure,
+    TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult? Function()? unSelectPiece,
+  }) {
+    return unSelectPiece?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String playerThatMakedMove, String moveMaded)?
+        makeMoveWithAnimation,
+    TResult Function(
+            CoordenatesInMove coordenatesInMove,
+            String playerUserTurnId,
+            List<BoardFieldEntity> boardState,
+            List<UserStateEntity> usersInTheMatchState,
+            List<MoveAnimationEntity> animationsInMove)?
+        updateBoardStateAfterMove,
+    TResult Function(String userThatSurrenderID)? surrender,
+    TResult Function(String userTurnID)? passTurn,
+    TResult Function(MatchFailure failure)? notificateFailure,
+    TResult Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
+    TResult Function()? unSelectPiece,
+    required TResult orElse(),
+  }) {
+    if (unSelectPiece != null) {
+      return unSelectPiece();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_MakeMoveWithAnimation value)
+        makeMoveWithAnimation,
+    required TResult Function(_UpdateBoardStateAfterMove value)
+        updateBoardStateAfterMove,
+    required TResult Function(_Surrender value) surrender,
+    required TResult Function(_PassTurn value) passTurn,
+    required TResult Function(_NotificateFailure value) notificateFailure,
+    required TResult Function(_BattlefieldPieceSelected value)
+        pieceSelectedInCoordenate,
+    required TResult Function(_UnSelectPiece value) unSelectPiece,
+  }) {
+    return unSelectPiece(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_MakeMoveWithAnimation value)? makeMoveWithAnimation,
+    TResult? Function(_UpdateBoardStateAfterMove value)?
+        updateBoardStateAfterMove,
+    TResult? Function(_Surrender value)? surrender,
+    TResult? Function(_PassTurn value)? passTurn,
+    TResult? Function(_NotificateFailure value)? notificateFailure,
+    TResult? Function(_BattlefieldPieceSelected value)?
+        pieceSelectedInCoordenate,
+    TResult? Function(_UnSelectPiece value)? unSelectPiece,
+  }) {
+    return unSelectPiece?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_MakeMoveWithAnimation value)? makeMoveWithAnimation,
+    TResult Function(_UpdateBoardStateAfterMove value)?
+        updateBoardStateAfterMove,
+    TResult Function(_Surrender value)? surrender,
+    TResult Function(_PassTurn value)? passTurn,
+    TResult Function(_NotificateFailure value)? notificateFailure,
+    TResult Function(_BattlefieldPieceSelected value)?
+        pieceSelectedInCoordenate,
+    TResult Function(_UnSelectPiece value)? unSelectPiece,
+    required TResult orElse(),
+  }) {
+    if (unSelectPiece != null) {
+      return unSelectPiece(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UnSelectPiece implements BattlefieldEvent {
+  const factory _UnSelectPiece() = _$_UnSelectPiece;
 }
 
 /// @nodoc
@@ -1343,13 +1555,18 @@ mixin _$BattlefieldState {
   TResult when<TResult extends Object?>({
     required TResult Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)
-        normal,
+        defaultState,
+    required TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)
+        defaultStateWithAnimations,
     required TResult Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)
+            BoardPieceEntity selectedPiece)
         pieceSelected,
     required TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)
@@ -1360,13 +1577,18 @@ mixin _$BattlefieldState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)?
-        normal,
+        defaultState,
+    TResult? Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
     TResult? Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)?
+            BoardPieceEntity selectedPiece)?
         pieceSelected,
     TResult? Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)?
@@ -1377,13 +1599,18 @@ mixin _$BattlefieldState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)?
-        normal,
+        defaultState,
+    TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
     TResult Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)?
+            BoardPieceEntity selectedPiece)?
         pieceSelected,
     TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)?
@@ -1393,21 +1620,27 @@ mixin _$BattlefieldState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BattlefieldInitialState value) normal,
+    required TResult Function(_DefaultState value) defaultState,
+    required TResult Function(_DefaultStateWithAnimations value)
+        defaultStateWithAnimations,
     required TResult Function(_PieceSelected value) pieceSelected,
     required TResult Function(_WithError value) withError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_BattlefieldInitialState value)? normal,
+    TResult? Function(_DefaultState value)? defaultState,
+    TResult? Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
     TResult? Function(_PieceSelected value)? pieceSelected,
     TResult? Function(_WithError value)? withError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BattlefieldInitialState value)? normal,
+    TResult Function(_DefaultState value)? defaultState,
+    TResult Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
     TResult Function(_PieceSelected value)? pieceSelected,
     TResult Function(_WithError value)? withError,
     required TResult orElse(),
@@ -1458,22 +1691,22 @@ class _$BattlefieldStateCopyWithImpl<$Res, $Val extends BattlefieldState>
 }
 
 /// @nodoc
-abstract class _$$_BattlefieldInitialStateCopyWith<$Res>
+abstract class _$$_DefaultStateCopyWith<$Res>
     implements $BattlefieldStateCopyWith<$Res> {
-  factory _$$_BattlefieldInitialStateCopyWith(_$_BattlefieldInitialState value,
-          $Res Function(_$_BattlefieldInitialState) then) =
-      __$$_BattlefieldInitialStateCopyWithImpl<$Res>;
+  factory _$$_DefaultStateCopyWith(
+          _$_DefaultState value, $Res Function(_$_DefaultState) then) =
+      __$$_DefaultStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<UserStateEntity> users, List<BoardFieldEntity> entities});
 }
 
 /// @nodoc
-class __$$_BattlefieldInitialStateCopyWithImpl<$Res>
-    extends _$BattlefieldStateCopyWithImpl<$Res, _$_BattlefieldInitialState>
-    implements _$$_BattlefieldInitialStateCopyWith<$Res> {
-  __$$_BattlefieldInitialStateCopyWithImpl(_$_BattlefieldInitialState _value,
-      $Res Function(_$_BattlefieldInitialState) _then)
+class __$$_DefaultStateCopyWithImpl<$Res>
+    extends _$BattlefieldStateCopyWithImpl<$Res, _$_DefaultState>
+    implements _$$_DefaultStateCopyWith<$Res> {
+  __$$_DefaultStateCopyWithImpl(
+      _$_DefaultState _value, $Res Function(_$_DefaultState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1482,7 +1715,7 @@ class __$$_BattlefieldInitialStateCopyWithImpl<$Res>
     Object? users = null,
     Object? entities = null,
   }) {
-    return _then(_$_BattlefieldInitialState(
+    return _then(_$_DefaultState(
       users: null == users
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
@@ -1497,8 +1730,8 @@ class __$$_BattlefieldInitialStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_BattlefieldInitialState implements _BattlefieldInitialState {
-  const _$_BattlefieldInitialState(
+class _$_DefaultState implements _DefaultState {
+  const _$_DefaultState(
       {required final List<UserStateEntity> users,
       required final List<BoardFieldEntity> entities})
       : _users = users,
@@ -1520,14 +1753,14 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
 
   @override
   String toString() {
-    return 'BattlefieldState.normal(users: $users, entities: $entities)';
+    return 'BattlefieldState.defaultState(users: $users, entities: $entities)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_BattlefieldInitialState &&
+            other is _$_DefaultState &&
             const DeepCollectionEquality().equals(other._users, _users) &&
             const DeepCollectionEquality().equals(other._entities, _entities));
   }
@@ -1541,29 +1774,32 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_BattlefieldInitialStateCopyWith<_$_BattlefieldInitialState>
-      get copyWith =>
-          __$$_BattlefieldInitialStateCopyWithImpl<_$_BattlefieldInitialState>(
-              this, _$identity);
+  _$$_DefaultStateCopyWith<_$_DefaultState> get copyWith =>
+      __$$_DefaultStateCopyWithImpl<_$_DefaultState>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)
-        normal,
+        defaultState,
+    required TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)
+        defaultStateWithAnimations,
     required TResult Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)
+            BoardPieceEntity selectedPiece)
         pieceSelected,
     required TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)
         withError,
   }) {
-    return normal(users, entities);
+    return defaultState(users, entities);
   }
 
   @override
@@ -1571,19 +1807,24 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)?
-        normal,
+        defaultState,
+    TResult? Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
     TResult? Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)?
+            BoardPieceEntity selectedPiece)?
         pieceSelected,
     TResult? Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)?
         withError,
   }) {
-    return normal?.call(users, entities);
+    return defaultState?.call(users, entities);
   }
 
   @override
@@ -1591,21 +1832,26 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)?
-        normal,
+        defaultState,
+    TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
     TResult Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)?
+            BoardPieceEntity selectedPiece)?
         pieceSelected,
     TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)?
         withError,
     required TResult orElse(),
   }) {
-    if (normal != null) {
-      return normal(users, entities);
+    if (defaultState != null) {
+      return defaultState(users, entities);
     }
     return orElse();
   }
@@ -1613,43 +1859,48 @@ class _$_BattlefieldInitialState implements _BattlefieldInitialState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BattlefieldInitialState value) normal,
+    required TResult Function(_DefaultState value) defaultState,
+    required TResult Function(_DefaultStateWithAnimations value)
+        defaultStateWithAnimations,
     required TResult Function(_PieceSelected value) pieceSelected,
     required TResult Function(_WithError value) withError,
   }) {
-    return normal(this);
+    return defaultState(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_BattlefieldInitialState value)? normal,
+    TResult? Function(_DefaultState value)? defaultState,
+    TResult? Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
     TResult? Function(_PieceSelected value)? pieceSelected,
     TResult? Function(_WithError value)? withError,
   }) {
-    return normal?.call(this);
+    return defaultState?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BattlefieldInitialState value)? normal,
+    TResult Function(_DefaultState value)? defaultState,
+    TResult Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
     TResult Function(_PieceSelected value)? pieceSelected,
     TResult Function(_WithError value)? withError,
     required TResult orElse(),
   }) {
-    if (normal != null) {
-      return normal(this);
+    if (defaultState != null) {
+      return defaultState(this);
     }
     return orElse();
   }
 }
 
-abstract class _BattlefieldInitialState implements BattlefieldState {
-  const factory _BattlefieldInitialState(
-          {required final List<UserStateEntity> users,
-          required final List<BoardFieldEntity> entities}) =
-      _$_BattlefieldInitialState;
+abstract class _DefaultState implements BattlefieldState {
+  const factory _DefaultState(
+      {required final List<UserStateEntity> users,
+      required final List<BoardFieldEntity> entities}) = _$_DefaultState;
 
   @override
   List<UserStateEntity> get users;
@@ -1657,7 +1908,255 @@ abstract class _BattlefieldInitialState implements BattlefieldState {
   List<BoardFieldEntity> get entities;
   @override
   @JsonKey(ignore: true)
-  _$$_BattlefieldInitialStateCopyWith<_$_BattlefieldInitialState>
+  _$$_DefaultStateCopyWith<_$_DefaultState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_DefaultStateWithAnimationsCopyWith<$Res>
+    implements $BattlefieldStateCopyWith<$Res> {
+  factory _$$_DefaultStateWithAnimationsCopyWith(
+          _$_DefaultStateWithAnimations value,
+          $Res Function(_$_DefaultStateWithAnimations) then) =
+      __$$_DefaultStateWithAnimationsCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {List<UserStateEntity> users,
+      List<BoardFieldEntity> entities,
+      List<MoveAnimationEntity> animationsInMove});
+}
+
+/// @nodoc
+class __$$_DefaultStateWithAnimationsCopyWithImpl<$Res>
+    extends _$BattlefieldStateCopyWithImpl<$Res, _$_DefaultStateWithAnimations>
+    implements _$$_DefaultStateWithAnimationsCopyWith<$Res> {
+  __$$_DefaultStateWithAnimationsCopyWithImpl(
+      _$_DefaultStateWithAnimations _value,
+      $Res Function(_$_DefaultStateWithAnimations) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? users = null,
+    Object? entities = null,
+    Object? animationsInMove = null,
+  }) {
+    return _then(_$_DefaultStateWithAnimations(
+      users: null == users
+          ? _value._users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<UserStateEntity>,
+      entities: null == entities
+          ? _value._entities
+          : entities // ignore: cast_nullable_to_non_nullable
+              as List<BoardFieldEntity>,
+      animationsInMove: null == animationsInMove
+          ? _value._animationsInMove
+          : animationsInMove // ignore: cast_nullable_to_non_nullable
+              as List<MoveAnimationEntity>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_DefaultStateWithAnimations implements _DefaultStateWithAnimations {
+  const _$_DefaultStateWithAnimations(
+      {required final List<UserStateEntity> users,
+      required final List<BoardFieldEntity> entities,
+      required final List<MoveAnimationEntity> animationsInMove})
+      : _users = users,
+        _entities = entities,
+        _animationsInMove = animationsInMove;
+
+  final List<UserStateEntity> _users;
+  @override
+  List<UserStateEntity> get users {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_users);
+  }
+
+  final List<BoardFieldEntity> _entities;
+  @override
+  List<BoardFieldEntity> get entities {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_entities);
+  }
+
+  final List<MoveAnimationEntity> _animationsInMove;
+  @override
+  List<MoveAnimationEntity> get animationsInMove {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_animationsInMove);
+  }
+
+  @override
+  String toString() {
+    return 'BattlefieldState.defaultStateWithAnimations(users: $users, entities: $entities, animationsInMove: $animationsInMove)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DefaultStateWithAnimations &&
+            const DeepCollectionEquality().equals(other._users, _users) &&
+            const DeepCollectionEquality().equals(other._entities, _entities) &&
+            const DeepCollectionEquality()
+                .equals(other._animationsInMove, _animationsInMove));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_users),
+      const DeepCollectionEquality().hash(_entities),
+      const DeepCollectionEquality().hash(_animationsInMove));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_DefaultStateWithAnimationsCopyWith<_$_DefaultStateWithAnimations>
+      get copyWith => __$$_DefaultStateWithAnimationsCopyWithImpl<
+          _$_DefaultStateWithAnimations>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            List<UserStateEntity> users, List<BoardFieldEntity> entities)
+        defaultState,
+    required TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)
+        defaultStateWithAnimations,
+    required TResult Function(
+            List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea,
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            BoardPieceEntity selectedPiece)
+        pieceSelected,
+    required TResult Function(MatchFailure failure, List<UserStateEntity> users,
+            List<BoardFieldEntity> entities)
+        withError,
+  }) {
+    return defaultStateWithAnimations(users, entities, animationsInMove);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+        defaultState,
+    TResult? Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
+    TResult? Function(
+            List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea,
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            BoardPieceEntity selectedPiece)?
+        pieceSelected,
+    TResult? Function(MatchFailure failure, List<UserStateEntity> users,
+            List<BoardFieldEntity> entities)?
+        withError,
+  }) {
+    return defaultStateWithAnimations?.call(users, entities, animationsInMove);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+        defaultState,
+    TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
+    TResult Function(
+            List<Coordenate> possiblePieceMovementArea,
+            List<Coordenate> possiblePieceAttackArea,
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            BoardPieceEntity selectedPiece)?
+        pieceSelected,
+    TResult Function(MatchFailure failure, List<UserStateEntity> users,
+            List<BoardFieldEntity> entities)?
+        withError,
+    required TResult orElse(),
+  }) {
+    if (defaultStateWithAnimations != null) {
+      return defaultStateWithAnimations(users, entities, animationsInMove);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_DefaultState value) defaultState,
+    required TResult Function(_DefaultStateWithAnimations value)
+        defaultStateWithAnimations,
+    required TResult Function(_PieceSelected value) pieceSelected,
+    required TResult Function(_WithError value) withError,
+  }) {
+    return defaultStateWithAnimations(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_DefaultState value)? defaultState,
+    TResult? Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
+    TResult? Function(_PieceSelected value)? pieceSelected,
+    TResult? Function(_WithError value)? withError,
+  }) {
+    return defaultStateWithAnimations?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_DefaultState value)? defaultState,
+    TResult Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
+    TResult Function(_PieceSelected value)? pieceSelected,
+    TResult Function(_WithError value)? withError,
+    required TResult orElse(),
+  }) {
+    if (defaultStateWithAnimations != null) {
+      return defaultStateWithAnimations(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DefaultStateWithAnimations implements BattlefieldState {
+  const factory _DefaultStateWithAnimations(
+          {required final List<UserStateEntity> users,
+          required final List<BoardFieldEntity> entities,
+          required final List<MoveAnimationEntity> animationsInMove}) =
+      _$_DefaultStateWithAnimations;
+
+  @override
+  List<UserStateEntity> get users;
+  @override
+  List<BoardFieldEntity> get entities;
+  List<MoveAnimationEntity> get animationsInMove;
+  @override
+  @JsonKey(ignore: true)
+  _$$_DefaultStateWithAnimationsCopyWith<_$_DefaultStateWithAnimations>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1674,7 +2173,7 @@ abstract class _$$_PieceSelectedCopyWith<$Res>
       List<Coordenate> possiblePieceAttackArea,
       List<UserStateEntity> users,
       List<BoardFieldEntity> entities,
-      Coordenate selectedPieceCoordenate});
+      BoardPieceEntity selectedPiece});
 }
 
 /// @nodoc
@@ -1692,7 +2191,7 @@ class __$$_PieceSelectedCopyWithImpl<$Res>
     Object? possiblePieceAttackArea = null,
     Object? users = null,
     Object? entities = null,
-    Object? selectedPieceCoordenate = null,
+    Object? selectedPiece = null,
   }) {
     return _then(_$_PieceSelected(
       possiblePieceMovementArea: null == possiblePieceMovementArea
@@ -1711,10 +2210,10 @@ class __$$_PieceSelectedCopyWithImpl<$Res>
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
               as List<BoardFieldEntity>,
-      selectedPieceCoordenate: null == selectedPieceCoordenate
-          ? _value.selectedPieceCoordenate
-          : selectedPieceCoordenate // ignore: cast_nullable_to_non_nullable
-              as Coordenate,
+      selectedPiece: null == selectedPiece
+          ? _value.selectedPiece
+          : selectedPiece // ignore: cast_nullable_to_non_nullable
+              as BoardPieceEntity,
     ));
   }
 }
@@ -1727,7 +2226,7 @@ class _$_PieceSelected implements _PieceSelected {
       required final List<Coordenate> possiblePieceAttackArea,
       required final List<UserStateEntity> users,
       required final List<BoardFieldEntity> entities,
-      required this.selectedPieceCoordenate})
+      required this.selectedPiece})
       : _possiblePieceMovementArea = possiblePieceMovementArea,
         _possiblePieceAttackArea = possiblePieceAttackArea,
         _users = users,
@@ -1762,11 +2261,11 @@ class _$_PieceSelected implements _PieceSelected {
   }
 
   @override
-  final Coordenate selectedPieceCoordenate;
+  final BoardPieceEntity selectedPiece;
 
   @override
   String toString() {
-    return 'BattlefieldState.pieceSelected(possiblePieceMovementArea: $possiblePieceMovementArea, possiblePieceAttackArea: $possiblePieceAttackArea, users: $users, entities: $entities, selectedPieceCoordenate: $selectedPieceCoordenate)';
+    return 'BattlefieldState.pieceSelected(possiblePieceMovementArea: $possiblePieceMovementArea, possiblePieceAttackArea: $possiblePieceAttackArea, users: $users, entities: $entities, selectedPiece: $selectedPiece)';
   }
 
   @override
@@ -1780,9 +2279,8 @@ class _$_PieceSelected implements _PieceSelected {
                 other._possiblePieceAttackArea, _possiblePieceAttackArea) &&
             const DeepCollectionEquality().equals(other._users, _users) &&
             const DeepCollectionEquality().equals(other._entities, _entities) &&
-            (identical(
-                    other.selectedPieceCoordenate, selectedPieceCoordenate) ||
-                other.selectedPieceCoordenate == selectedPieceCoordenate));
+            const DeepCollectionEquality()
+                .equals(other.selectedPiece, selectedPiece));
   }
 
   @override
@@ -1792,7 +2290,7 @@ class _$_PieceSelected implements _PieceSelected {
       const DeepCollectionEquality().hash(_possiblePieceAttackArea),
       const DeepCollectionEquality().hash(_users),
       const DeepCollectionEquality().hash(_entities),
-      selectedPieceCoordenate);
+      const DeepCollectionEquality().hash(selectedPiece));
 
   @JsonKey(ignore: true)
   @override
@@ -1805,20 +2303,25 @@ class _$_PieceSelected implements _PieceSelected {
   TResult when<TResult extends Object?>({
     required TResult Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)
-        normal,
+        defaultState,
+    required TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)
+        defaultStateWithAnimations,
     required TResult Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)
+            BoardPieceEntity selectedPiece)
         pieceSelected,
     required TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)
         withError,
   }) {
     return pieceSelected(possiblePieceMovementArea, possiblePieceAttackArea,
-        users, entities, selectedPieceCoordenate);
+        users, entities, selectedPiece);
   }
 
   @override
@@ -1826,20 +2329,25 @@ class _$_PieceSelected implements _PieceSelected {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)?
-        normal,
+        defaultState,
+    TResult? Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
     TResult? Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)?
+            BoardPieceEntity selectedPiece)?
         pieceSelected,
     TResult? Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)?
         withError,
   }) {
     return pieceSelected?.call(possiblePieceMovementArea,
-        possiblePieceAttackArea, users, entities, selectedPieceCoordenate);
+        possiblePieceAttackArea, users, entities, selectedPiece);
   }
 
   @override
@@ -1847,13 +2355,18 @@ class _$_PieceSelected implements _PieceSelected {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)?
-        normal,
+        defaultState,
+    TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
     TResult Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)?
+            BoardPieceEntity selectedPiece)?
         pieceSelected,
     TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)?
@@ -1862,7 +2375,7 @@ class _$_PieceSelected implements _PieceSelected {
   }) {
     if (pieceSelected != null) {
       return pieceSelected(possiblePieceMovementArea, possiblePieceAttackArea,
-          users, entities, selectedPieceCoordenate);
+          users, entities, selectedPiece);
     }
     return orElse();
   }
@@ -1870,7 +2383,9 @@ class _$_PieceSelected implements _PieceSelected {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BattlefieldInitialState value) normal,
+    required TResult Function(_DefaultState value) defaultState,
+    required TResult Function(_DefaultStateWithAnimations value)
+        defaultStateWithAnimations,
     required TResult Function(_PieceSelected value) pieceSelected,
     required TResult Function(_WithError value) withError,
   }) {
@@ -1880,7 +2395,9 @@ class _$_PieceSelected implements _PieceSelected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_BattlefieldInitialState value)? normal,
+    TResult? Function(_DefaultState value)? defaultState,
+    TResult? Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
     TResult? Function(_PieceSelected value)? pieceSelected,
     TResult? Function(_WithError value)? withError,
   }) {
@@ -1890,7 +2407,9 @@ class _$_PieceSelected implements _PieceSelected {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BattlefieldInitialState value)? normal,
+    TResult Function(_DefaultState value)? defaultState,
+    TResult Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
     TResult Function(_PieceSelected value)? pieceSelected,
     TResult Function(_WithError value)? withError,
     required TResult orElse(),
@@ -1908,7 +2427,7 @@ abstract class _PieceSelected implements BattlefieldState {
       required final List<Coordenate> possiblePieceAttackArea,
       required final List<UserStateEntity> users,
       required final List<BoardFieldEntity> entities,
-      required final Coordenate selectedPieceCoordenate}) = _$_PieceSelected;
+      required final BoardPieceEntity selectedPiece}) = _$_PieceSelected;
 
   List<Coordenate> get possiblePieceMovementArea;
   List<Coordenate> get possiblePieceAttackArea;
@@ -1916,7 +2435,7 @@ abstract class _PieceSelected implements BattlefieldState {
   List<UserStateEntity> get users;
   @override
   List<BoardFieldEntity> get entities;
-  Coordenate get selectedPieceCoordenate;
+  BoardPieceEntity get selectedPiece;
   @override
   @JsonKey(ignore: true)
   _$$_PieceSelectedCopyWith<_$_PieceSelected> get copyWith =>
@@ -2028,13 +2547,18 @@ class _$_WithError implements _WithError {
   TResult when<TResult extends Object?>({
     required TResult Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)
-        normal,
+        defaultState,
+    required TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)
+        defaultStateWithAnimations,
     required TResult Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)
+            BoardPieceEntity selectedPiece)
         pieceSelected,
     required TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)
@@ -2048,13 +2572,18 @@ class _$_WithError implements _WithError {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)?
-        normal,
+        defaultState,
+    TResult? Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
     TResult? Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)?
+            BoardPieceEntity selectedPiece)?
         pieceSelected,
     TResult? Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)?
@@ -2068,13 +2597,18 @@ class _$_WithError implements _WithError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
             List<UserStateEntity> users, List<BoardFieldEntity> entities)?
-        normal,
+        defaultState,
+    TResult Function(
+            List<UserStateEntity> users,
+            List<BoardFieldEntity> entities,
+            List<MoveAnimationEntity> animationsInMove)?
+        defaultStateWithAnimations,
     TResult Function(
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
             List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
-            Coordenate selectedPieceCoordenate)?
+            BoardPieceEntity selectedPiece)?
         pieceSelected,
     TResult Function(MatchFailure failure, List<UserStateEntity> users,
             List<BoardFieldEntity> entities)?
@@ -2090,7 +2624,9 @@ class _$_WithError implements _WithError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_BattlefieldInitialState value) normal,
+    required TResult Function(_DefaultState value) defaultState,
+    required TResult Function(_DefaultStateWithAnimations value)
+        defaultStateWithAnimations,
     required TResult Function(_PieceSelected value) pieceSelected,
     required TResult Function(_WithError value) withError,
   }) {
@@ -2100,7 +2636,9 @@ class _$_WithError implements _WithError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_BattlefieldInitialState value)? normal,
+    TResult? Function(_DefaultState value)? defaultState,
+    TResult? Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
     TResult? Function(_PieceSelected value)? pieceSelected,
     TResult? Function(_WithError value)? withError,
   }) {
@@ -2110,7 +2648,9 @@ class _$_WithError implements _WithError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_BattlefieldInitialState value)? normal,
+    TResult Function(_DefaultState value)? defaultState,
+    TResult Function(_DefaultStateWithAnimations value)?
+        defaultStateWithAnimations,
     TResult Function(_PieceSelected value)? pieceSelected,
     TResult Function(_WithError value)? withError,
     required TResult orElse(),

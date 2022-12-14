@@ -7,8 +7,6 @@ class PieceAttackNonFatalAnimationWidget extends StatefulWidget {
   final Duration animationDuration;
   final BoardPieceEntity entity;
   final String valueKey;
-  final double axisX;
-  final double axisY;
   final double size;
   final double coordenateMultipliyer;
 
@@ -19,8 +17,6 @@ class PieceAttackNonFatalAnimationWidget extends StatefulWidget {
     required this.animationDuration,
     required this.entity,
     required this.valueKey,
-    required this.axisX,
-    required this.axisY,
     required this.size,
     required this.coordenateMultipliyer,
     required this.originCoordenate,

@@ -12,6 +12,7 @@ class BattlefieldEvent with _$BattlefieldEvent {
     required String playerUserTurnId,
     required List<BoardFieldEntity> boardState,
     required List<UserStateEntity> usersInTheMatchState,
+    required List<MoveAnimationEntity> animationsInMove,
   }) = _UpdateBoardStateAfterMove;
 
   const factory BattlefieldEvent.surrender(String userThatSurrenderID) =
@@ -23,5 +24,8 @@ class BattlefieldEvent with _$BattlefieldEvent {
       _NotificateFailure;
 
   const factory BattlefieldEvent.pieceSelectedInCoordenate(
-      PieceEntity piece, Coordenate coordenate) = _BattlefieldPieceSelected;
+    BoardPieceEntity piece,
+  ) = _BattlefieldPieceSelected;
+
+  const factory BattlefieldEvent.unSelectPiece() = _UnSelectPiece;
 }

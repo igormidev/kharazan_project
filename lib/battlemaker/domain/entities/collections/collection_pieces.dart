@@ -6,7 +6,8 @@ part 'collection_movements.dart';
 const PieceEntity medusa = PieceEntity(
   uid: 1,
   name: 'Medusa',
-  description: '',
+  description: 'The piece that is attacked by the '
+      'medusa cannot move in the next turn.',
   cost: 4,
   life: 3,
   damage: 1,

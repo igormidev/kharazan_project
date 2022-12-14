@@ -2,17 +2,23 @@ part of 'battlefield_bloc.dart';
 
 @freezed
 class BattlefieldState with _$BattlefieldState {
-  const factory BattlefieldState.normal({
+  const factory BattlefieldState.defaultState({
     required List<UserStateEntity> users,
     required List<BoardFieldEntity> entities,
-  }) = _BattlefieldInitialState;
+  }) = _DefaultState;
+
+  const factory BattlefieldState.defaultStateWithAnimations({
+    required List<UserStateEntity> users,
+    required List<BoardFieldEntity> entities,
+    required List<MoveAnimationEntity> animationsInMove,
+  }) = _DefaultStateWithAnimations;
 
   const factory BattlefieldState.pieceSelected({
     required List<Coordenate> possiblePieceMovementArea,
     required List<Coordenate> possiblePieceAttackArea,
     required List<UserStateEntity> users,
     required List<BoardFieldEntity> entities,
-    required Coordenate selectedPieceCoordenate,
+    required BoardPieceEntity selectedPiece,
   }) = _PieceSelected;
 
   const factory BattlefieldState.withError({
