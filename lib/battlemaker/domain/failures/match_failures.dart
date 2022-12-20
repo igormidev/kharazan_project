@@ -1,4 +1,7 @@
-abstract class MatchFailure implements Exception {}
+abstract class MatchFailure implements Exception {
+} // TODO: Make it a freezed class
+
+class CoordenateNotInOriginPieceRange extends MatchFailure {}
 
 class InvalidPieceLocation extends MatchFailure {}
 

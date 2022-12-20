@@ -1550,70 +1550,80 @@ abstract class _UnSelectPiece implements BattlefieldEvent {
 /// @nodoc
 mixin _$BattlefieldState {
   List<UserStateEntity> get users => throw _privateConstructorUsedError;
+  String get currentPlayerId => throw _privateConstructorUsedError;
   List<BoardFieldEntity> get entities => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)
+    required TResult Function(List<UserStateEntity> users,
+            String currentPlayerId, List<BoardFieldEntity> entities)
         defaultState,
     required TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)
         defaultStateWithAnimations,
     required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)
         pieceSelected,
-    required TResult Function(MatchFailure failure, List<UserStateEntity> users,
+    required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
+            MatchFailure failure,
             List<BoardFieldEntity> entities)
         withError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult? Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult? Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult? Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
     required TResult orElse(),
   }) =>
@@ -1658,7 +1668,10 @@ abstract class $BattlefieldStateCopyWith<$Res> {
           BattlefieldState value, $Res Function(BattlefieldState) then) =
       _$BattlefieldStateCopyWithImpl<$Res, BattlefieldState>;
   @useResult
-  $Res call({List<UserStateEntity> users, List<BoardFieldEntity> entities});
+  $Res call(
+      {List<UserStateEntity> users,
+      String currentPlayerId,
+      List<BoardFieldEntity> entities});
 }
 
 /// @nodoc
@@ -1675,6 +1688,7 @@ class _$BattlefieldStateCopyWithImpl<$Res, $Val extends BattlefieldState>
   @override
   $Res call({
     Object? users = null,
+    Object? currentPlayerId = null,
     Object? entities = null,
   }) {
     return _then(_value.copyWith(
@@ -1682,6 +1696,10 @@ class _$BattlefieldStateCopyWithImpl<$Res, $Val extends BattlefieldState>
           ? _value.users
           : users // ignore: cast_nullable_to_non_nullable
               as List<UserStateEntity>,
+      currentPlayerId: null == currentPlayerId
+          ? _value.currentPlayerId
+          : currentPlayerId // ignore: cast_nullable_to_non_nullable
+              as String,
       entities: null == entities
           ? _value.entities
           : entities // ignore: cast_nullable_to_non_nullable
@@ -1698,7 +1716,10 @@ abstract class _$$_DefaultStateCopyWith<$Res>
       __$$_DefaultStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<UserStateEntity> users, List<BoardFieldEntity> entities});
+  $Res call(
+      {List<UserStateEntity> users,
+      String currentPlayerId,
+      List<BoardFieldEntity> entities});
 }
 
 /// @nodoc
@@ -1713,6 +1734,7 @@ class __$$_DefaultStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? users = null,
+    Object? currentPlayerId = null,
     Object? entities = null,
   }) {
     return _then(_$_DefaultState(
@@ -1720,6 +1742,10 @@ class __$$_DefaultStateCopyWithImpl<$Res>
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
               as List<UserStateEntity>,
+      currentPlayerId: null == currentPlayerId
+          ? _value.currentPlayerId
+          : currentPlayerId // ignore: cast_nullable_to_non_nullable
+              as String,
       entities: null == entities
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
@@ -1733,6 +1759,7 @@ class __$$_DefaultStateCopyWithImpl<$Res>
 class _$_DefaultState implements _DefaultState {
   const _$_DefaultState(
       {required final List<UserStateEntity> users,
+      required this.currentPlayerId,
       required final List<BoardFieldEntity> entities})
       : _users = users,
         _entities = entities;
@@ -1744,6 +1771,8 @@ class _$_DefaultState implements _DefaultState {
     return EqualUnmodifiableListView(_users);
   }
 
+  @override
+  final String currentPlayerId;
   final List<BoardFieldEntity> _entities;
   @override
   List<BoardFieldEntity> get entities {
@@ -1753,7 +1782,7 @@ class _$_DefaultState implements _DefaultState {
 
   @override
   String toString() {
-    return 'BattlefieldState.defaultState(users: $users, entities: $entities)';
+    return 'BattlefieldState.defaultState(users: $users, currentPlayerId: $currentPlayerId, entities: $entities)';
   }
 
   @override
@@ -1762,6 +1791,8 @@ class _$_DefaultState implements _DefaultState {
         (other.runtimeType == runtimeType &&
             other is _$_DefaultState &&
             const DeepCollectionEquality().equals(other._users, _users) &&
+            (identical(other.currentPlayerId, currentPlayerId) ||
+                other.currentPlayerId == currentPlayerId) &&
             const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
@@ -1769,6 +1800,7 @@ class _$_DefaultState implements _DefaultState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_users),
+      currentPlayerId,
       const DeepCollectionEquality().hash(_entities));
 
   @JsonKey(ignore: true)
@@ -1780,78 +1812,87 @@ class _$_DefaultState implements _DefaultState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)
+    required TResult Function(List<UserStateEntity> users,
+            String currentPlayerId, List<BoardFieldEntity> entities)
         defaultState,
     required TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)
         defaultStateWithAnimations,
     required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)
         pieceSelected,
-    required TResult Function(MatchFailure failure, List<UserStateEntity> users,
+    required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
+            MatchFailure failure,
             List<BoardFieldEntity> entities)
         withError,
   }) {
-    return defaultState(users, entities);
+    return defaultState(users, currentPlayerId, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult? Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult? Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult? Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
   }) {
-    return defaultState?.call(users, entities);
+    return defaultState?.call(users, currentPlayerId, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
     required TResult orElse(),
   }) {
     if (defaultState != null) {
-      return defaultState(users, entities);
+      return defaultState(users, currentPlayerId, entities);
     }
     return orElse();
   }
@@ -1900,10 +1941,13 @@ class _$_DefaultState implements _DefaultState {
 abstract class _DefaultState implements BattlefieldState {
   const factory _DefaultState(
       {required final List<UserStateEntity> users,
+      required final String currentPlayerId,
       required final List<BoardFieldEntity> entities}) = _$_DefaultState;
 
   @override
   List<UserStateEntity> get users;
+  @override
+  String get currentPlayerId;
   @override
   List<BoardFieldEntity> get entities;
   @override
@@ -1923,6 +1967,7 @@ abstract class _$$_DefaultStateWithAnimationsCopyWith<$Res>
   @useResult
   $Res call(
       {List<UserStateEntity> users,
+      String currentPlayerId,
       List<BoardFieldEntity> entities,
       List<MoveAnimationEntity> animationsInMove});
 }
@@ -1940,6 +1985,7 @@ class __$$_DefaultStateWithAnimationsCopyWithImpl<$Res>
   @override
   $Res call({
     Object? users = null,
+    Object? currentPlayerId = null,
     Object? entities = null,
     Object? animationsInMove = null,
   }) {
@@ -1948,6 +1994,10 @@ class __$$_DefaultStateWithAnimationsCopyWithImpl<$Res>
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
               as List<UserStateEntity>,
+      currentPlayerId: null == currentPlayerId
+          ? _value.currentPlayerId
+          : currentPlayerId // ignore: cast_nullable_to_non_nullable
+              as String,
       entities: null == entities
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
@@ -1965,6 +2015,7 @@ class __$$_DefaultStateWithAnimationsCopyWithImpl<$Res>
 class _$_DefaultStateWithAnimations implements _DefaultStateWithAnimations {
   const _$_DefaultStateWithAnimations(
       {required final List<UserStateEntity> users,
+      required this.currentPlayerId,
       required final List<BoardFieldEntity> entities,
       required final List<MoveAnimationEntity> animationsInMove})
       : _users = users,
@@ -1978,6 +2029,8 @@ class _$_DefaultStateWithAnimations implements _DefaultStateWithAnimations {
     return EqualUnmodifiableListView(_users);
   }
 
+  @override
+  final String currentPlayerId;
   final List<BoardFieldEntity> _entities;
   @override
   List<BoardFieldEntity> get entities {
@@ -1994,7 +2047,7 @@ class _$_DefaultStateWithAnimations implements _DefaultStateWithAnimations {
 
   @override
   String toString() {
-    return 'BattlefieldState.defaultStateWithAnimations(users: $users, entities: $entities, animationsInMove: $animationsInMove)';
+    return 'BattlefieldState.defaultStateWithAnimations(users: $users, currentPlayerId: $currentPlayerId, entities: $entities, animationsInMove: $animationsInMove)';
   }
 
   @override
@@ -2003,6 +2056,8 @@ class _$_DefaultStateWithAnimations implements _DefaultStateWithAnimations {
         (other.runtimeType == runtimeType &&
             other is _$_DefaultStateWithAnimations &&
             const DeepCollectionEquality().equals(other._users, _users) &&
+            (identical(other.currentPlayerId, currentPlayerId) ||
+                other.currentPlayerId == currentPlayerId) &&
             const DeepCollectionEquality().equals(other._entities, _entities) &&
             const DeepCollectionEquality()
                 .equals(other._animationsInMove, _animationsInMove));
@@ -2012,6 +2067,7 @@ class _$_DefaultStateWithAnimations implements _DefaultStateWithAnimations {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_users),
+      currentPlayerId,
       const DeepCollectionEquality().hash(_entities),
       const DeepCollectionEquality().hash(_animationsInMove));
 
@@ -2025,78 +2081,90 @@ class _$_DefaultStateWithAnimations implements _DefaultStateWithAnimations {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)
+    required TResult Function(List<UserStateEntity> users,
+            String currentPlayerId, List<BoardFieldEntity> entities)
         defaultState,
     required TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)
         defaultStateWithAnimations,
     required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)
         pieceSelected,
-    required TResult Function(MatchFailure failure, List<UserStateEntity> users,
+    required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
+            MatchFailure failure,
             List<BoardFieldEntity> entities)
         withError,
   }) {
-    return defaultStateWithAnimations(users, entities, animationsInMove);
+    return defaultStateWithAnimations(
+        users, currentPlayerId, entities, animationsInMove);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult? Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult? Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult? Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
   }) {
-    return defaultStateWithAnimations?.call(users, entities, animationsInMove);
+    return defaultStateWithAnimations?.call(
+        users, currentPlayerId, entities, animationsInMove);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
     required TResult orElse(),
   }) {
     if (defaultStateWithAnimations != null) {
-      return defaultStateWithAnimations(users, entities, animationsInMove);
+      return defaultStateWithAnimations(
+          users, currentPlayerId, entities, animationsInMove);
     }
     return orElse();
   }
@@ -2145,12 +2213,15 @@ class _$_DefaultStateWithAnimations implements _DefaultStateWithAnimations {
 abstract class _DefaultStateWithAnimations implements BattlefieldState {
   const factory _DefaultStateWithAnimations(
           {required final List<UserStateEntity> users,
+          required final String currentPlayerId,
           required final List<BoardFieldEntity> entities,
           required final List<MoveAnimationEntity> animationsInMove}) =
       _$_DefaultStateWithAnimations;
 
   @override
   List<UserStateEntity> get users;
+  @override
+  String get currentPlayerId;
   @override
   List<BoardFieldEntity> get entities;
   List<MoveAnimationEntity> get animationsInMove;
@@ -2169,9 +2240,10 @@ abstract class _$$_PieceSelectedCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Coordenate> possiblePieceMovementArea,
+      {List<UserStateEntity> users,
+      String currentPlayerId,
+      List<Coordenate> possiblePieceMovementArea,
       List<Coordenate> possiblePieceAttackArea,
-      List<UserStateEntity> users,
       List<BoardFieldEntity> entities,
       BoardPieceEntity selectedPiece});
 }
@@ -2187,13 +2259,22 @@ class __$$_PieceSelectedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? users = null,
+    Object? currentPlayerId = null,
     Object? possiblePieceMovementArea = null,
     Object? possiblePieceAttackArea = null,
-    Object? users = null,
     Object? entities = null,
     Object? selectedPiece = null,
   }) {
     return _then(_$_PieceSelected(
+      users: null == users
+          ? _value._users
+          : users // ignore: cast_nullable_to_non_nullable
+              as List<UserStateEntity>,
+      currentPlayerId: null == currentPlayerId
+          ? _value.currentPlayerId
+          : currentPlayerId // ignore: cast_nullable_to_non_nullable
+              as String,
       possiblePieceMovementArea: null == possiblePieceMovementArea
           ? _value._possiblePieceMovementArea
           : possiblePieceMovementArea // ignore: cast_nullable_to_non_nullable
@@ -2202,10 +2283,6 @@ class __$$_PieceSelectedCopyWithImpl<$Res>
           ? _value._possiblePieceAttackArea
           : possiblePieceAttackArea // ignore: cast_nullable_to_non_nullable
               as List<Coordenate>,
-      users: null == users
-          ? _value._users
-          : users // ignore: cast_nullable_to_non_nullable
-              as List<UserStateEntity>,
       entities: null == entities
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
@@ -2222,16 +2299,26 @@ class __$$_PieceSelectedCopyWithImpl<$Res>
 
 class _$_PieceSelected implements _PieceSelected {
   const _$_PieceSelected(
-      {required final List<Coordenate> possiblePieceMovementArea,
+      {required final List<UserStateEntity> users,
+      required this.currentPlayerId,
+      required final List<Coordenate> possiblePieceMovementArea,
       required final List<Coordenate> possiblePieceAttackArea,
-      required final List<UserStateEntity> users,
       required final List<BoardFieldEntity> entities,
       required this.selectedPiece})
-      : _possiblePieceMovementArea = possiblePieceMovementArea,
+      : _users = users,
+        _possiblePieceMovementArea = possiblePieceMovementArea,
         _possiblePieceAttackArea = possiblePieceAttackArea,
-        _users = users,
         _entities = entities;
 
+  final List<UserStateEntity> _users;
+  @override
+  List<UserStateEntity> get users {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_users);
+  }
+
+  @override
+  final String currentPlayerId;
   final List<Coordenate> _possiblePieceMovementArea;
   @override
   List<Coordenate> get possiblePieceMovementArea {
@@ -2246,13 +2333,6 @@ class _$_PieceSelected implements _PieceSelected {
     return EqualUnmodifiableListView(_possiblePieceAttackArea);
   }
 
-  final List<UserStateEntity> _users;
-  @override
-  List<UserStateEntity> get users {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_users);
-  }
-
   final List<BoardFieldEntity> _entities;
   @override
   List<BoardFieldEntity> get entities {
@@ -2265,7 +2345,7 @@ class _$_PieceSelected implements _PieceSelected {
 
   @override
   String toString() {
-    return 'BattlefieldState.pieceSelected(possiblePieceMovementArea: $possiblePieceMovementArea, possiblePieceAttackArea: $possiblePieceAttackArea, users: $users, entities: $entities, selectedPiece: $selectedPiece)';
+    return 'BattlefieldState.pieceSelected(users: $users, currentPlayerId: $currentPlayerId, possiblePieceMovementArea: $possiblePieceMovementArea, possiblePieceAttackArea: $possiblePieceAttackArea, entities: $entities, selectedPiece: $selectedPiece)';
   }
 
   @override
@@ -2273,11 +2353,13 @@ class _$_PieceSelected implements _PieceSelected {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PieceSelected &&
+            const DeepCollectionEquality().equals(other._users, _users) &&
+            (identical(other.currentPlayerId, currentPlayerId) ||
+                other.currentPlayerId == currentPlayerId) &&
             const DeepCollectionEquality().equals(
                 other._possiblePieceMovementArea, _possiblePieceMovementArea) &&
             const DeepCollectionEquality().equals(
                 other._possiblePieceAttackArea, _possiblePieceAttackArea) &&
-            const DeepCollectionEquality().equals(other._users, _users) &&
             const DeepCollectionEquality().equals(other._entities, _entities) &&
             const DeepCollectionEquality()
                 .equals(other.selectedPiece, selectedPiece));
@@ -2286,9 +2368,10 @@ class _$_PieceSelected implements _PieceSelected {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(_users),
+      currentPlayerId,
       const DeepCollectionEquality().hash(_possiblePieceMovementArea),
       const DeepCollectionEquality().hash(_possiblePieceAttackArea),
-      const DeepCollectionEquality().hash(_users),
       const DeepCollectionEquality().hash(_entities),
       const DeepCollectionEquality().hash(selectedPiece));
 
@@ -2301,81 +2384,95 @@ class _$_PieceSelected implements _PieceSelected {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)
+    required TResult Function(List<UserStateEntity> users,
+            String currentPlayerId, List<BoardFieldEntity> entities)
         defaultState,
     required TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)
         defaultStateWithAnimations,
     required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)
         pieceSelected,
-    required TResult Function(MatchFailure failure, List<UserStateEntity> users,
+    required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
+            MatchFailure failure,
             List<BoardFieldEntity> entities)
         withError,
   }) {
-    return pieceSelected(possiblePieceMovementArea, possiblePieceAttackArea,
-        users, entities, selectedPiece);
+    return pieceSelected(users, currentPlayerId, possiblePieceMovementArea,
+        possiblePieceAttackArea, entities, selectedPiece);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult? Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult? Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult? Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
   }) {
-    return pieceSelected?.call(possiblePieceMovementArea,
-        possiblePieceAttackArea, users, entities, selectedPiece);
+    return pieceSelected?.call(
+        users,
+        currentPlayerId,
+        possiblePieceMovementArea,
+        possiblePieceAttackArea,
+        entities,
+        selectedPiece);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
     required TResult orElse(),
   }) {
     if (pieceSelected != null) {
-      return pieceSelected(possiblePieceMovementArea, possiblePieceAttackArea,
-          users, entities, selectedPiece);
+      return pieceSelected(users, currentPlayerId, possiblePieceMovementArea,
+          possiblePieceAttackArea, entities, selectedPiece);
     }
     return orElse();
   }
@@ -2423,16 +2520,19 @@ class _$_PieceSelected implements _PieceSelected {
 
 abstract class _PieceSelected implements BattlefieldState {
   const factory _PieceSelected(
-      {required final List<Coordenate> possiblePieceMovementArea,
+      {required final List<UserStateEntity> users,
+      required final String currentPlayerId,
+      required final List<Coordenate> possiblePieceMovementArea,
       required final List<Coordenate> possiblePieceAttackArea,
-      required final List<UserStateEntity> users,
       required final List<BoardFieldEntity> entities,
       required final BoardPieceEntity selectedPiece}) = _$_PieceSelected;
 
-  List<Coordenate> get possiblePieceMovementArea;
-  List<Coordenate> get possiblePieceAttackArea;
   @override
   List<UserStateEntity> get users;
+  @override
+  String get currentPlayerId;
+  List<Coordenate> get possiblePieceMovementArea;
+  List<Coordenate> get possiblePieceAttackArea;
   @override
   List<BoardFieldEntity> get entities;
   BoardPieceEntity get selectedPiece;
@@ -2451,8 +2551,9 @@ abstract class _$$_WithErrorCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {MatchFailure failure,
-      List<UserStateEntity> users,
+      {List<UserStateEntity> users,
+      String currentPlayerId,
+      MatchFailure failure,
       List<BoardFieldEntity> entities});
 }
 
@@ -2467,19 +2568,24 @@ class __$$_WithErrorCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failure = null,
     Object? users = null,
+    Object? currentPlayerId = null,
+    Object? failure = null,
     Object? entities = null,
   }) {
     return _then(_$_WithError(
-      failure: null == failure
-          ? _value.failure
-          : failure // ignore: cast_nullable_to_non_nullable
-              as MatchFailure,
       users: null == users
           ? _value._users
           : users // ignore: cast_nullable_to_non_nullable
               as List<UserStateEntity>,
+      currentPlayerId: null == currentPlayerId
+          ? _value.currentPlayerId
+          : currentPlayerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      failure: null == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as MatchFailure,
       entities: null == entities
           ? _value._entities
           : entities // ignore: cast_nullable_to_non_nullable
@@ -2492,14 +2598,13 @@ class __$$_WithErrorCopyWithImpl<$Res>
 
 class _$_WithError implements _WithError {
   const _$_WithError(
-      {required this.failure,
-      required final List<UserStateEntity> users,
+      {required final List<UserStateEntity> users,
+      required this.currentPlayerId,
+      required this.failure,
       required final List<BoardFieldEntity> entities})
       : _users = users,
         _entities = entities;
 
-  @override
-  final MatchFailure failure;
   final List<UserStateEntity> _users;
   @override
   List<UserStateEntity> get users {
@@ -2507,6 +2612,10 @@ class _$_WithError implements _WithError {
     return EqualUnmodifiableListView(_users);
   }
 
+  @override
+  final String currentPlayerId;
+  @override
+  final MatchFailure failure;
   final List<BoardFieldEntity> _entities;
   @override
   List<BoardFieldEntity> get entities {
@@ -2516,7 +2625,7 @@ class _$_WithError implements _WithError {
 
   @override
   String toString() {
-    return 'BattlefieldState.withError(failure: $failure, users: $users, entities: $entities)';
+    return 'BattlefieldState.withError(users: $users, currentPlayerId: $currentPlayerId, failure: $failure, entities: $entities)';
   }
 
   @override
@@ -2524,16 +2633,19 @@ class _$_WithError implements _WithError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WithError &&
-            (identical(other.failure, failure) || other.failure == failure) &&
             const DeepCollectionEquality().equals(other._users, _users) &&
+            (identical(other.currentPlayerId, currentPlayerId) ||
+                other.currentPlayerId == currentPlayerId) &&
+            (identical(other.failure, failure) || other.failure == failure) &&
             const DeepCollectionEquality().equals(other._entities, _entities));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      failure,
       const DeepCollectionEquality().hash(_users),
+      currentPlayerId,
+      failure,
       const DeepCollectionEquality().hash(_entities));
 
   @JsonKey(ignore: true)
@@ -2545,78 +2657,87 @@ class _$_WithError implements _WithError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)
+    required TResult Function(List<UserStateEntity> users,
+            String currentPlayerId, List<BoardFieldEntity> entities)
         defaultState,
     required TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)
         defaultStateWithAnimations,
     required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)
         pieceSelected,
-    required TResult Function(MatchFailure failure, List<UserStateEntity> users,
+    required TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
+            MatchFailure failure,
             List<BoardFieldEntity> entities)
         withError,
   }) {
-    return withError(failure, users, entities);
+    return withError(users, currentPlayerId, failure, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult? Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult? Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult? Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult? Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
   }) {
-    return withError?.call(failure, users, entities);
+    return withError?.call(users, currentPlayerId, failure, entities);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            List<UserStateEntity> users, List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            List<BoardFieldEntity> entities)?
         defaultState,
     TResult Function(
             List<UserStateEntity> users,
+            String currentPlayerId,
             List<BoardFieldEntity> entities,
             List<MoveAnimationEntity> animationsInMove)?
         defaultStateWithAnimations,
     TResult Function(
+            List<UserStateEntity> users,
+            String currentPlayerId,
             List<Coordenate> possiblePieceMovementArea,
             List<Coordenate> possiblePieceAttackArea,
-            List<UserStateEntity> users,
             List<BoardFieldEntity> entities,
             BoardPieceEntity selectedPiece)?
         pieceSelected,
-    TResult Function(MatchFailure failure, List<UserStateEntity> users,
-            List<BoardFieldEntity> entities)?
+    TResult Function(List<UserStateEntity> users, String currentPlayerId,
+            MatchFailure failure, List<BoardFieldEntity> entities)?
         withError,
     required TResult orElse(),
   }) {
     if (withError != null) {
-      return withError(failure, users, entities);
+      return withError(users, currentPlayerId, failure, entities);
     }
     return orElse();
   }
@@ -2664,13 +2785,16 @@ class _$_WithError implements _WithError {
 
 abstract class _WithError implements BattlefieldState {
   const factory _WithError(
-      {required final MatchFailure failure,
-      required final List<UserStateEntity> users,
+      {required final List<UserStateEntity> users,
+      required final String currentPlayerId,
+      required final MatchFailure failure,
       required final List<BoardFieldEntity> entities}) = _$_WithError;
 
-  MatchFailure get failure;
   @override
   List<UserStateEntity> get users;
+  @override
+  String get currentPlayerId;
+  MatchFailure get failure;
   @override
   List<BoardFieldEntity> get entities;
   @override

@@ -9,6 +9,8 @@ import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/move_animation_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_piece_repository.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/can_piece_make_move_usecase/impl_can_piece_make_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/can_piece_make_move_usecase/protocol_can_piece_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/define_type_of_move_usecase/impl_define_type_of_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/define_type_of_move_usecase/protocol_define_type_of_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/execute_typed_move_usecase/impl_execute_typed_move_usecase.dart';
@@ -128,6 +130,9 @@ class MainBattlefieldView extends StatelessWidget {
         ImplDefineTypeOfMoveUsecase();
     final ProtocolGetMoveEntitiesUsecase getMoveEntitiesUsecase =
         ImplGetMoveEntitiesUsecase(getPieceUsecase: getPieceUsecase);
+    final ProtocolCanPieceMakeMoveUsecase canPieceMakeMoveUsecase =
+        ImplCanPieceMakeMoveUsecase();
+
     final ProtocolExecuteTypedMoveUsecase executeTypedMoveUsecase =
         ImplExecuteTypedMoveUsecase(
       changePiecePositionUsecase: changePiecePositionUsecase,
@@ -148,6 +153,7 @@ class MainBattlefieldView extends StatelessWidget {
       canUserMakeMoveUsecase: canUserMakeMove,
       getPieceUsecase: getMoveEntitiesUsecase,
       executeTypedMoveUsecase: executeTypedMoveUsecase,
+      canPieceMakeMoveUsecase: canPieceMakeMoveUsecase,
     );
 
     final ProtocolGetMatchStatesUsecase getMatchStatesUsecase =
@@ -228,7 +234,7 @@ class _DisposeWidgetState extends State<DisposeWidget> {
           current.maybeMap<bool>(withError: (_) => true, orElse: () => false),
       listener: (context, state) {
         state.whenOrNull(
-          withError: (failure, users, pieces) {
+          withError: (users, currentUserId, failure, pieces) {
             log(failure.toString()); // TODO: IMPLEMENT DIALOG / ERROR MANEJMENT
           },
         );

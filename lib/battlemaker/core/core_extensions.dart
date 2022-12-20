@@ -43,3 +43,12 @@ extension BoardFieldEntityExtension on List<BoardFieldEntity> {
   List<Coordenate> get coordenatesInBoard =>
       map((entity) => entity.coordenate).toList();
 }
+
+extension ObjectExtension<T> on Function {
+  T? get returnNullOnError {
+    try {
+      return this();
+    } catch (_) {}
+    return null;
+  }
+}

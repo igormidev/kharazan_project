@@ -51,7 +51,7 @@ class StageCoordenateGrid extends StatelessWidget {
             // └─────────────────────────────────────────────────────────
             BlocSelector<BattlefieldBloc, BattlefieldState, List<Coordenate>>(
               selector: (BattlefieldState state) => state.maybeWhen(
-                pieceSelected: (pieceMovimentation, _, __, ___, ____) =>
+                pieceSelected: (_, __, pieceMovimentation, ___, ____, _____) =>
                     pieceMovimentation,
                 orElse: () => <Coordenate>[],
               ),
@@ -178,8 +178,9 @@ class StageCoordenateGrid extends StatelessWidget {
             // └─────────────────────────────────────────────────────────
             BlocSelector<BattlefieldBloc, BattlefieldState, List<Coordenate>>(
               selector: (state) => state.maybeWhen(
-                pieceSelected: (_, pieceAttacks, __, ___, ____) => pieceAttacks,
-                orElse: () => <Coordenate>[],
+                pieceSelected: (_, __, ___, pieceAttacks, ____, _____) =>
+                    pieceAttacks,
+                orElse: () => const <Coordenate>[],
               ),
               builder: (context, pieceAttacks) {
                 if (pieceAttacks.isEmpty) return const SizedBox.shrink();
@@ -206,9 +207,10 @@ class StageCoordenateGrid extends StatelessWidget {
                       top: ((coordenate.axisY - 1) * multipliyer) - align,
                       child: InkWell(
                         onTap: () {
+                          if (isEnemyPieceCoordenate == false) return;
                           final bloc = context.read<BattlefieldBloc>();
                           bloc.state.whenOrNull(
-                            pieceSelected: (_, __, ___, ____, piece) {
+                            pieceSelected: (_, __, ___, ____, _____, piece) {
                               final move = '${piece.coordenate}$coordenate'
                                   .replaceAll('(', '')
                                   .replaceAll(')', '')
@@ -223,7 +225,6 @@ class StageCoordenateGrid extends StatelessWidget {
                             },
                           );
                         },
-                        // color: Colors.red,
                         child: SizedBox(
                           height: max,
                           width: max,
@@ -300,7 +301,7 @@ class GestureWrapper extends StatelessWidget {
       onTap: () {
         final bloc = context.read<BattlefieldBloc>();
         bloc.state.whenOrNull(
-          pieceSelected: (_, __, ___, ____, pieceCoordenate) {
+          pieceSelected: (_, __, ___, ____, _____, pieceCoordenate) {
             final move = '${pieceCoordenate.coordenate}$coordenate'
                 .replaceAll('(', '')
                 .replaceAll(')', '')

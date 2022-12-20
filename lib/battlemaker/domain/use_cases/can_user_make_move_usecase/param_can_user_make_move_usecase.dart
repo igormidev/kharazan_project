@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-class CanUserMakeMoveParam extends Equatable {
+class ParamCanUserMakeMove extends Equatable {
   final String userId;
   final int neededManaToMakeMove;
 
-  const CanUserMakeMoveParam({
+  const ParamCanUserMakeMove({
     required this.userId,
     required this.neededManaToMakeMove,
   });

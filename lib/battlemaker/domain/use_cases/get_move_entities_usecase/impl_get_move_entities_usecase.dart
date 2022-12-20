@@ -44,11 +44,19 @@ class ImplGetMoveEntitiesUsecase implements ProtocolGetMoveEntitiesUsecase {
 
     if (pieceOrigin == null) return left(InvalidPieceLocation());
 
+    final List<Coordenate> possibleOriginPieceMovements =
+        pieceOrigin.pieceState.piece.obtainMovesArea(coordenatesInMove.origin);
+
+    final List<Coordenate> possibleOriginPieceAttacks =
+        pieceOrigin.pieceState.piece.obtainAttackArea(coordenatesInMove.origin);
+
     return right(ReturnGetMoveEntitiesUsecase(
       coordenatesInMove: coordenatesInMove,
       pieceInOrigin: pieceOrigin,
       pieceInDestiny: pieceDestiny,
       otherBoardEntities: const <BoardFieldEntity>[],
+      possibleOriginPieceMovements: possibleOriginPieceMovements,
+      possibleOriginPieceAttacks: possibleOriginPieceAttacks,
     ));
   }
 }

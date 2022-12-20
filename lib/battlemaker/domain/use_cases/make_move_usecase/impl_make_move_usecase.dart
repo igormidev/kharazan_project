@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/can_piece_make_move_usecase/param_can_piece_make_move_usecase.dart';
+import 'package:micro_kharazan/battlemaker/domain/use_cases/can_piece_make_move_usecase/protocol_can_piece_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/can_user_make_move_usecase/param_can_user_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/can_user_make_move_usecase/protocol_can_user_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/define_type_of_move_usecase/param_define_type_of_move_usecase.dart';
@@ -23,6 +25,7 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
   final ProtocolGetMoveEntitiesUsecase _getMoveEntitiesUsecase;
   final ProtocolDefineTypeOfMoveUsecase _defineTypeOfMoveUsecase;
   final ProtocolExecuteTypedMoveUsecase _executeTypedMoveUsecase;
+  final ProtocolCanPieceMakeMoveUsecase _canPieceMakeMoveUsecase;
 
   const ImplMakeMoveUsecase({
     // UseCases
@@ -31,11 +34,13 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
     required ProtocolCanUserMakeMoveUsecase canUserMakeMoveUsecase,
     required ProtocolGetMoveEntitiesUsecase getPieceUsecase,
     required ProtocolExecuteTypedMoveUsecase executeTypedMoveUsecase,
+    required ProtocolCanPieceMakeMoveUsecase canPieceMakeMoveUsecase,
   })  : _defineTypeOfMoveUsecase = defineTypeOfMoveUsecase,
         _getMatchStatesUsecase = getMatchStatesUsecase,
         _canUserMakeMoveUsecase = canUserMakeMoveUsecase,
         _getMoveEntitiesUsecase = getPieceUsecase,
-        _executeTypedMoveUsecase = executeTypedMoveUsecase;
+        _executeTypedMoveUsecase = executeTypedMoveUsecase,
+        _canPieceMakeMoveUsecase = canPieceMakeMoveUsecase;
 
   @override
   Either<MatchFailure, ReturnMakeMoveUsecase> call(MakeMoveParam param) {
@@ -48,12 +53,25 @@ class ImplMakeMoveUsecase implements ProtocolMakeMoveUsecase {
         moveEntitiesResponse.asRightResult;
 
     // Verify if user has mana to make the move and other validations
-    final canMoveParam = CanUserMakeMoveParam(
+    final canUserMakeMoveParam = ParamCanUserMakeMove(
       userId: param.userId,
       neededManaToMakeMove: moveEntities.pieceInOrigin.pieceState.piece.cost,
     );
-    final canOriginPieceMove = _canUserMakeMoveUsecase(canMoveParam);
+    final canOriginPieceMove = _canUserMakeMoveUsecase(canUserMakeMoveParam);
     if (canOriginPieceMove.isLeft()) return canOriginPieceMove.asLeft();
+
+    final canPieceMakeMoveParam = ParamCanPieceMakeMoveUsecase(
+      coordenatesInMove: moveEntities.coordenatesInMove,
+      pieceInOrigin: moveEntities.pieceInOrigin,
+      pieceInDestiny: moveEntities.pieceInDestiny,
+      possibleOriginPieceMovements: moveEntities.possibleOriginPieceMovements,
+      possibleOriginPieceAttacks: moveEntities.possibleOriginPieceAttacks,
+    );
+    final canPieceMakeMoveResponse =
+        _canPieceMakeMoveUsecase(canPieceMakeMoveParam);
+    if (canPieceMakeMoveResponse.isLeft()) {
+      return canPieceMakeMoveResponse.asLeft();
+    }
 
     // Defining the type of the move that the enemy maded
     final defineMoveParamater = ParamDefineTypeOfMoveUsecase(

@@ -14,7 +14,7 @@ class ImplCanUserMakeMoveUsecase implements ProtocolCanUserMakeMoveUsecase {
   }) : _matchStateRepository = matchStateRepository;
 
   @override
-  Either<MatchFailure, VoidSucess> call(CanUserMakeMoveParam param) {
+  Either<MatchFailure, VoidSucess> call(ParamCanUserMakeMove param) {
     final neededManaToAttack = param.neededManaToMakeMove;
     final userId = param.userId;
 

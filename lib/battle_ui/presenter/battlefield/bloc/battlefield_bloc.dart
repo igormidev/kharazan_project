@@ -30,6 +30,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
         super(BattlefieldState.defaultState(
           entities: entities,
           users: usersInTheGame,
+          currentPlayerId: 'player1',
         )) {
     // ==> Move handlers <==
 
@@ -70,6 +71,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
   ) {
     emit(BattlefieldState.defaultStateWithAnimations(
       users: event.usersInTheMatchState,
+      currentPlayerId: event.playerUserTurnId,
       entities: List.from([...event.boardState]),
       animationsInMove: List.from([...event.animationsInMove]),
     ));
@@ -82,6 +84,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     emit(
       BattlefieldState.defaultState(
         users: state.users,
+        currentPlayerId: state.currentPlayerId,
         entities: state.entities,
       ),
     );
@@ -134,6 +137,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     emit(BattlefieldState.pieceSelected(
       possiblePieceAttackArea: possibleAttacks,
       possiblePieceMovementArea: possibleMovimentation,
+      currentPlayerId: state.currentPlayerId,
       entities: List.from([...state.entities]),
       users: List.from([...state.users]),
       selectedPiece: event.piece,
@@ -148,6 +152,7 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
   ]) {
     return BattlefieldState.withError(
       failure: failure.asLeftResult,
+      currentPlayerId: state.currentPlayerId,
       users: state.users,
       entities: enitites ?? state.entities,
     );
