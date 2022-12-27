@@ -1,4 +1,5 @@
 import 'package:micro_kharazan/battlemaker/core/constants.dart';
+import 'package:micro_kharazan/battlemaker/domain/builders/move_builder.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/move_animation_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
@@ -40,7 +41,9 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   final ProtocolRemoveAllPieceAnimationsUsecase
       _removeAllPieceAnimationsUsecase;
 
-  const ImplExecuteTypedMoveUsecase({
+  final MoveBuilder _moveBuilder;
+
+  ImplExecuteTypedMoveUsecase({
     required ProtocolChangePiecePositionUsecase changePiecePositionUsecase,
     required ProtocolDealDamageToPieceUsecase dealDamageToPieceUsecase,
     required ProtocolUpdatePieceToChangePositionAnimationStateUsecase
@@ -62,7 +65,19 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
         _updatePieceToMakingFatalAttackAnimationStateUsecase =
             updatePieceToMakingFatalAttackAnimationStateUsecase,
         _removePieceInCoordenateUsecase = removePieceInCoordenateUsecase,
-        _removeAllPieceAnimationsUsecase = removeAllPieceAnimationsUsecase;
+        _removeAllPieceAnimationsUsecase = removeAllPieceAnimationsUsecase,
+        _moveBuilder = MoveBuilder(
+          changePiecePositionUsecase: changePiecePositionUsecase,
+          dealDamageToPieceUsecase: dealDamageToPieceUsecase,
+          updatePieceToChangePositionAnimationStateUsecase:
+              updatePieceToChangePositionAnimationStateUsecase,
+          updatePieceToMakingNonFatalAttackAnimationStateUsecase:
+              updatePieceToMakingNonFatalAttackAnimationStateUsecase,
+          updatePieceToMakingFatalAttackAnimationStateUsecase:
+              updatePieceToMakingFatalAttackAnimationStateUsecase,
+          removePieceInCoordenateUsecase: removePieceInCoordenateUsecase,
+          removeAllPieceAnimationsUsecase: removeAllPieceAnimationsUsecase,
+        );
 
   @override
   Either<MatchFailure, ReturnExecuteTypedMoveUsecase> call(
@@ -71,8 +86,71 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
     final TypeOfMoveEntity typeOfMove = param.typeOfMoveEntity;
 
     return typeOfMove.when<Either<MatchFailure, ReturnExecuteTypedMoveUsecase>>(
-      pieceChangingPosition: onPieceChangingPosition,
-      pieceAttackingOther: onPieceAttackingOther,
+      // ┌─────────────────────────────────────────────────────────
+      // │ The animation of a piece changing his current position
+      // └─────────────────────────────────────────────────────────
+      pieceChangingPosition: (
+        CoordenatesInMove coordenatesInMove,
+        BoardPieceEntity boardEntity,
+        List<BoardFieldEntity> otherBoardEntities,
+      ) {
+        final origin = coordenatesInMove.origin;
+        final destiny = coordenatesInMove.destiny;
+        return _moveBuilder
+            .removePieceAnimations()
+            .changePiecePositionById(origin, destiny)
+            .updatePieceEntityWithChangePositionAnimation(
+              uniqueBoardId: boardEntity.uniqueBoardId,
+              origin: origin,
+              destiny: destiny,
+            )
+            .execute();
+      },
+
+      // ┌─────────────────────────────────────────────────────────
+      // │ The animation of one piece attackig other
+      // └─────────────────────────────────────────────────────────
+      pieceAttackingOther: (
+        CoordenatesInMove coordenatesInMove,
+        BoardPieceEntity pieceEntityInOrigin,
+        BoardPieceEntity pieceEntityInDestiny,
+        List<BoardFieldEntity> otherBoardEntities,
+      ) {
+        final pieceState = pieceEntityInOrigin.pieceState;
+        final damage = pieceState.piece.damage;
+        final id = pieceEntityInOrigin.pieceOwnerId;
+        final origin = coordenatesInMove.origin;
+        final destiny = coordenatesInMove.destiny;
+
+        return _moveBuilder
+            .removePieceAnimations()
+
+            // ==> Init deal damage case
+            .dealDamageToPieceWithId(id, damage)
+
+            // Set if damage dosent kill target piece
+            .setIfDamageDosentKillTargetPiece()
+            .putNonFatalPieceAttackAnimationWithId(
+              uniqueBoardId: id,
+              origin: origin,
+              destiny: destiny,
+            )
+
+            // Set if damage does kill target piece
+            .setIfDamageKillTargetPiece()
+            .changePiecePositionById(origin, destiny)
+            .putDestructionAnimationInPieceWithId(id)
+            .putFatalPieceAttackAnimationWithId(
+              uniqueBoardId: id,
+              origin: origin,
+              destiny: destiny,
+            )
+            .exitDealDamageCases()
+            // ==> Exit deal damage case
+
+            .addDamageIndicatorInCoordenate(damage, destiny)
+            .execute();
+      },
     );
   }
 
