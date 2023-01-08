@@ -24,7 +24,8 @@ class ImplCanUserMakeMoveUsecase implements ProtocolCanUserMakeMoveUsecase {
     // The user needs to have mana to make a move
     final userMana = userResponse.asRightResult.currentMana;
     final hasManaToMakeMove = userMana >= neededManaToAttack;
-    if (hasManaToMakeMove == false) return left(DosentHaveMana());
+    if (hasManaToMakeMove == false)
+      return left(const MatchFailure.dosentHaveMana());
 
     return right(VoidSucess());
   }

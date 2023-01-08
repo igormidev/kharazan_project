@@ -21,7 +21,7 @@ class ImplUpdatePieceToMakingFatalAttackAnimationStateUsecase
     ParamUpdatePieceToMakingFatalAttackAnimationStateUsecase param,
   ) {
     return _pieceRepository.updatePieceEntityWithId(
-      param.uniqueBoardId,
+      param.uniquePieceEntityId,
       (BoardPieceEntity currentPiece) {
         return currentPiece.copyWith(
           pieceState: PieceState.pieceMakingFatalAttack(

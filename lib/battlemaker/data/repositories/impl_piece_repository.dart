@@ -23,7 +23,7 @@ class ImplPieceRepository implements ProtocolPieceRepository {
     if (pieceCreated is BoardPieceEntity) {
       return right(pieceCreated);
     } else {
-      return left(NotAValidResponse());
+      return left(const MatchFailure.notAValidResponse());
     }
   }
 
@@ -39,7 +39,9 @@ class ImplPieceRepository implements ProtocolPieceRepository {
       return entity.coordenate == coordenate;
     });
 
-    if (pieceEntity.isNull) return left(NoPieceFoundInCoordenate());
+    if (pieceEntity.isNull) {
+      return left(const MatchFailure.noPieceWithCoordenateToRemoveIt());
+    }
 
     final removedPieceResponse =
         _boardDataSource.removeEntityWithId(pieceEntity!.uniqueBoardId);
@@ -49,7 +51,7 @@ class ImplPieceRepository implements ProtocolPieceRepository {
     if (pieceRemoved is BoardPieceEntity) {
       return right(pieceRemoved);
     } else {
-      return left(NotAValidResponse());
+      return left(const MatchFailure.notAValidResponse());
     }
   }
 
@@ -85,11 +87,13 @@ class ImplPieceRepository implements ProtocolPieceRepository {
       return (entity.coordenate == coordenate) && (entity is BoardPieceEntity);
     });
 
-    if (pieceEntity == null) return left(NoPieceFoundInCoordenate());
+    if (pieceEntity == null) {
+      return left(const MatchFailure.noPieceFoundInCoordenateToObtain());
+    }
     if (pieceEntity is BoardPieceEntity) {
       return right(pieceEntity);
     } else {
-      return left(NotAValidResponse());
+      return left(const MatchFailure.notAValidResponse());
     }
   }
 
@@ -101,7 +105,9 @@ class ImplPieceRepository implements ProtocolPieceRepository {
     final entityResponse = _boardDataSource.getEntityById(uniqueBoardId);
     if (entityResponse.isLeft()) return entityResponse.asLeft();
     final entity = entityResponse.asRightResult;
-    if (entity is! BoardPieceEntity) return left(NotAValidResponse());
+    if (entity is! BoardPieceEntity) {
+      return left(const MatchFailure.notAValidResponse());
+    }
 
     final response = _boardDataSource.updateEntityWithId(
         uniqueBoardId, boardPieceEntity(entity));
@@ -109,6 +115,6 @@ class ImplPieceRepository implements ProtocolPieceRepository {
 
     final pieceEntity = response.asRightResult;
     if (pieceEntity is BoardPieceEntity) return right(pieceEntity);
-    return left(NotAValidResponse());
+    return left(const MatchFailure.notAValidResponse());
   }
 }

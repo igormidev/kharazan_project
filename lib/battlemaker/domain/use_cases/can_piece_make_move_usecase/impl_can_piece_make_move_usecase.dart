@@ -9,24 +9,24 @@ class ImplCanPieceMakeMoveUsecase implements ProtocolCanPieceMakeMoveUsecase {
   @override
   Either<MatchFailure, VoidSucess> call(ParamCanPieceMakeMoveUsecase param) {
     final destinyPiece = param.pieceInDestiny?.pieceState.piece;
-    final originCoordenate = param.coordenatesInMove.origin;
     final destinyCoordenate = param.coordenatesInMove.destiny;
     final possibleOriginPieceMovements = param.possibleOriginPieceMovements;
     final possibleOriginPieceAttacks = param.possibleOriginPieceAttacks;
 
-    if (destinyPiece.isNotNull) {
+    final exitsAPieceInDestinyCoordenate = destinyPiece.isNotNull;
+    if (exitsAPieceInDestinyCoordenate) {
       final isDestinyCoordenateInOriginPieceAttackRange =
           possibleOriginPieceAttacks.contains(destinyCoordenate);
 
       if (isDestinyCoordenateInOriginPieceAttackRange == false) {
-        return left(CoordenateNotInOriginPieceRange());
+        return left(const MatchFailure.coordenateNotInOriginPieceRange());
       }
     } else {
       final isDestinyCoordenateInOriginPieceMoveRange =
-          possibleOriginPieceMovements.contains(originCoordenate);
+          possibleOriginPieceMovements.contains(destinyCoordenate);
 
       if (isDestinyCoordenateInOriginPieceMoveRange == false) {
-        return left(CoordenateNotInOriginPieceRange());
+        return left(const MatchFailure.coordenateNotInOriginPieceRange());
       }
     }
 

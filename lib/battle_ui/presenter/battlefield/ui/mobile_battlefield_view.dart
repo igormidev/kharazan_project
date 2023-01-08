@@ -11,20 +11,16 @@ class MobileBattlefieldView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[200],
+      backgroundColor: Colors.grey[300],
       body: Stack(
         children: [
           Center(
-            child: SizedBox(
-              child: InteractiveViewer(
-                // constrained: false,
-                boundaryMargin: const EdgeInsets.all(double.infinity),
-                child: const SizedBox(
-                  width: 600,
-                  child: StageCoordenateGrid(
-                    stageEntity: ColiseumMap(),
-                    maxSquareSize: 800,
-                  ),
+            child: InteractiveViewer(
+              boundaryMargin: const EdgeInsets.all(200),
+              child: const Center(
+                child: StageCoordenateGrid(
+                  stageEntity: ColiseumMap(),
+                  maxSquareSize: 800,
                 ),
               ),
             ),

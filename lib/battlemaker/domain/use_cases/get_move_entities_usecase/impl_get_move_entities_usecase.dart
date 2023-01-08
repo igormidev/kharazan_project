@@ -23,7 +23,7 @@ class ImplGetMoveEntitiesUsecase implements ProtocolGetMoveEntitiesUsecase {
     try {
       coordenatesInMove = CoordenatesInMove.fromString(param.move);
     } catch (_) {
-      return left(ErrorWhileCastingMovement());
+      return left(const MatchFailure.errorWhileCastingMovement());
     }
 
     // Obtaining piece in coordenate
@@ -42,7 +42,8 @@ class ImplGetMoveEntitiesUsecase implements ProtocolGetMoveEntitiesUsecase {
     final pieceOrigin = originResponse.asRightResult;
     final pieceDestiny = destinyResponse.asRightResult;
 
-    if (pieceOrigin == null) return left(InvalidPieceLocation());
+    if (pieceOrigin == null)
+      return left(const MatchFailure.invalidPieceLocation());
 
     final List<Coordenate> possibleOriginPieceMovements =
         pieceOrigin.pieceState.piece.obtainMovesArea(coordenatesInMove.origin);

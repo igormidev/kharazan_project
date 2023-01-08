@@ -1006,6 +1006,8 @@ abstract class _$$_NotificateFailureCopyWith<$Res> {
       __$$_NotificateFailureCopyWithImpl<$Res>;
   @useResult
   $Res call({MatchFailure failure});
+
+  $MatchFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -1027,6 +1029,14 @@ class __$$_NotificateFailureCopyWithImpl<$Res>
           : failure // ignore: cast_nullable_to_non_nullable
               as MatchFailure,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MatchFailureCopyWith<$Res> get failure {
+    return $MatchFailureCopyWith<$Res>(_value.failure, (value) {
+      return _then(_value.copyWith(failure: value));
+    });
   }
 }
 
@@ -2555,6 +2565,8 @@ abstract class _$$_WithErrorCopyWith<$Res>
       String currentPlayerId,
       MatchFailure failure,
       List<BoardFieldEntity> entities});
+
+  $MatchFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -2591,6 +2603,14 @@ class __$$_WithErrorCopyWithImpl<$Res>
           : entities // ignore: cast_nullable_to_non_nullable
               as List<BoardFieldEntity>,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MatchFailureCopyWith<$Res> get failure {
+    return $MatchFailureCopyWith<$Res>(_value.failure, (value) {
+      return _then(_value.copyWith(failure: value));
+    });
   }
 }
 

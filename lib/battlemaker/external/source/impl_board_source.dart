@@ -21,7 +21,9 @@ class ImplBoardSource extends ProtocolBoardSource {
     // Entity with same id can't exist, this is, the index has to be -1
     final index = _entitiesInTheBoard
         .indexWhere((e) => e.uniqueBoardId == entity.uniqueBoardId);
-    if (index != -1) return left(EntityWithThatIdAlreadyExists());
+    if (index != -1) {
+      return left(const MatchFailure.entityWithThatIdAlreadyExists());
+    }
 
     _entitiesInTheBoard.add(entity);
     return right(entity);
@@ -31,21 +33,19 @@ class ImplBoardSource extends ProtocolBoardSource {
   Either<MatchFailure, BoardFieldEntity> updateEntityWithId(
       String uniqueBoardEntityId, BoardFieldEntity entity) {
     final index = _entitiesInTheBoard.entityIndexWithId(uniqueBoardEntityId);
-    if (index == -1) return left(NoPieceFoundInCoordenate());
+    if (index == -1) return left(const MatchFailure.noPieceWithIdToUpdate());
 
-    try {
-      _entitiesInTheBoard[index] = entity;
-      return right(entity);
-    } catch (_) {
-      return left(NoPieceFoundInCoordenate());
-    }
+    _entitiesInTheBoard[index] = entity;
+    return right(entity);
   }
 
   @override
   Either<MatchFailure, BoardFieldEntity> removeEntityWithId(
       String uniqueBoardEntityId) {
     final index = _entitiesInTheBoard.entityIndexWithId(uniqueBoardEntityId);
-    if (index == -1) return left(NoPieceFoundInCoordenate());
+    if (index == -1) {
+      return left(const MatchFailure.noPieceWithIdToRemoveIt());
+    }
     final BoardFieldEntity entity = _entitiesInTheBoard[index];
     _entitiesInTheBoard.removeAt(index);
     return right(entity);
@@ -56,12 +56,9 @@ class ImplBoardSource extends ProtocolBoardSource {
     String uniqueBoardEntityId,
   ) {
     final index = _entitiesInTheBoard.entityIndexWithId(uniqueBoardEntityId);
-    if (index == -1) return left(NoPieceFoundInCoordenate());
-    try {
-      return right(_entitiesInTheBoard[index]);
-    } catch (_) {
-      return left(NoPieceFoundInCoordenate());
-    }
+    if (index == -1) return left(const MatchFailure.noEntityWithId());
+
+    return right(_entitiesInTheBoard[index]);
   }
 
   @override

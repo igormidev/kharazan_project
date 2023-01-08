@@ -13,9 +13,9 @@ class ImplUpdatePieceToChangePositionAnimationStateUsecase
     implements ProtocolUpdatePieceToChangePositionAnimationStateUsecase {
   final ProtocolPieceRepository _pieceRepository;
 
-  const ImplUpdatePieceToChangePositionAnimationStateUsecase(
-      {required ProtocolPieceRepository pieceRepository})
-      : _pieceRepository = pieceRepository;
+  const ImplUpdatePieceToChangePositionAnimationStateUsecase({
+    required ProtocolPieceRepository pieceRepository,
+  }) : _pieceRepository = pieceRepository;
 
   @override
   Either<MatchFailure, VoidSucess> call(

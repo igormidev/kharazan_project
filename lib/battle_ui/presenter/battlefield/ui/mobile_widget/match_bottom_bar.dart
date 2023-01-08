@@ -35,7 +35,7 @@ class MatchBottomBar extends StatelessWidget {
                   );
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
                   child: SizedBox(
                     height: 80,
                     child: Card(

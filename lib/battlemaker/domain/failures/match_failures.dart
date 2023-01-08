@@ -1,20 +1,58 @@
-abstract class MatchFailure implements Exception {
-} // TODO: Make it a freezed class
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class CoordenateNotInOriginPieceRange extends MatchFailure {}
+part 'match_failures.freezed.dart';
 
-class InvalidPieceLocation extends MatchFailure {}
+@freezed
+class MatchFailure with _$MatchFailure {
+  const factory MatchFailure.invalidPieceLocation() = _InvalidPieceLocation;
 
-class DosentHaveMana extends MatchFailure {}
+  const factory MatchFailure.dosentHaveMana() = _DosentHaveMana;
 
-class NoPieceFoundInCoordenate extends MatchFailure {}
+  const factory MatchFailure.notAValidResponse() = _NotAValidResponse;
 
-class EntityWithThatIdAlreadyExists extends MatchFailure {}
+  const factory MatchFailure.castingCoordenateError() = _CastingCoordenateError;
 
-class NoUserStateWithThatID extends MatchFailure {}
+  const factory MatchFailure.noUserStateWithThatID() = _NoUserStateWithThatID;
 
-class ErrorWhileCastingMovement extends MatchFailure {}
+  const factory MatchFailure.noPieceWithIdToUpdate() = _NoPieceWithIdToUpdate;
 
-class CastingCoordenateError extends MatchFailure {}
+  const factory MatchFailure.noPieceWithIdToRemoveIt() = _NoPieceWithIdToRemove;
 
-class NotAValidResponse extends MatchFailure {}
+  const factory MatchFailure.noPieceWithCoordenateToRemoveIt() =
+      _NoPieceWithCoordenateToRemoveIt;
+
+  const factory MatchFailure.noEntityWithId() = _NoEntityWithId;
+
+  const factory MatchFailure.noPieceFoundInCoordenateToObtain() =
+      _NoPieceFoundInCoordenateToObtain;
+
+  const factory MatchFailure.coordenateNotInOriginPieceRange() =
+      _CoordenateNotInOriginPieceRange;
+
+  const factory MatchFailure.entityWithThatIdAlreadyExists() =
+      _EntityWithThatIdAlreadyExists;
+
+  const factory MatchFailure.errorWhileCastingMovement() =
+      _ErrorWhileCastingMovement;
+}
+
+
+// abstract class MatchFailure implements Exception {}
+
+// class CoordenateNotInOriginPieceRange extends MatchFailure {}
+
+// class InvalidPieceLocation extends MatchFailure {}
+
+// class DosentHaveMana extends MatchFailure {}
+
+// class NoPieceFoundInCoordenate extends MatchFailure {}
+
+// class EntityWithThatIdAlreadyExists extends MatchFailure {}
+
+// class NoUserStateWithThatID extends MatchFailure {}
+
+// class ErrorWhileCastingMovement extends MatchFailure {}
+
+// class CastingCoordenateError extends MatchFailure {}
+
+// class NotAValidResponse extends MatchFailure {}

@@ -13,11 +13,12 @@ class Coordenate extends Equatable {
 
   factory Coordenate.fromString(String text) {
     text = text.replaceAll(' ', '');
-    if (text.length != 2) throw CastingCoordenateError();
+    if (text.length != 2) throw const MatchFailure.castingCoordenateError();
 
     final xAxis = int.tryParse(text[0]);
     final yAxis = int.tryParse(text[1]);
-    if (xAxis == null || yAxis == null) throw CastingCoordenateError();
+    if (xAxis == null || yAxis == null)
+      throw const MatchFailure.castingCoordenateError();
 
     return Coordenate(xAxis, yAxis);
   }
@@ -33,7 +34,7 @@ class CoordenatesInMove extends Equatable {
 
   factory CoordenatesInMove.fromString(String text) {
     text = text.replaceAll(' ', '');
-    if (text.length != 4) throw CastingCoordenateError();
+    if (text.length != 4) throw const MatchFailure.castingCoordenateError();
     final origing = text[0] + text[1];
     final destiny = text[2] + text[3];
     return CoordenatesInMove(

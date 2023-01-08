@@ -17,7 +17,7 @@ class ImplMatchSource extends ProtocolMatchSource {
   @override
   Either<MatchFailure, UserStateEntity> getUserState(String userId) {
     final index = _usersInTheGame.entityIndexOf(userId);
-    if (index == -1) return left(NoUserStateWithThatID());
+    if (index == -1) return left(const MatchFailure.noUserStateWithThatID());
     return right(_usersInTheGame[index]);
   }
 }

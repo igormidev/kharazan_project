@@ -686,6 +686,8 @@ abstract class _$$_ErrorOccouredCopyWith<$Res> {
       __$$_ErrorOccouredCopyWithImpl<$Res>;
   @useResult
   $Res call({MatchFailure failure});
+
+  $MatchFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -707,6 +709,14 @@ class __$$_ErrorOccouredCopyWithImpl<$Res>
           : failure // ignore: cast_nullable_to_non_nullable
               as MatchFailure,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MatchFailureCopyWith<$Res> get failure {
+    return $MatchFailureCopyWith<$Res>(_value.failure, (value) {
+      return _then(_value.copyWith(failure: value));
+    });
   }
 }
 

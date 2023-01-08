@@ -18,7 +18,7 @@
 //     try {
 //       coordenatesInMove = CoordenatesInMove.fromString(param.move);
 //     } catch (_) {
-//       return left(CastingCoordenateError());
+//       return left(MatchFailure.castingCoordenateError());
 //     }
 
 //     // Obtaining the pieces and handling with the possible errors
