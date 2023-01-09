@@ -4,11 +4,10 @@ part of 'battlefield_bloc.dart';
 class BattlefieldEvent with _$BattlefieldEvent {
   const factory BattlefieldEvent.makeMoveWithAnimation({
     required String playerThatMakedMove,
-    required String moveMaded,
+    required TypeOfMoveEntity moveMaded,
   }) = _MakeMoveWithAnimation;
 
   const factory BattlefieldEvent.updateBoardStateAfterMove({
-    required CoordenatesInMove coordenatesInMove,
     required String playerUserTurnId,
     required List<BoardFieldEntity> boardState,
     required List<UserStateEntity> usersInTheMatchState,

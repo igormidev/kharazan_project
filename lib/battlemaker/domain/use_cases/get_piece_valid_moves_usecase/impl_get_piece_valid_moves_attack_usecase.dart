@@ -25,8 +25,7 @@ class ImplGetPieceValidMovesAttackUsecase
     if (matchResponse.isLeft()) return matchResponse.asLeft();
     final field = matchResponse.asRightResult;
 
-    final entityResponse =
-        _pieceRepository.obtainPieceInCoordenate(param.coordenate);
+    final entityResponse = _pieceRepository.obtainPieceWithId(param.boardId);
     if (entityResponse.isLeft()) return entityResponse.asLeft();
     final pieceEntity = entityResponse.asRightResult;
     final piece = entityResponse.asRightResult.pieceState.piece;

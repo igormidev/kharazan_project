@@ -9,13 +9,11 @@ class TypeOfMoveEntity with _$TypeOfMoveEntity {
   const factory TypeOfMoveEntity.pieceChangingPosition({
     required CoordenatesInMove coordenatesInMove,
     required BoardPieceEntity pieceInOrigin,
-    required List<BoardFieldEntity> otherBoardEntities,
   }) = _MoveTypeChangePiecePosition;
 
   const factory TypeOfMoveEntity.pieceAttackingOther({
     required CoordenatesInMove coordenatesInMove,
     required BoardPieceEntity pieceInOrigin,
     required BoardPieceEntity pieceInDestiny,
-    required List<BoardFieldEntity> otherBoardEntities,
   }) = _PieceAttackingOther;
 }

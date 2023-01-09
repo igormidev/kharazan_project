@@ -9,14 +9,13 @@ abstract class ProtocolPieceRepository {
   Either<MatchFailure, BoardPieceEntity> removePieceInCoordenate(
       Coordenate coordenate);
 
-  /// Will return the piece created in the [coordenate]
+  /// Will return the piece created in the [boardId]
   Either<MatchFailure, BoardPieceEntity> createPieceInBoard(
       BoardPieceEntity entity);
 
-  /// Will obtain the [BoardPieceEntity] in the [coordenate] if exists,
-  /// return a [NoPieceFoundInCoordenate] otherwise
-  Either<MatchFailure, BoardPieceEntity> obtainPieceInCoordenate(
-      Coordenate coordenate);
+  /// Will obtain the [BoardPieceEntity] in the [boardId] if exists,
+  /// return a [MatchFailure.noPieceFoundInCoordenateToObtain] otherwise
+  Either<MatchFailure, BoardPieceEntity> obtainPieceWithId(String boardId);
 
   /// Will update the entity with the same [boardId] with [boardPieceEntity]
   Either<MatchFailure, BoardPieceEntity> updatePieceEntityWithId({

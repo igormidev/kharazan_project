@@ -19,7 +19,6 @@ mixin _$MatchEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -33,7 +32,6 @@ mixin _$MatchEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -47,7 +45,6 @@ mixin _$MatchEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -111,8 +108,7 @@ abstract class _$$_MoveMakedCopyWith<$Res> {
       __$$_MoveMakedCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {CoordenatesInMove coordenatesInMove,
-      String playerUserTurnId,
+      {String playerUserTurnId,
       List<BoardFieldEntity> boardState,
       List<UserStateEntity> usersInTheMatchState,
       List<MoveAnimationEntity> animationsInMove});
@@ -129,17 +125,12 @@ class __$$_MoveMakedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? coordenatesInMove = null,
     Object? playerUserTurnId = null,
     Object? boardState = null,
     Object? usersInTheMatchState = null,
     Object? animationsInMove = null,
   }) {
     return _then(_$_MoveMaked(
-      coordenatesInMove: null == coordenatesInMove
-          ? _value.coordenatesInMove
-          : coordenatesInMove // ignore: cast_nullable_to_non_nullable
-              as CoordenatesInMove,
       playerUserTurnId: null == playerUserTurnId
           ? _value.playerUserTurnId
           : playerUserTurnId // ignore: cast_nullable_to_non_nullable
@@ -164,8 +155,7 @@ class __$$_MoveMakedCopyWithImpl<$Res>
 
 class _$_MoveMaked implements _MoveMaked {
   const _$_MoveMaked(
-      {required this.coordenatesInMove,
-      required this.playerUserTurnId,
+      {required this.playerUserTurnId,
       required final List<BoardFieldEntity> boardState,
       required final List<UserStateEntity> usersInTheMatchState,
       required final List<MoveAnimationEntity> animationsInMove})
@@ -173,8 +163,6 @@ class _$_MoveMaked implements _MoveMaked {
         _usersInTheMatchState = usersInTheMatchState,
         _animationsInMove = animationsInMove;
 
-  @override
-  final CoordenatesInMove coordenatesInMove;
   @override
   final String playerUserTurnId;
   final List<BoardFieldEntity> _boardState;
@@ -200,7 +188,7 @@ class _$_MoveMaked implements _MoveMaked {
 
   @override
   String toString() {
-    return 'MatchEvent.moveMaked(coordenatesInMove: $coordenatesInMove, playerUserTurnId: $playerUserTurnId, boardState: $boardState, usersInTheMatchState: $usersInTheMatchState, animationsInMove: $animationsInMove)';
+    return 'MatchEvent.moveMaked(playerUserTurnId: $playerUserTurnId, boardState: $boardState, usersInTheMatchState: $usersInTheMatchState, animationsInMove: $animationsInMove)';
   }
 
   @override
@@ -208,8 +196,6 @@ class _$_MoveMaked implements _MoveMaked {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MoveMaked &&
-            (identical(other.coordenatesInMove, coordenatesInMove) ||
-                other.coordenatesInMove == coordenatesInMove) &&
             (identical(other.playerUserTurnId, playerUserTurnId) ||
                 other.playerUserTurnId == playerUserTurnId) &&
             const DeepCollectionEquality()
@@ -223,7 +209,6 @@ class _$_MoveMaked implements _MoveMaked {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      coordenatesInMove,
       playerUserTurnId,
       const DeepCollectionEquality().hash(_boardState),
       const DeepCollectionEquality().hash(_usersInTheMatchState),
@@ -239,7 +224,6 @@ class _$_MoveMaked implements _MoveMaked {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -249,15 +233,14 @@ class _$_MoveMaked implements _MoveMaked {
     required TResult Function(String idOfTurnUser) passTurnOtherToUser,
     required TResult Function(MatchFailure failure) errorOccoured,
   }) {
-    return moveMaked(coordenatesInMove, playerUserTurnId, boardState,
-        usersInTheMatchState, animationsInMove);
+    return moveMaked(
+        playerUserTurnId, boardState, usersInTheMatchState, animationsInMove);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -267,15 +250,14 @@ class _$_MoveMaked implements _MoveMaked {
     TResult? Function(String idOfTurnUser)? passTurnOtherToUser,
     TResult? Function(MatchFailure failure)? errorOccoured,
   }) {
-    return moveMaked?.call(coordenatesInMove, playerUserTurnId, boardState,
-        usersInTheMatchState, animationsInMove);
+    return moveMaked?.call(
+        playerUserTurnId, boardState, usersInTheMatchState, animationsInMove);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -287,8 +269,8 @@ class _$_MoveMaked implements _MoveMaked {
     required TResult orElse(),
   }) {
     if (moveMaked != null) {
-      return moveMaked(coordenatesInMove, playerUserTurnId, boardState,
-          usersInTheMatchState, animationsInMove);
+      return moveMaked(
+          playerUserTurnId, boardState, usersInTheMatchState, animationsInMove);
     }
     return orElse();
   }
@@ -333,14 +315,12 @@ class _$_MoveMaked implements _MoveMaked {
 
 abstract class _MoveMaked implements MatchEvent {
   const factory _MoveMaked(
-          {required final CoordenatesInMove coordenatesInMove,
-          required final String playerUserTurnId,
+          {required final String playerUserTurnId,
           required final List<BoardFieldEntity> boardState,
           required final List<UserStateEntity> usersInTheMatchState,
           required final List<MoveAnimationEntity> animationsInMove}) =
       _$_MoveMaked;
 
-  CoordenatesInMove get coordenatesInMove;
   String get playerUserTurnId;
   List<BoardFieldEntity> get boardState;
   List<UserStateEntity> get usersInTheMatchState;
@@ -416,7 +396,6 @@ class _$_UserSurrender implements _UserSurrender {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -433,7 +412,6 @@ class _$_UserSurrender implements _UserSurrender {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -450,7 +428,6 @@ class _$_UserSurrender implements _UserSurrender {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -581,7 +558,6 @@ class _$_PassTurn implements _PassTurn {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -598,7 +574,6 @@ class _$_PassTurn implements _PassTurn {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -615,7 +590,6 @@ class _$_PassTurn implements _PassTurn {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -754,7 +728,6 @@ class _$_ErrorOccoured implements _ErrorOccoured {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -771,7 +744,6 @@ class _$_ErrorOccoured implements _ErrorOccoured {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -788,7 +760,6 @@ class _$_ErrorOccoured implements _ErrorOccoured {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,

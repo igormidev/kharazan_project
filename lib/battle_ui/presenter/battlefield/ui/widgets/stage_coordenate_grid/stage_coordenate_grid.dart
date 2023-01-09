@@ -13,6 +13,7 @@ import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/entiti
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/move_animation_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/protocol_stage_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/type_of_move_entity.dart';
 
 class StageCoordenateGrid extends StatelessWidget {
   final double maxSquareSize;
@@ -73,7 +74,7 @@ class StageCoordenateGrid extends StatelessWidget {
                         child: SizedBox(
                           height: max,
                           width: max,
-                          child: GestureWrapper(
+                          child: GestureChangePositionWrapper(
                             coordenate: coordenate,
                             child: Center(
                               child: CircleAvatar(
@@ -211,26 +212,9 @@ class StageCoordenateGrid extends StatelessWidget {
                       return Positioned(
                         left: ((coordenate.axisX - 1) * multipliyer) - align,
                         top: ((coordenate.axisY - 1) * multipliyer) - align,
-                        child: InkWell(
-                          onTap: () {
-                            if (isEnemyPieceCoordenate == false) return;
-                            final bloc = context.read<BattlefieldBloc>();
-                            bloc.state.whenOrNull(
-                              pieceSelected: (_, __, ___, ____, _____, piece) {
-                                final move = '${piece.coordenate}$coordenate'
-                                    .replaceAll('(', '')
-                                    .replaceAll(')', '')
-                                    .replaceAll('x', '');
-
-                                bloc.add(
-                                  BattlefieldEvent.makeMoveWithAnimation(
-                                    playerThatMakedMove: 'player1',
-                                    moveMaded: move,
-                                  ),
-                                );
-                              },
-                            );
-                          },
+                        child: GestureWrapperAttackMove(
+                          existsAEnemyPieceCoordenate: isEnemyPieceCoordenate,
+                          coordenate: coordenate,
                           child: SizedBox(
                             height: max,
                             width: max,
@@ -292,15 +276,13 @@ class StageCoordenateGrid extends StatelessWidget {
   }
 }
 
-class GestureWrapper extends StatelessWidget {
+class GestureChangePositionWrapper extends StatelessWidget {
   final Coordenate coordenate;
   final Widget child;
-  // final void Function(BattlefieldBloc bloc, String move) onPressed;
-  const GestureWrapper({
+  const GestureChangePositionWrapper({
     super.key,
     required this.coordenate,
     required this.child,
-    // required this.onPressed,
   });
 
   @override
@@ -308,17 +290,64 @@ class GestureWrapper extends StatelessWidget {
     return InkWell(
       onTap: () {
         final bloc = context.read<BattlefieldBloc>();
-        bloc.state.whenOrNull(
-          pieceSelected: (_, __, ___, ____, _____, pieceCoordenate) {
-            final move = '${pieceCoordenate.coordenate}$coordenate'
-                .replaceAll('(', '')
-                .replaceAll(')', '')
-                .replaceAll('x', '');
+
+        bloc.state.whenOrNull<void>(
+          pieceSelected: (_, currentPlayerId, __, ___, ____, pieceEntity) {
+            final moveMaded = TypeOfMoveEntity.pieceChangingPosition(
+              coordenatesInMove: CoordenatesInMove(
+                origin: pieceEntity.coordenate,
+                destiny: coordenate,
+              ),
+              pieceInOrigin: pieceEntity,
+            );
 
             bloc.add(
               BattlefieldEvent.makeMoveWithAnimation(
-                playerThatMakedMove: 'player1',
-                moveMaded: move,
+                playerThatMakedMove: currentPlayerId,
+                moveMaded: moveMaded,
+              ),
+            );
+          },
+        );
+      },
+      child: child,
+    );
+  }
+}
+
+class GestureWrapperAttackMove extends StatelessWidget {
+  final Coordenate coordenate;
+  final Widget child;
+  final bool existsAEnemyPieceCoordenate;
+  const GestureWrapperAttackMove({
+    super.key,
+    required this.coordenate,
+    required this.child,
+    required this.existsAEnemyPieceCoordenate,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        if (existsAEnemyPieceCoordenate == false) return;
+
+        final bloc = context.read<BattlefieldBloc>();
+
+        bloc.state.whenOrNull<void>(
+          pieceSelected: (_, currentPlayerId, __, ___, ____, pieceEntity) {
+            final moveMaded = TypeOfMoveEntity.pieceChangingPosition(
+              coordenatesInMove: CoordenatesInMove(
+                origin: pieceEntity.coordenate,
+                destiny: coordenate,
+              ),
+              pieceInOrigin: pieceEntity,
+            );
+
+            bloc.add(
+              BattlefieldEvent.makeMoveWithAnimation(
+                playerThatMakedMove: currentPlayerId,
+                moveMaded: moveMaded,
               ),
             );
           },

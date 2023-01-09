@@ -1,10 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 
 class GetPieceParam extends Equatable {
-  final Coordenate coordenates;
-  const GetPieceParam({required this.coordenates});
+  final String boardId;
+  const GetPieceParam({required this.boardId});
 
   @override
-  List<Object?> get props => [coordenates];
+  List<Object?> get props => [boardId];
 }

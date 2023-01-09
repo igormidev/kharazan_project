@@ -11,18 +11,13 @@ import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_board_re
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_piece_repository.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/can_piece_make_move_usecase/impl_can_piece_make_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/can_piece_make_move_usecase/protocol_can_piece_make_move_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/define_type_of_move_usecase/impl_define_type_of_move_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/define_type_of_move_usecase/protocol_define_type_of_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/execute_typed_move_usecase/impl_execute_typed_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/execute_typed_move_usecase/protocol_execute_typed_move_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/remove_piece_in_coordenate_usecase/impl_remove_piece_in_coordenate_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/field_manipulation_usecases/remove_piece_in_coordenate_usecase/protocol_remove_piece_in_coordenate_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/get_move_entities_usecase/impl_get_move_entities_usecase.dart';
-import 'package:micro_kharazan/battlemaker/domain/use_cases/get_move_entities_usecase/protocol_get_move_entities_usecase.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/bloc/battlefield_bloc.dart';
 import 'package:micro_kharazan/battle_ui/presenter/battlefield/models/stages/coliseum_map.dart';
 import 'package:micro_kharazan/battlemaker/data/repositories/impl_match_repository.dart';
-import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/domain/repositories/protocol_match_state_repository.dart';
@@ -126,10 +121,6 @@ class MainBattlefieldView extends StatelessWidget {
         removeAllPieceAnimationsUsecase =
         ImplRemoveAllPieceAnimationsUsecase(pieceRepository: pieceRepository);
 
-    final ProtocolDefineTypeOfMoveUsecase defineTypeOfMoveUsecase =
-        ImplDefineTypeOfMoveUsecase();
-    final ProtocolGetMoveEntitiesUsecase getMoveEntitiesUsecase =
-        ImplGetMoveEntitiesUsecase(getPieceUsecase: getPieceUsecase);
     final ProtocolCanPieceMakeMoveUsecase canPieceMakeMoveUsecase =
         ImplCanPieceMakeMoveUsecase();
 
@@ -148,10 +139,8 @@ class MainBattlefieldView extends StatelessWidget {
     );
 
     final ProtocolMakeMoveUsecase makeMoveUsecase = ImplMakeMoveUsecase(
-      defineTypeOfMoveUsecase: defineTypeOfMoveUsecase,
       getMatchStatesUsecase: getMatchStates,
       canUserMakeMoveUsecase: canUserMakeMove,
-      getPieceUsecase: getMoveEntitiesUsecase,
       executeTypedMoveUsecase: executeTypedMoveUsecase,
       canPieceMakeMoveUsecase: canPieceMakeMoveUsecase,
     );
@@ -194,7 +183,7 @@ class _DisposeWidgetState extends State<DisposeWidget> {
     super.initState();
     final bloc = context.read<BattlefieldBloc>();
     bloc.events.listen((event) {
-      event.when(
+      event.when<void>(
         surrender: (String userThatSurrenderID) {
           bloc.add(BattlefieldEvent.surrender(userThatSurrenderID));
         },
@@ -204,13 +193,13 @@ class _DisposeWidgetState extends State<DisposeWidget> {
         errorOccoured: (MatchFailure failure) {
           bloc.add(BattlefieldEvent.notificateFailure(failure));
         },
-        moveMaked: (CoordenatesInMove coordenatesInMove,
-            String playerUserTurnId,
-            List<BoardFieldEntity> boardState,
-            List<UserStateEntity> usersInTheMatchState,
-            List<MoveAnimationEntity> animationsInMove) {
+        moveMaked: (
+          String playerUserTurnId,
+          List<BoardFieldEntity> boardState,
+          List<UserStateEntity> usersInTheMatchState,
+          List<MoveAnimationEntity> animationsInMove,
+        ) {
           bloc.add(BattlefieldEvent.updateBoardStateAfterMove(
-            coordenatesInMove: coordenatesInMove,
             playerUserTurnId: playerUserTurnId,
             boardState: boardState,
             usersInTheMatchState: usersInTheMatchState,

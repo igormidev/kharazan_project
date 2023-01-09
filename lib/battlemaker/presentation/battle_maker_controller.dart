@@ -4,6 +4,7 @@ import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/core/usecase_contract.dart';
 
 import 'package:micro_kharazan/battlemaker/domain/entities/coordenate_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/type_of_move_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_match_states_usecase/protocol_get_match_states_usecase.dart';
 import 'package:micro_kharazan/battlemaker/domain/use_cases/get_piece_valid_moves_usecase/param_get_piece_valid_moves_usecase.dart';
@@ -37,7 +38,10 @@ class BattleMakerController {
   StreamSink get inEvents => _eventsStream.sink;
   Stream<MatchEvent> get outEvents => _eventsStream.stream;
 
-  Either<MatchFailure, VoidSucess> makeMove(String userId, String move) {
+  Either<MatchFailure, VoidSucess> makeMove({
+    required String userId,
+    required TypeOfMoveEntity move,
+  }) {
     final param = MakeMoveParam(userId: userId, move: move);
     final makeMoveResponse = _makeMoveUsecase(param);
     if (makeMoveResponse.isLeft()) return left(makeMoveResponse.asLeftResult);
@@ -45,7 +49,6 @@ class BattleMakerController {
     // Event that will be added
     final ReturnMakeMoveUsecase matchResult = makeMoveResponse.asRightResult;
     final event = MatchEvent.moveMaked(
-      coordenatesInMove: matchResult.moveMaked,
       playerUserTurnId: matchResult.playerThatMakedMoveId,
       boardState: matchResult.boardStates,
       usersInTheMatchState: matchResult.usersInTheMatchState,
@@ -90,14 +93,13 @@ class BattleMakerController {
   }
 
   Either<MatchFailure, List<Coordenate>> getPieceValidMovimentation(
-      Coordenate coordenate) {
-    final moveParam = GetPieceValidMovesParam(coordenate: coordenate);
+      String boardId) {
+    final moveParam = GetPieceValidMovesParam(boardId: boardId);
     return _getPieceValidMovimentation(moveParam);
   }
 
-  Either<MatchFailure, List<Coordenate>> getPieceValidAttacks(
-      Coordenate coordenate) {
-    final moveParam = GetPieceValidMovesParam(coordenate: coordenate);
+  Either<MatchFailure, List<Coordenate>> getPieceValidAttacks(String boardId) {
+    final moveParam = GetPieceValidMovesParam(boardId: boardId);
     return _getPieceValidAttacks(moveParam);
   }
 }

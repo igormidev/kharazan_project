@@ -10,7 +10,6 @@ part 'match_event.freezed.dart';
 @freezed
 class MatchEvent with _$MatchEvent {
   const factory MatchEvent.moveMaked({
-    required CoordenatesInMove coordenatesInMove,
     required String playerUserTurnId,
     required List<BoardFieldEntity> boardState,
     required List<UserStateEntity> usersInTheMatchState,

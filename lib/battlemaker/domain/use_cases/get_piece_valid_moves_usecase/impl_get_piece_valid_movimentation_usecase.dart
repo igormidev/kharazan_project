@@ -25,8 +25,7 @@ class ImplGetPieceValidMovimentationUsecase
     if (coordenatesResponse.isLeft()) return coordenatesResponse.asLeft();
     final field = coordenatesResponse.asRightResult;
 
-    final pieceResponse =
-        _pieceRepository.obtainPieceInCoordenate(param.coordenate);
+    final pieceResponse = _pieceRepository.obtainPieceWithId(param.boardId);
     if (pieceResponse.isLeft()) return pieceResponse.asLeft();
     final pieceEntity = pieceResponse.asRightResult;
     final piece = pieceResponse.asRightResult.pieceState.piece;

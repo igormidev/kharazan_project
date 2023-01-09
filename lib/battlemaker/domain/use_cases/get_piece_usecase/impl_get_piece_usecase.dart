@@ -16,8 +16,8 @@ class ImplGetPieceUsecase implements ProtocolGetPieceUsecase {
 
   @override
   Either<MatchFailure, BoardPieceEntity?> call(GetPieceParam param) {
-    final coordenate = param.coordenates;
-    final response = _repository.obtainPieceInCoordenate(coordenate);
+    final coordenate = param.boardId;
+    final response = _repository.obtainPieceWithId(coordenate);
 
     if (response.isLeft()) {
       // If there is no entity in the coordenate we will return null

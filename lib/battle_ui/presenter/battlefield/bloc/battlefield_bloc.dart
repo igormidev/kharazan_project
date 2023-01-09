@@ -7,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/board_field_entity.dart';
 import 'package:micro_kharazan/battlemaker/core/core_extensions.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/board_entities/move_animation_entity.dart';
+import 'package:micro_kharazan/battlemaker/domain/entities/type_of_move_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/entities/user_state_entity.dart';
 import 'package:micro_kharazan/battlemaker/domain/failures/match_failures.dart';
 import 'package:micro_kharazan/battlemaker/presentation/battle_maker_controller.dart';
@@ -51,8 +52,8 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     Emitter<BattlefieldState> emit,
   ) async {
     final realMoveResponse = _battleController.makeMove(
-      event.playerThatMakedMove,
-      event.moveMaded,
+      userId: event.playerThatMakedMove,
+      move: event.moveMaded,
     );
 
     if (realMoveResponse.isLeft()) {
@@ -118,14 +119,14 @@ class BattlefieldBloc extends Bloc<BattlefieldEvent, BattlefieldState> {
     Emitter<BattlefieldState> emit,
   ) async {
     final possibleAttacksResponse =
-        _battleController.getPieceValidAttacks(event.piece.coordenate);
+        _battleController.getPieceValidAttacks(event.piece.boardId);
     if (possibleAttacksResponse.isLeft()) {
       emit(_getFailureState(possibleAttacksResponse));
       return;
     }
 
     final possibleMovesResponse =
-        _battleController.getPieceValidMovimentation(event.piece.coordenate);
+        _battleController.getPieceValidMovimentation(event.piece.boardId);
     if (possibleMovesResponse.isLeft()) {
       emit(_getFailureState(possibleMovesResponse));
       return;

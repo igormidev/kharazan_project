@@ -18,10 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BattlefieldEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String playerThatMakedMove, String moveMaded)
+    required TResult Function(
+            String playerThatMakedMove, TypeOfMoveEntity moveMaded)
         makeMoveWithAnimation,
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -36,10 +36,9 @@ mixin _$BattlefieldEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String playerThatMakedMove, String moveMaded)?
+    TResult? Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -54,10 +53,9 @@ mixin _$BattlefieldEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String playerThatMakedMove, String moveMaded)?
+    TResult Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -138,7 +136,9 @@ abstract class _$$_MakeMoveWithAnimationCopyWith<$Res> {
           $Res Function(_$_MakeMoveWithAnimation) then) =
       __$$_MakeMoveWithAnimationCopyWithImpl<$Res>;
   @useResult
-  $Res call({String playerThatMakedMove, String moveMaded});
+  $Res call({String playerThatMakedMove, TypeOfMoveEntity moveMaded});
+
+  $TypeOfMoveEntityCopyWith<$Res> get moveMaded;
 }
 
 /// @nodoc
@@ -163,8 +163,16 @@ class __$$_MakeMoveWithAnimationCopyWithImpl<$Res>
       moveMaded: null == moveMaded
           ? _value.moveMaded
           : moveMaded // ignore: cast_nullable_to_non_nullable
-              as String,
+              as TypeOfMoveEntity,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TypeOfMoveEntityCopyWith<$Res> get moveMaded {
+    return $TypeOfMoveEntityCopyWith<$Res>(_value.moveMaded, (value) {
+      return _then(_value.copyWith(moveMaded: value));
+    });
   }
 }
 
@@ -177,7 +185,7 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
   @override
   final String playerThatMakedMove;
   @override
-  final String moveMaded;
+  final TypeOfMoveEntity moveMaded;
 
   @override
   String toString() {
@@ -208,10 +216,10 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String playerThatMakedMove, String moveMaded)
+    required TResult Function(
+            String playerThatMakedMove, TypeOfMoveEntity moveMaded)
         makeMoveWithAnimation,
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -229,10 +237,9 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String playerThatMakedMove, String moveMaded)?
+    TResult? Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -250,10 +257,9 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String playerThatMakedMove, String moveMaded)?
+    TResult Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -329,10 +335,10 @@ class _$_MakeMoveWithAnimation implements _MakeMoveWithAnimation {
 abstract class _MakeMoveWithAnimation implements BattlefieldEvent {
   const factory _MakeMoveWithAnimation(
       {required final String playerThatMakedMove,
-      required final String moveMaded}) = _$_MakeMoveWithAnimation;
+      required final TypeOfMoveEntity moveMaded}) = _$_MakeMoveWithAnimation;
 
   String get playerThatMakedMove;
-  String get moveMaded;
+  TypeOfMoveEntity get moveMaded;
   @JsonKey(ignore: true)
   _$$_MakeMoveWithAnimationCopyWith<_$_MakeMoveWithAnimation> get copyWith =>
       throw _privateConstructorUsedError;
@@ -346,8 +352,7 @@ abstract class _$$_UpdateBoardStateAfterMoveCopyWith<$Res> {
       __$$_UpdateBoardStateAfterMoveCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {CoordenatesInMove coordenatesInMove,
-      String playerUserTurnId,
+      {String playerUserTurnId,
       List<BoardFieldEntity> boardState,
       List<UserStateEntity> usersInTheMatchState,
       List<MoveAnimationEntity> animationsInMove});
@@ -365,17 +370,12 @@ class __$$_UpdateBoardStateAfterMoveCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? coordenatesInMove = null,
     Object? playerUserTurnId = null,
     Object? boardState = null,
     Object? usersInTheMatchState = null,
     Object? animationsInMove = null,
   }) {
     return _then(_$_UpdateBoardStateAfterMove(
-      coordenatesInMove: null == coordenatesInMove
-          ? _value.coordenatesInMove
-          : coordenatesInMove // ignore: cast_nullable_to_non_nullable
-              as CoordenatesInMove,
       playerUserTurnId: null == playerUserTurnId
           ? _value.playerUserTurnId
           : playerUserTurnId // ignore: cast_nullable_to_non_nullable
@@ -400,8 +400,7 @@ class __$$_UpdateBoardStateAfterMoveCopyWithImpl<$Res>
 
 class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
   const _$_UpdateBoardStateAfterMove(
-      {required this.coordenatesInMove,
-      required this.playerUserTurnId,
+      {required this.playerUserTurnId,
       required final List<BoardFieldEntity> boardState,
       required final List<UserStateEntity> usersInTheMatchState,
       required final List<MoveAnimationEntity> animationsInMove})
@@ -409,8 +408,6 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
         _usersInTheMatchState = usersInTheMatchState,
         _animationsInMove = animationsInMove;
 
-  @override
-  final CoordenatesInMove coordenatesInMove;
   @override
   final String playerUserTurnId;
   final List<BoardFieldEntity> _boardState;
@@ -436,7 +433,7 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
 
   @override
   String toString() {
-    return 'BattlefieldEvent.updateBoardStateAfterMove(coordenatesInMove: $coordenatesInMove, playerUserTurnId: $playerUserTurnId, boardState: $boardState, usersInTheMatchState: $usersInTheMatchState, animationsInMove: $animationsInMove)';
+    return 'BattlefieldEvent.updateBoardStateAfterMove(playerUserTurnId: $playerUserTurnId, boardState: $boardState, usersInTheMatchState: $usersInTheMatchState, animationsInMove: $animationsInMove)';
   }
 
   @override
@@ -444,8 +441,6 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UpdateBoardStateAfterMove &&
-            (identical(other.coordenatesInMove, coordenatesInMove) ||
-                other.coordenatesInMove == coordenatesInMove) &&
             (identical(other.playerUserTurnId, playerUserTurnId) ||
                 other.playerUserTurnId == playerUserTurnId) &&
             const DeepCollectionEquality()
@@ -459,7 +454,6 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      coordenatesInMove,
       playerUserTurnId,
       const DeepCollectionEquality().hash(_boardState),
       const DeepCollectionEquality().hash(_usersInTheMatchState),
@@ -475,10 +469,10 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String playerThatMakedMove, String moveMaded)
+    required TResult Function(
+            String playerThatMakedMove, TypeOfMoveEntity moveMaded)
         makeMoveWithAnimation,
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -490,17 +484,16 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
     required TResult Function(BoardPieceEntity piece) pieceSelectedInCoordenate,
     required TResult Function() unSelectPiece,
   }) {
-    return updateBoardStateAfterMove(coordenatesInMove, playerUserTurnId,
-        boardState, usersInTheMatchState, animationsInMove);
+    return updateBoardStateAfterMove(
+        playerUserTurnId, boardState, usersInTheMatchState, animationsInMove);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String playerThatMakedMove, String moveMaded)?
+    TResult? Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -512,17 +505,16 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
     TResult? Function(BoardPieceEntity piece)? pieceSelectedInCoordenate,
     TResult? Function()? unSelectPiece,
   }) {
-    return updateBoardStateAfterMove?.call(coordenatesInMove, playerUserTurnId,
-        boardState, usersInTheMatchState, animationsInMove);
+    return updateBoardStateAfterMove?.call(
+        playerUserTurnId, boardState, usersInTheMatchState, animationsInMove);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String playerThatMakedMove, String moveMaded)?
+    TResult Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -536,8 +528,8 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
     required TResult orElse(),
   }) {
     if (updateBoardStateAfterMove != null) {
-      return updateBoardStateAfterMove(coordenatesInMove, playerUserTurnId,
-          boardState, usersInTheMatchState, animationsInMove);
+      return updateBoardStateAfterMove(
+          playerUserTurnId, boardState, usersInTheMatchState, animationsInMove);
     }
     return orElse();
   }
@@ -598,14 +590,12 @@ class _$_UpdateBoardStateAfterMove implements _UpdateBoardStateAfterMove {
 
 abstract class _UpdateBoardStateAfterMove implements BattlefieldEvent {
   const factory _UpdateBoardStateAfterMove(
-          {required final CoordenatesInMove coordenatesInMove,
-          required final String playerUserTurnId,
+          {required final String playerUserTurnId,
           required final List<BoardFieldEntity> boardState,
           required final List<UserStateEntity> usersInTheMatchState,
           required final List<MoveAnimationEntity> animationsInMove}) =
       _$_UpdateBoardStateAfterMove;
 
-  CoordenatesInMove get coordenatesInMove;
   String get playerUserTurnId;
   List<BoardFieldEntity> get boardState;
   List<UserStateEntity> get usersInTheMatchState;
@@ -680,10 +670,10 @@ class _$_Surrender implements _Surrender {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String playerThatMakedMove, String moveMaded)
+    required TResult Function(
+            String playerThatMakedMove, TypeOfMoveEntity moveMaded)
         makeMoveWithAnimation,
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -701,10 +691,9 @@ class _$_Surrender implements _Surrender {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String playerThatMakedMove, String moveMaded)?
+    TResult? Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -722,10 +711,9 @@ class _$_Surrender implements _Surrender {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String playerThatMakedMove, String moveMaded)?
+    TResult Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -872,10 +860,10 @@ class _$_PassTurn implements _PassTurn {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String playerThatMakedMove, String moveMaded)
+    required TResult Function(
+            String playerThatMakedMove, TypeOfMoveEntity moveMaded)
         makeMoveWithAnimation,
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -893,10 +881,9 @@ class _$_PassTurn implements _PassTurn {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String playerThatMakedMove, String moveMaded)?
+    TResult? Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -914,10 +901,9 @@ class _$_PassTurn implements _PassTurn {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String playerThatMakedMove, String moveMaded)?
+    TResult Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1074,10 +1060,10 @@ class _$_NotificateFailure implements _NotificateFailure {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String playerThatMakedMove, String moveMaded)
+    required TResult Function(
+            String playerThatMakedMove, TypeOfMoveEntity moveMaded)
         makeMoveWithAnimation,
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1095,10 +1081,9 @@ class _$_NotificateFailure implements _NotificateFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String playerThatMakedMove, String moveMaded)?
+    TResult? Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1116,10 +1101,9 @@ class _$_NotificateFailure implements _NotificateFailure {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String playerThatMakedMove, String moveMaded)?
+    TResult Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1269,10 +1253,10 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String playerThatMakedMove, String moveMaded)
+    required TResult Function(
+            String playerThatMakedMove, TypeOfMoveEntity moveMaded)
         makeMoveWithAnimation,
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1290,10 +1274,9 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String playerThatMakedMove, String moveMaded)?
+    TResult? Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1311,10 +1294,9 @@ class _$_BattlefieldPieceSelected implements _BattlefieldPieceSelected {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String playerThatMakedMove, String moveMaded)?
+    TResult Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1435,10 +1417,10 @@ class _$_UnSelectPiece implements _UnSelectPiece {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String playerThatMakedMove, String moveMaded)
+    required TResult Function(
+            String playerThatMakedMove, TypeOfMoveEntity moveMaded)
         makeMoveWithAnimation,
     required TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1456,10 +1438,9 @@ class _$_UnSelectPiece implements _UnSelectPiece {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String playerThatMakedMove, String moveMaded)?
+    TResult? Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult? Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,
@@ -1477,10 +1458,9 @@ class _$_UnSelectPiece implements _UnSelectPiece {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String playerThatMakedMove, String moveMaded)?
+    TResult Function(String playerThatMakedMove, TypeOfMoveEntity moveMaded)?
         makeMoveWithAnimation,
     TResult Function(
-            CoordenatesInMove coordenatesInMove,
             String playerUserTurnId,
             List<BoardFieldEntity> boardState,
             List<UserStateEntity> usersInTheMatchState,

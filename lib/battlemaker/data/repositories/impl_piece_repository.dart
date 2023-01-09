@@ -76,24 +76,16 @@ class ImplPieceRepository implements ProtocolPieceRepository {
   }
 
   @override
-  Either<MatchFailure, BoardPieceEntity> obtainPieceInCoordenate(
-      Coordenate coordenate) {
-    final entityResponse =
-        _boardDataSource.getAllEntitiesInCoordenate(coordenate);
+  Either<MatchFailure, BoardPieceEntity> obtainPieceWithId(String boardId) {
+    final entityResponse = _boardDataSource.getEntityById(boardId);
     if (entityResponse.isLeft()) return entityResponse.asLeft();
 
-    final listEntities = entityResponse.asRightResult;
-    final pieceEntity = listEntities.singleWhereOrNull((entity) {
-      return (entity.coordenate == coordenate) && (entity is BoardPieceEntity);
-    });
+    final pieceEntity = entityResponse.asRightResult;
 
-    if (pieceEntity == null) {
-      return left(const MatchFailure.noPieceFoundInCoordenateToObtain());
-    }
     if (pieceEntity is BoardPieceEntity) {
       return right(pieceEntity);
     } else {
-      return left(const MatchFailure.notAValidResponse());
+      return left(const MatchFailure.noPieceFoundInCoordenateToObtain());
     }
   }
 

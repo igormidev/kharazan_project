@@ -8,6 +8,6 @@ abstract class ProtocolGetPieceUsecase
     extends SyncUseCase<BoardPieceEntity?, GetPieceParam> {
   @override
 
-  /// Returns null if dosen't exist a piece in the [GetPieceParam.coordenates]
+  /// Returns null if dosen't exist a piece in the [GetPieceParam.boardId]
   Either<MatchFailure, BoardPieceEntity?> call(GetPieceParam param);
 }

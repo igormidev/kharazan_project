@@ -58,7 +58,6 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
       pieceChangingPosition: (
         CoordenatesInMove coordenatesInMove,
         BoardPieceEntity pieceEntity,
-        List<BoardFieldEntity> otherBoardEntities,
       ) {
         final origin = coordenatesInMove.origin;
         final destiny = coordenatesInMove.destiny;
@@ -81,7 +80,6 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
         CoordenatesInMove coordenatesInMove,
         BoardPieceEntity pieceEntityInOrigin,
         BoardPieceEntity pieceEntityInDestiny,
-        List<BoardFieldEntity> otherBoardEntities,
       ) {
         final pieceState = pieceEntityInOrigin.pieceState;
         final damage = pieceState.piece.damage;
