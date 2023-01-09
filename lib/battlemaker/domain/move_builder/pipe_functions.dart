@@ -31,7 +31,7 @@ PipeResult _updatePieceToChangePositionAnimationStateUsecase({
   required MovePipeLineBuilder currentPipe,
 }) {
   final param = ParamUpdatePieceToChangePositionAnimationStateUsecase(
-    uniqueBoardId: uniquePieceEntityId,
+    boardId: uniquePieceEntityId,
     originCoordenate: originCoordenate,
     destinyCoordenate: destinyCoordenate,
   );

@@ -15,6 +15,6 @@ class BoardFieldEntity with _$BoardFieldEntity {
 
     /// The [piece] that is in the [coordenate]
     required PieceState pieceState,
-    required String uniqueBoardId,
+    required String boardId,
   }) = BoardPieceEntity;
 }

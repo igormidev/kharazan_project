@@ -19,8 +19,8 @@ class ImplBoardSource extends ProtocolBoardSource {
     BoardFieldEntity entity,
   ) {
     // Entity with same id can't exist, this is, the index has to be -1
-    final index = _entitiesInTheBoard
-        .indexWhere((e) => e.uniqueBoardId == entity.uniqueBoardId);
+    final index =
+        _entitiesInTheBoard.indexWhere((e) => e.boardId == entity.boardId);
     if (index != -1) {
       return left(const MatchFailure.entityWithThatIdAlreadyExists());
     }
@@ -84,5 +84,5 @@ class ImplBoardSource extends ProtocolBoardSource {
 
 extension _BoardListEntityExtension on List<BoardFieldEntity> {
   int entityIndexWithId(String uniqueBoardEntityId) =>
-      indexWhere((entity) => entity.uniqueBoardId == uniqueBoardEntityId);
+      indexWhere((entity) => entity.boardId == uniqueBoardEntityId);
 }

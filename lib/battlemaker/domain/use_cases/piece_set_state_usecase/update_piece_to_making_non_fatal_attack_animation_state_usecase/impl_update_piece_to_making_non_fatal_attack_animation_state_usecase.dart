@@ -20,18 +20,20 @@ class ImplUpdatePieceToMakingNonFatalAttackAnimationStateUsecase
   Either<MatchFailure, VoidSucess> call(
     ParamUpdatePieceToMakingNonFatalAttackAnimationStateUsecase param,
   ) {
-    return _pieceRepository.updatePieceEntityWithId(
-      param.uniquePieceEntityId,
-      (BoardPieceEntity currentPiece) {
-        return currentPiece.copyWith(
-          pieceState: PieceState.pieceMakingNonFatalAttack(
-            piece: currentPiece.pieceState.piece,
-            animationTime: Constants.changeAttackAnimationTime,
-            originCoordenate: param.originCoordenate,
-            destinyCoordenate: param.destinyCoordenate,
-          ),
-        );
-      },
-    ).castRight((_) => VoidSucess());
+    return _pieceRepository
+        .updatePieceEntityWithId(
+          boardId: param.uniquePieceEntityId,
+          boardPieceEntity: (BoardPieceEntity currentPiece) {
+            return currentPiece.copyWith(
+              pieceState: PieceState.pieceMakingNonFatalAttack(
+                piece: currentPiece.pieceState.piece,
+                animationTime: Constants.changeAttackAnimationTime,
+                originCoordenate: param.originCoordenate,
+                destinyCoordenate: param.destinyCoordenate,
+              ),
+            );
+          },
+        )
+        .castRight((_) => VoidSucess());
   }
 }

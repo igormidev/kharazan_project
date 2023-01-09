@@ -152,7 +152,7 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   //   // └─────────────────────────────────────────────────────────
   //   final animationParam =
   //       ParamUpdatePieceToChangePositionAnimationStateUsecase(
-  //     uniqueBoardId: uniqueId.uniqueBoardId,
+  //     boardId: uniqueId.boardId,
   //     originCoordenate: coordenatesInMove.origin,
   //     destinyCoordenate: coordenatesInMove.destiny,
   //   );
@@ -188,7 +188,7 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   //   // │ Deal the damage to the target piece, reducing its life
   //   // └─────────────────────────────────────────────────────────
   //   final param = DealDamageToPieceParam(
-  //     uniquePieceEntityId: pieceEntityInDestiny.uniqueBoardId,
+  //     uniquePieceEntityId: pieceEntityInDestiny.boardId,
   //     damage: pieceEntityInOrigin.pieceState.piece.damage,
   //   );
   //   final dealDamageResponse = _dealDamageToPieceUsecase(param);
@@ -225,7 +225,7 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   //     // └─────────────────────────────────────────────────────────
   //     final pieceAttackParam =
   //         ParamUpdatePieceToMakingFatalAttackAnimationStateUsecase(
-  //       uniquePieceEntityId: pieceEntityInOrigin.uniqueBoardId,
+  //       uniquePieceEntityId: pieceEntityInOrigin.boardId,
   //       originCoordenate: coordenatesInMove.origin,
   //       destinyCoordenate: coordenatesInMove.destiny,
   //     );
@@ -239,7 +239,7 @@ class ImplExecuteTypedMoveUsecase implements ProtocolExecuteTypedMoveUsecase {
   //     // └─────────────────────────────────────────────────────────
   //     final pieceAttackParam =
   //         ParamUpdatePieceToMakingNonFatalAttackAnimationStateUsecase(
-  //       uniquePieceEntityId: pieceEntityInOrigin.uniqueBoardId,
+  //       uniquePieceEntityId: pieceEntityInOrigin.boardId,
   //       originCoordenate: coordenatesInMove.origin,
   //       destinyCoordenate: coordenatesInMove.destiny,
   //     );

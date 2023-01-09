@@ -42,8 +42,9 @@ class ImplGetMoveEntitiesUsecase implements ProtocolGetMoveEntitiesUsecase {
     final pieceOrigin = originResponse.asRightResult;
     final pieceDestiny = destinyResponse.asRightResult;
 
-    if (pieceOrigin == null)
+    if (pieceOrigin == null) {
       return left(const MatchFailure.invalidPieceLocation());
+    }
 
     final List<Coordenate> possibleOriginPieceMovements =
         pieceOrigin.pieceState.piece.obtainMovesArea(coordenatesInMove.origin);

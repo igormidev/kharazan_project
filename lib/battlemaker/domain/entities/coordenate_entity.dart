@@ -17,8 +17,9 @@ class Coordenate extends Equatable {
 
     final xAxis = int.tryParse(text[0]);
     final yAxis = int.tryParse(text[1]);
-    if (xAxis == null || yAxis == null)
+    if (xAxis == null || yAxis == null) {
       throw const MatchFailure.castingCoordenateError();
+    }
 
     return Coordenate(xAxis, yAxis);
   }

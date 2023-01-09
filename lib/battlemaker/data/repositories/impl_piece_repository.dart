@@ -44,7 +44,7 @@ class ImplPieceRepository implements ProtocolPieceRepository {
     }
 
     final removedPieceResponse =
-        _boardDataSource.removeEntityWithId(pieceEntity!.uniqueBoardId);
+        _boardDataSource.removeEntityWithId(pieceEntity!.boardId);
     if (removedPieceResponse.isLeft()) return removedPieceResponse.asLeft();
 
     final pieceRemoved = removedPieceResponse.asRightResult;
@@ -98,19 +98,20 @@ class ImplPieceRepository implements ProtocolPieceRepository {
   }
 
   @override
-  Either<MatchFailure, BoardPieceEntity> updatePieceEntityWithId(
-    String uniqueBoardId,
-    BoardPieceEntity Function(BoardPieceEntity currentEntity) boardPieceEntity,
-  ) {
-    final entityResponse = _boardDataSource.getEntityById(uniqueBoardId);
+  Either<MatchFailure, BoardPieceEntity> updatePieceEntityWithId({
+    required String boardId,
+    required BoardPieceEntity Function(BoardPieceEntity currentEntity)
+        boardPieceEntity,
+  }) {
+    final entityResponse = _boardDataSource.getEntityById(boardId);
     if (entityResponse.isLeft()) return entityResponse.asLeft();
     final entity = entityResponse.asRightResult;
     if (entity is! BoardPieceEntity) {
       return left(const MatchFailure.notAValidResponse());
     }
 
-    final response = _boardDataSource.updateEntityWithId(
-        uniqueBoardId, boardPieceEntity(entity));
+    final response =
+        _boardDataSource.updateEntityWithId(boardId, boardPieceEntity(entity));
     if (response.isLeft()) return response.asLeft();
 
     final pieceEntity = response.asRightResult;

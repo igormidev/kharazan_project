@@ -111,8 +111,8 @@ class StageCoordenateGrid extends StatelessWidget {
                             return pieceEntity.pieceState.when<Widget>(
                               normal: (PieceEntity piece) {
                                 return PieceDefaultStateWidget(
-                                  key: ValueKey(pieceEntity.uniqueBoardId),
-                                  valueKey: pieceEntity.uniqueBoardId,
+                                  key: ValueKey(pieceEntity.boardId),
+                                  valueKey: pieceEntity.boardId,
                                   entity: pieceEntity,
                                   axisX: axisX,
                                   axisY: axisY,
@@ -126,9 +126,9 @@ class StageCoordenateGrid extends StatelessWidget {
                                 destinyCoordenate,
                               ) {
                                 return PieceChangePositionAnimationWidget(
-                                  key: ValueKey(pieceEntity.uniqueBoardId),
+                                  key: ValueKey(pieceEntity.boardId),
                                   animationDuration: animationTime,
-                                  valueKey: pieceEntity.uniqueBoardId,
+                                  valueKey: pieceEntity.boardId,
                                   entity: pieceEntity,
                                   size: maxSize,
                                   originCoordenate: originCoordenate,
@@ -143,10 +143,10 @@ class StageCoordenateGrid extends StatelessWidget {
                                 destinyCoordenate,
                               ) {
                                 return PieceAttackFatalAnimationWidget(
-                                  key: ValueKey(pieceEntity.uniqueBoardId),
+                                  key: ValueKey(pieceEntity.boardId),
                                   animationDuration: animationTime,
                                   entity: pieceEntity,
-                                  valueKey: pieceEntity.uniqueBoardId,
+                                  valueKey: pieceEntity.boardId,
                                   size: maxSize,
                                   coordenateMultipliyer: multipliyer,
                                   originCoordenate: originCoordenate,
@@ -160,8 +160,8 @@ class StageCoordenateGrid extends StatelessWidget {
                                 destinyCoordenate,
                               ) {
                                 return PieceAttackNonFatalAnimationWidget(
-                                  key: ValueKey(pieceEntity.uniqueBoardId),
-                                  valueKey: pieceEntity.uniqueBoardId,
+                                  key: ValueKey(pieceEntity.boardId),
+                                  valueKey: pieceEntity.boardId,
                                   animationDuration: animationTime,
                                   entity: pieceEntity,
                                   size: maxSize,

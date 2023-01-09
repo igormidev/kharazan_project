@@ -18,11 +18,12 @@ abstract class ProtocolPieceRepository {
   Either<MatchFailure, BoardPieceEntity> obtainPieceInCoordenate(
       Coordenate coordenate);
 
-  /// Will update the entity with the same [uniqueBoardId] with [boardPieceEntity]
-  Either<MatchFailure, BoardPieceEntity> updatePieceEntityWithId(
-    String uniqueBoardId,
-    BoardPieceEntity Function(BoardPieceEntity currentEntity) boardPieceEntity,
-  );
+  /// Will update the entity with the same [boardId] with [boardPieceEntity]
+  Either<MatchFailure, BoardPieceEntity> updatePieceEntityWithId({
+    required String boardId,
+    required BoardPieceEntity Function(BoardPieceEntity currentEntity)
+        boardPieceEntity,
+  });
 
   /// Obtain the entities in the board
   Either<MatchFailure, List<BoardPieceEntity>> obtainPiecesInTheBoard();

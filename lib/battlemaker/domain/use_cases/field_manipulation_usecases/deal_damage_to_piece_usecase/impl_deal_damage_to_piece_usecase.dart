@@ -19,8 +19,8 @@ class ImplDealDamageToPieceUsecase implements ProtocolDealDamageToPieceUsecase {
     DealDamageToPieceParam param,
   ) {
     final destinyPieceResponse = _repository.updatePieceEntityWithId(
-      param.uniquePieceEntityId,
-      (currentEntity) {
+      boardId: param.uniquePieceEntityId,
+      boardPieceEntity: (currentEntity) {
         return currentEntity.copyWith(
           pieceState: currentEntity.pieceState.copyWith(
             piece: currentEntity.pieceState.piece.copyWith(

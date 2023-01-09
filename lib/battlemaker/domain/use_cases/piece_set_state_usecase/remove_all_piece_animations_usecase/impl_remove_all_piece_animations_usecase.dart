@@ -26,8 +26,8 @@ class ImplRemoveAllPieceAnimationsUsecase
 
     for (var animationState in piecesWithAnimation) {
       final updateResponse = _protocolPieceRepository.updatePieceEntityWithId(
-        animationState.uniqueBoardId,
-        (currentEntity) => animationState.copyWith(
+        boardId: animationState.boardId,
+        boardPieceEntity: (currentEntity) => animationState.copyWith(
           pieceState: PieceState.normal(
             piece: animationState.pieceState.piece,
           ),

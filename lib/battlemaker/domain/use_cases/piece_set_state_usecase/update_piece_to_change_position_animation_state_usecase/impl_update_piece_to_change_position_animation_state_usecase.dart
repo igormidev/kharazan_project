@@ -21,18 +21,20 @@ class ImplUpdatePieceToChangePositionAnimationStateUsecase
   Either<MatchFailure, VoidSucess> call(
     ParamUpdatePieceToChangePositionAnimationStateUsecase param,
   ) {
-    return _pieceRepository.updatePieceEntityWithId(
-      param.uniqueBoardId,
-      (BoardPieceEntity currentPiece) {
-        return currentPiece.copyWith(
-          pieceState: PieceState.pieceChangingPosition(
-            piece: currentPiece.pieceState.piece,
-            animationTime: Constants.changePositionAnimationTime,
-            originCoordenate: param.originCoordenate,
-            destinyCoordenate: param.destinyCoordenate,
-          ),
-        );
-      },
-    ).castRight((_) => VoidSucess());
+    return _pieceRepository
+        .updatePieceEntityWithId(
+          boardId: param.boardId,
+          boardPieceEntity: (BoardPieceEntity currentPiece) {
+            return currentPiece.copyWith(
+              pieceState: PieceState.pieceChangingPosition(
+                piece: currentPiece.pieceState.piece,
+                animationTime: Constants.changePositionAnimationTime,
+                originCoordenate: param.originCoordenate,
+                destinyCoordenate: param.destinyCoordenate,
+              ),
+            );
+          },
+        )
+        .castRight((_) => VoidSucess());
   }
 }
